@@ -1314,6 +1314,9 @@ async function handleSignOut() {
   try {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
+    // Update UI immediately
+    document.querySelectorAll('.auth-logged-out').forEach(el => el.style.display = 'block');
+    document.querySelectorAll('.auth-logged-in').forEach(el => el.style.display = 'none');
     location.reload();
   } catch (error) {
     console.error('Sign out error:', error);
