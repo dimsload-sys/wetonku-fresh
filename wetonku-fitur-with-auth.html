@@ -567,7 +567,7 @@
       <div class="panel-head">
         <span class="panel-tier basic">● Paket Pendalaman</span>
         <h1>Tafsir Mimpi</h1>
-        <p>Cari makna mimpimu menurut primbon Jawa. Ketik kata kunci mimpi — misal "ular", "gigi", atau "terbang".</p>
+        <p>Tafsir mimpi yang personal — berdasarkan kata kunci mimpi, weton kelahiranmu, dan waktu mimpi terjadi.</p>
       </div>
       <div class="card">
         <div class="card-title">Cari tafsir mimpi</div>
@@ -577,14 +577,54 @@
         </div>
         <p class="empty-hint">Atau pilih mimpi yang umum:</p>
         <div class="dream-tags" id="dream-tags"></div>
+
+        <!-- Tambahan: weton & waktu mimpi -->
+        <div style="margin-top:20px;padding:16px;background:var(--paper-2);border-radius:12px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:14px;color:var(--accent)">Personalisasi Tafsir (Opsional)</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div>
+              <label class="field-label">Tanggal lahirmu</label>
+              <div class="date-inputs">
+                <select id="mimpi-day"></select><select id="mimpi-month"></select><select id="mimpi-year"></select>
+              </div>
+            </div>
+            <div>
+              <label class="field-label">Mimpi terjadi saat</label>
+              <select class="text-input" id="mimpi-waktu" style="width:100%;margin-top:0">
+                <option value="">-- Pilih waktu --</option>
+                <option value="malam">Malam (sebelum tengah malam)</option>
+                <option value="dinihari">Dini hari / Subuh (02.00–05.00)</option>
+                <option value="shubuh">Menjelang Shubuh (05.00–06.00)</option>
+                <option value="siang">Siang hari</option>
+                <option value="sore">Sore hari</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
         <div class="dream-result" id="dream-result">
           <h4 id="dr-title">—</h4>
-          <p id="dr-text">—</p>
-          <div class="dr-omen" id="dr-omen">—</div>
+          <!-- Tafsir umum -->
+          <div id="dr-umum">
+            <p id="dr-text">—</p>
+            <div class="dr-omen" id="dr-omen">—</div>
+          </div>
+          <!-- Tafsir personal (weton + waktu) -->
+          <div id="dr-personal" style="display:none;margin-top:18px">
+            <div style="height:1px;background:var(--line);margin-bottom:18px"></div>
+            <div id="dr-waktu-box" style="display:none;margin-bottom:14px;padding:12px 14px;background:var(--paper-2);border-radius:10px;border-left:3px solid var(--accent)">
+              <div style="font-size:12px;font-weight:600;color:var(--accent);margin-bottom:5px">⏱ TAFSIR BERDASARKAN WAKTU MIMPI</div>
+              <p id="dr-waktu-teks" style="font-size:14px;line-height:1.7;margin:0"></p>
+            </div>
+            <div id="dr-weton-box" style="display:none;padding:12px 14px;background:var(--paper-2);border-radius:10px;border-left:3px solid var(--accent)">
+              <div style="font-size:12px;font-weight:600;color:var(--accent);margin-bottom:5px">✦ TAFSIR PERSONAL UNTUK WETON <span id="dr-weton-label"></span></div>
+              <p id="dr-weton-teks" style="font-size:14px;line-height:1.7;margin:0"></p>
+            </div>
+          </div>
         </div>
         <p class="dream-notfound" id="dream-notfound">Mimpi itu belum ada dalam basis data ini. Coba kata kunci lain yang lebih umum, atau gunakan kata dasar (misal "ular" alih-alih "diserang ular besar").</p>
       </div>
-      <p class="note-line">Basis data memuat 120+ tafsir mimpi yang mencakup hewan, alam, aktivitas, benda, hingga peristiwa khusus — jauh lebih lengkap dari versi awal.</p>
+      <p class="note-line">Tafsir didasarkan pada primbon Jawa — makna bisa berbeda tergantung weton kelahiran dan waktu mimpi terjadi.</p>
     </section>
 
     <!-- ===== PANEL: WETON ANAK ===== -->
@@ -1145,36 +1185,147 @@ const MIMPI = [
   {k:'mencuri',t:'Mimpi mencuri menandakan keinginan yang tidak terpenuhi dengan cara halal. Perlu evaluasi cara mencapai tujuan.',o:'Pertanda evaluasi'},
   {k:'dicuri',t:'Mimpi dicuri menandakan kehilangan atau kekhawatiran kehilangan sesuatu yang berharga. Jaga dengan lebih baik apa yang kamu miliki.',o:'Pertanda kehilangan'}
 ];
-function tampilMimpi(item){
-  document.getElementById('dr-title').textContent='Mimpi '+item.k;
-  document.getElementById('dr-text').textContent=item.t;
-  document.getElementById('dr-omen').textContent='Tafsiran umum: '+item.o;
-  document.getElementById('dr-omen').style.color='var(--accent)';
-  document.getElementById('dream-result').classList.add('show');
-  document.getElementById('dream-notfound').style.display='none';
+/* Tafsir berdasarkan waktu mimpi */
+const TAFSIR_WAKTU = {
+  malam:    'Mimpi yang terjadi di awal malam (sebelum tengah malam) umumnya dianggap sebagai cerminan pikiran dan kekhawatiran hari itu — bukan pertanda dari luar diri. Dalam primbon, mimpi malam masih dipengaruhi oleh energi hari yang belum selesai. Tafsirnya lebih ringan, tidak perlu terlalu dikhawatirkan.',
+  dinihari: 'Mimpi dini hari (sekitar pukul 02.00–04.00) adalah yang paling kuat maknanya dalam primbon Jawa. Pada jam-jam ini pikiran sudah benar-benar istirahat dan jiwa lebih terbuka menerima "pesan". Leluhur Jawa mempercayai bahwa mimpi di waktu ini paling sering menjadi kenyataan — baik sebagai peringatan maupun kabar baik.',
+  shubuh:   'Mimpi menjelang Shubuh (setelah sahur, sebelum adzan) dianggap sangat bermakna dalam tradisi Jawa yang berpadu dengan Islam. Waktu ini disebut waktu "antara" — antara malam dan siang, antara tidur dan terjaga. Mimpi di sini sering dianggap sebagai ilham atau petunjuk yang perlu direnungkan dengan serius.',
+  siang:    'Mimpi siang hari dalam primbon Jawa umumnya tidak dianggap sebagai pertanda. Ia lebih merupakan olahan pikiran yang belum terselesaikan dari pagi. Namun kalau mimpi siang terasa sangat vivid dan berulang, barulah patut diperhatikan.',
+  sore:     'Mimpi sore hari jarang disebutkan dalam primbon klasik. Posisinya netral — tidak sekuat dini hari, tapi bukan tidak bermakna. Perhatikan jika mimpinya melibatkan orang yang sudah meninggal atau situasi yang sangat tidak biasa.'
+};
+
+/* Tafsir personal per pasaran weton untuk tiap kategori mimpi */
+const TAFSIR_WETON_MIMPI = {
+  /* HEWAN */
+  ular: {
+    Legi:   'Bagi weton Legi, ular dalam mimpi sering dikaitkan dengan datangnya rezeki dari arah yang tidak terduga — bisa berupa peluang, pertemuan, atau kabar baik. Bila ularnya jinak dan berwarna cerah, pertanda sangat baik.',
+    Pahing: 'Weton Pahing yang bermimpi ular perlu waspada terhadap persaingan atau orang yang menyimpan niat tersembunyi. Ular yang menyerang menandakan tantangan nyata yang harus dihadapi langsung, bukan dihindari.',
+    Pon:    'Bagi Pon, mimpi ular adalah sinyal komunikasi — ada seseorang yang ingin menyampaikan sesuatu tapi belum bisa. Perhatikan orang-orang di sekitarmu yang terlihat berbeda belakangan ini.',
+    Wage:   'Weton Wage yang bermimpi ular biasanya mendapat pesan tentang ketahanan. Ular melambangkan kemampuan berganti kulit — ada perubahan besar yang menanti, dan kamu lebih siap dari yang kamu kira.',
+    Kliwon: 'Bagi Kliwon, mimpi ular sangat kuat maknanya — bisa berupa koneksi spiritual, pesan dari leluhur, atau energi alam yang sedang berbicara. Ular putih atau ular besar yang tenang adalah tanda keistimewaan.'
+  },
+  terbang: {
+    Legi:   'Terbang dalam mimpi bagi Legi menandakan popularitas dan pengakuan yang akan datang. Kamu akan dikenal lebih luas — mungkin melalui pekerjaan, media sosial, atau lingkaran pertemanan baru.',
+    Pahing: 'Bagi Pahing, terbang adalah simbol ambisi yang akan terwujud. Semakin tinggi terbangnya, semakin besar pencapaian yang menanti. Ini momen untuk berani mengambil langkah besar.',
+    Pon:    'Weton Pon yang terbang dalam mimpi mendapat sinyal bahwa ide atau rencananya akan mendapat sambutan baik. Saatnya bicara dan berbagi — gagasanmu siap didengar.',
+    Wage:   'Bagi Wage, terbang melambangkan kebebasan dari beban yang sudah lama ditanggung. Ada sesuatu yang akan terselesaikan, dan kamu akan merasa jauh lebih ringan.',
+    Kliwon: 'Terbang bagi Kliwon adalah pengalaman spiritual yang dalam. Ini bisa menandakan meningkatnya kepekaan batin, atau jiwa yang sedang "berkelana" mencari jawaban atas pertanyaan besar dalam hidupmu.'
+  },
+  air: {
+    Legi:   'Air jernih dalam mimpi Legi melambangkan rezeki yang mengalir lancar dan hubungan yang harmonis. Air keruh atau banjir justru menandakan perlu introspeksi dalam hubungan sosialmu.',
+    Pahing: 'Bagi Pahing, air adalah cermin emosi yang selama ini ditekan. Mimpi air deras menandakan energi besar yang butuh disalurkan — jangan tahan terlalu lama.',
+    Pon:    'Weton Pon dan air sangat terhubung — air adalah medium komunikasi. Mimpi sungai jernih menandakan aliran ide yang lancar; air stagnan menandakan komunikasi yang macet perlu diperbaiki.',
+    Wage:   'Air bagi Wage melambangkan fondasi — air yang tenang dan dalam menandakan stabilitas yang akan datang setelah periode kerja keras.',
+    Kliwon: 'Bagi Kliwon, air sangat spiritual — laut luas menandakan kedalaman batin yang sedang berkembang. Air mata dalam mimpi justru sering pertanda kebahagiaan yang mendekat.'
+  },
+  uang: {
+    Legi:   'Weton Legi yang bermimpi menemukan uang perlu berhati-hati dengan pengeluaran mendadak minggu ini. Tapi memberi uang dalam mimpi? Itu pertanda rezeki berlipat yang akan datang.',
+    Pahing: 'Bagi Pahing, mimpi uang berkaitan langsung dengan keputusan bisnis yang sedang dipertimbangkan. Uang yang banyak tapi tidak bisa dipegang — pertanda peluang yang perlu strategi lebih matang.',
+    Pon:    'Weton Pon yang bermimpi uang mendapat sinyal tentang negosiasi atau transaksi yang akan datang. Persiapkan diri untuk percakapan penting soal finansial.',
+    Wage:   'Bagi Wage, uang dalam mimpi adalah cerminan kerja keras yang akan terbayar. Temukan uang = hasil mulai terlihat. Kehilangan uang = perlu evaluasi pengeluaran.',
+    Kliwon: 'Mimpi uang bagi Kliwon sering bermakna terbalik — fokus pada niat, bukan materi. Justru saat tidak memikirkan uang, rezekinya datang dari arah yang tidak disangka.'
+  },
+  meninggal: {
+    Legi:   'Bagi Legi, mimpi kematian hampir selalu pertanda transformasi positif — sesuatu yang lama akan berakhir, memberi ruang untuk yang baru dan lebih baik.',
+    Pahing: 'Weton Pahing yang bermimpi kematian mendapat sinyal untuk "mematikan" satu kebiasaan atau pola pikir lama yang sudah menghambat pertumbuhan.',
+    Pon:    'Bagi Pon, mimpi kematian sering berkaitan dengan perpisahan — bukan fisik, tapi fase hubungan atau komunikasi yang akan berubah bentuk.',
+    Wage:   'Weton Wage yang bermimpi kematian mendapat pengingat tentang kefanaan — saatnya fokus pada hal yang benar-benar penting dan melepaskan yang tidak.',
+    Kliwon: 'Bagi Kliwon, mimpi kematian adalah yang paling dalam maknanya — sering berupa pesan dari leluhur atau sinyal spiritual tentang perubahan besar dalam perjalanan hidup.'
+  }
+};
+
+function getTafsirWeton(keyword, pasaran) {
+  /* Cari tafsir spesifik per keyword, fallback ke tafsir generik per pasaran */
+  const keyMap = {
+    'ular': 'ular', 'terbang': 'terbang', 'air': 'air', 'banjir': 'air',
+    'uang': 'uang', 'emas': 'uang', 'meninggal': 'meninggal', 'kematian': 'meninggal'
+  };
+  const mappedKey = keyMap[keyword];
+  if (mappedKey && TAFSIR_WETON_MIMPI[mappedKey] && TAFSIR_WETON_MIMPI[mappedKey][pasaran]) {
+    return TAFSIR_WETON_MIMPI[mappedKey][pasaran];
+  }
+
+  /* Fallback: tafsir generik per pasaran */
+  const fallback = {
+    Legi:   'Bagi weton Legi, mimpi ini membawa energi sosial — perhatikan orang-orang terdekat yang mungkin ingin menyampaikan sesuatu. Tafsirnya cenderung positif dan berkaitan dengan hubungan antar manusia.',
+    Pahing: 'Weton Pahing yang bermimpi ini mendapat sinyal tentang tantangan yang perlu dihadapi dengan keberanian. Jangan menghindar — justru konfrontasi langsung yang akan membawa solusi.',
+    Pon:    'Bagi Pon, mimpi ini berkaitan dengan komunikasi dan informasi. Ada pesan yang sedang dalam perjalanan menuju kamu — bisa dari seseorang atau dari intuisimu sendiri.',
+    Wage:   'Weton Wage yang bermimpi ini mendapat pengingat tentang ketahanan dan kesabaran. Prosesmu sedang berjalan — meski tidak terlihat, fondasinya sedang dibangun.',
+    Kliwon: 'Bagi Kliwon yang peka secara spiritual, mimpi ini membawa dimensi yang lebih dalam dari sekadar tafsir biasa. Renungkan dalam ketenangan — jawabannya ada di dalam dirimu sendiri.'
+  };
+  return fallback[pasaran] || '';
 }
+
+function tampilMimpi(item){
+  document.getElementById('dr-title').textContent = 'Mimpi ' + item.k;
+  document.getElementById('dr-text').textContent = item.t;
+  document.getElementById('dr-omen').textContent = 'Tafsiran umum: ' + item.o;
+  document.getElementById('dr-omen').style.color = 'var(--accent)';
+  document.getElementById('dream-result').classList.add('show');
+  document.getElementById('dream-notfound').style.display = 'none';
+
+  /* Cek weton & waktu */
+  const personalDiv = document.getElementById('dr-personal');
+  const waktuBox = document.getElementById('dr-waktu-box');
+  const wetonBox = document.getElementById('dr-weton-box');
+  const waktu = document.getElementById('mimpi-waktu').value;
+
+  /* Coba baca tanggal lahir */
+  const a = readDate('mimpi');
+  let hasPersonal = false;
+
+  /* Tafsir waktu */
+  if (waktu && TAFSIR_WAKTU[waktu]) {
+    document.getElementById('dr-waktu-teks').textContent = TAFSIR_WAKTU[waktu];
+    waktuBox.style.display = 'block';
+    hasPersonal = true;
+  } else {
+    waktuBox.style.display = 'none';
+  }
+
+  /* Tafsir weton */
+  if (a) {
+    const w = getWeton(a.y, a.m, a.d);
+    const tafsirPersonal = getTafsirWeton(item.k, w.pas.n);
+    if (tafsirPersonal) {
+      document.getElementById('dr-weton-label').textContent = w.label;
+      document.getElementById('dr-weton-teks').textContent = tafsirPersonal;
+      wetonBox.style.display = 'block';
+      hasPersonal = true;
+    }
+  } else {
+    wetonBox.style.display = 'none';
+  }
+
+  personalDiv.style.display = hasPersonal ? 'block' : 'none';
+}
+
 function cariMimpi(){
-  const q=document.getElementById('dream-input').value.trim().toLowerCase();
+  const q = document.getElementById('dream-input').value.trim().toLowerCase();
   if(!q){ return; }
-  let found=MIMPI.find(m=>m.k===q);
-  if(!found) found=MIMPI.find(m=>q.includes(m.k)||m.k.includes(q));
-  if(!found) found=MIMPI.find(m=>{
-    const words=q.split(/\s+/);
-    return words.some(w=>w.length>2 && m.k.includes(w));
+  let found = MIMPI.find(m => m.k === q);
+  if(!found) found = MIMPI.find(m => q.includes(m.k) || m.k.includes(q));
+  if(!found) found = MIMPI.find(m => {
+    const words = q.split(/\s+/);
+    return words.some(w => w.length > 2 && m.k.includes(w));
   });
   if(found){ tampilMimpi(found); }
   else {
     document.getElementById('dream-result').classList.remove('show');
-    document.getElementById('dream-notfound').style.display='block';
+    document.getElementById('dream-notfound').style.display = 'block';
   }
 }
+
 function buildDreamTags(){
-  const box=document.getElementById('dream-tags');
-  ['ular','gigi copot','terbang','jatuh','air','dikejar','kebakaran','uang','hamil','meninggal'].forEach(k=>{
-    const item=MIMPI.find(m=>m.k===k);
-    const tag=document.createElement('span');
-    tag.className='dream-tag'; tag.textContent=k;
-    tag.onclick=()=>{ document.getElementById('dream-input').value=k; tampilMimpi(item); };
+  const box = document.getElementById('dream-tags');
+  ['ular','gigi copot','terbang','jatuh','air','dikejar','kebakaran','uang','hamil','meninggal'].forEach(k => {
+    const item = MIMPI.find(m => m.k === k);
+    const tag = document.createElement('span');
+    tag.className = 'dream-tag'; tag.textContent = k;
+    tag.onclick = () => {
+      document.getElementById('dream-input').value = k;
+      tampilMimpi(item);
+    };
     box.appendChild(tag);
   });
 }
@@ -1515,6 +1666,7 @@ fillDate('bb',1,0,2026);
 fillDate('wa',1,0,2024);
 fillDate('waibu',17,7,1995);
 fillDate('waayah',10,5,1993);
+fillDate('mimpi',17,7,1995);
 buildDreamTags();
 buildMobileTabs();
 
