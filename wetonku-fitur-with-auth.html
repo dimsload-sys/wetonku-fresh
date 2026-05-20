@@ -914,13 +914,13 @@ function buatNarasiPersonal(w1, w2, r, s1, s2, total) {
   }
 
   // Saran spesifik berdasarkan sifat keduanya
-  const sarانPersonal = `${s1.cinta.charAt(0).toUpperCase()+s1.cinta.slice(1)}. Di sisi lain, ${s2.cinta}. Kunci hubungan ini: ${r.saran.toLowerCase()}`;
+  const saranPersonal = `${s1.cinta.charAt(0).toUpperCase()+s1.cinta.slice(1)}. Di sisi lain, ${s2.cinta}. Kunci hubungan ini: ${r.saran.toLowerCase()}`;
 
   return `
     <div style="line-height:1.8;font-size:14.5px;color:var(--ink);margin-bottom:16px">${intro}</div>
     <div style="line-height:1.8;font-size:14.5px;color:var(--ink);margin-bottom:16px">${dinamika}</div>
     <div style="padding:16px;background:var(--paper-2);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;margin-bottom:16px;font-size:14px;line-height:1.7;color:var(--ink)">${r.txt}</div>
-    <div style="line-height:1.8;font-size:14.5px;color:var(--ink)">${sarانPersonal}</div>
+    <div style="line-height:1.8;font-size:14.5px;color:var(--ink)">${saranPersonal}</div>
   `;
 }
 
