@@ -960,6 +960,9 @@ function hitungRezeki(){
   // Tampilkan premium preview
   document.getElementById('rz-premium-preview').style.display = 'block';
   document.getElementById('rezeki-result').classList.add('show');
+
+  // Cek apakah owner/premium user → hapus blur
+  checkPremiumAccess();
 }
 
 /* ============== 3. TAFSIR MIMPI ============== */
@@ -1287,6 +1290,50 @@ fillDate('hb',17,7,1995);
 fillDate('bb',1,0,2026);
 buildDreamTags();
 buildMobileTabs();
+
+/* ============== PREMIUM ACCESS CHECK ============== */
+const OWNER_EMAILS = ['dimasrytm@gmail.com'];
+
+async function checkPremiumAccess() {
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return;
+
+    const email = session.user.email;
+    const isOwner = OWNER_EMAILS.includes(email.toLowerCase());
+
+    // Cek subscription tier (untuk user bayar nanti)
+    let isPremium = isOwner;
+    if (!isOwner) {
+      const { data: sub } = await supabase
+        .from('user_subscriptions')
+        .select('tier_code')
+        .eq('user_id', session.user.id)
+        .eq('status', 'active')
+        .single();
+      isPremium = sub && sub.tier_code === 'pamungkas';
+    }
+
+    if (isPremium) {
+      // Hapus blur & overlay untuk premium user
+      const preview = document.getElementById('rz-premium-preview');
+      if (!preview) return;
+      const blurDiv = preview.querySelector('[style*="blur"]');
+      const overlay = preview.querySelector('[style*="position:absolute"]');
+      if (blurDiv) blurDiv.style.filter = 'none';
+      if (overlay) overlay.style.display = 'none';
+
+      // Update label
+      const label = preview.querySelector('[style*="ANALISIS"]');
+      if (label) label.parentElement.innerHTML = `
+        <div style="width:3px;height:20px;background:var(--accent);border-radius:2px"></div>
+        <span style="font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.5px">ANALISIS PAMUNGKAS ✦ AKTIF</span>
+      `;
+    }
+  } catch(e) {
+    console.log('Premium check:', e.message);
+  }
+}
 
 /* ============== SUPABASE INTEGRATION ============== */
 // GANTI DENGAN CREDENTIALS SUPABASE ANDA:
