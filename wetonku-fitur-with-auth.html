@@ -740,8 +740,7 @@ const WETON_SIFAT = {
 };
 
 function getWetonKey(w){
-  const hariMap = {0:'Minggu',1:'Senin',2:'Selasa',3:'Rabu',4:'Kamis',5:'Jumat',6:'Sabtu'};
-  return (hariMap[w.hari.day]||w.hari.id) + ' ' + (w.pas.id.charAt(0).toUpperCase()+w.pas.id.slice(1).toLowerCase());
+  return w.hari.n + ' ' + w.pas.n;
 }
 
 function buatNarasiPersonal(w1, w2, r, s1, s2, total) {
