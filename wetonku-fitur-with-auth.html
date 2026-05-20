@@ -497,6 +497,61 @@
           <div class="fortune-ico">☼</div>
           <div class="fr-body"><h4>Saran</h4><p id="rz-saran">—</p></div>
         </div>
+
+        <!-- PREMIUM PREVIEW BLUR SECTION -->
+        <div id="rz-premium-preview" style="display:none;margin-top:24px;position:relative">
+          <!-- Label -->
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+            <div style="width:3px;height:20px;background:var(--accent);border-radius:2px"></div>
+            <span style="font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.5px">ANALISIS PAMUNGKAS</span>
+          </div>
+
+          <!-- Blurred content -->
+          <div style="position:relative;border-radius:16px;overflow:hidden">
+            <div style="filter:blur(6px);pointer-events:none;user-select:none;opacity:0.7">
+              <div class="fortune-row">
+                <div class="fortune-ico">☽</div>
+                <div class="fr-body">
+                  <h4>Periode Rezeki Terbaik</h4>
+                  <p id="rz-periode">Berdasarkan siklus weton dan kalender Jawa, periode paling menguntungkan bagimu adalah saat neptu harian selaras dengan neptumu. Bulan-bulan dengan jumlah hari yang habis dibagi 5 akan membuka pintu rezeki yang lebih besar dari biasanya.</p>
+                </div>
+              </div>
+              <div class="fortune-row">
+                <div class="fortune-ico">⚑</div>
+                <div class="fr-body">
+                  <h4>Pantangan Finansial</h4>
+                  <p id="rz-pantangan">Ada beberapa jenis investasi dan keputusan finansial yang justru berpotensi merugikan pemilik weton ini. Leluhur mewanti-wanti agar tidak terburu-buru dalam keputusan besar yang melibatkan tanah atau properti.</p>
+                </div>
+              </div>
+              <div class="fortune-row">
+                <div class="fortune-ico">✦</div>
+                <div class="fr-body">
+                  <h4>Rekomendasi Usaha & Karir</h4>
+                  <p id="rz-usaha">Berdasarkan kombinasi hari dan pasaran kelahiranmu, ada 3 jalur usaha yang paling selaras dengan energi wetonmu — dan 2 jalur yang sebaiknya dihindari karena berlawanan dengan arah rezekinya.</p>
+                </div>
+              </div>
+              <div class="fortune-row">
+                <div class="fortune-ico">♦</div>
+                <div class="fr-body">
+                  <h4>Nasihat Leluhur</h4>
+                  <p id="rz-nasihat">Dalam primbon kuno, weton ini disebut memiliki "wahyu" tersendiri yang hanya bisa diaktifkan dengan cara-cara tertentu. Ada amalan dan kebiasaan yang bila dilakukan secara konsisten, akan membuka pintu keberuntungan yang lebih besar.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Overlay lock -->
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.85) 40%, rgba(255,255,255,0.97) 100%);border-radius:16px">
+              <div style="text-align:center;padding:24px 20px">
+                <div style="font-size:28px;margin-bottom:10px">🔮</div>
+                <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:8px;color:var(--ink)">Analisis Mendalam</div>
+                <div style="font-size:14px;color:var(--ink-soft);max-width:260px;margin:0 auto 18px;line-height:1.6">Periode rezeki, pantangan finansial, rekomendasi usaha, dan nasihat leluhur khusus untuk wetonmu</div>
+                <div style="background:var(--accent);color:white;padding:11px 24px;border-radius:10px;font-size:14px;font-weight:600;display:inline-block;cursor:pointer" onclick="window.location.href='/'">Upgrade ke Pamungkas →</div>
+                <div style="font-size:12px;color:var(--ink-soft);margin-top:10px">Rp 79rb/bulan · Akses semua fitur premium</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -862,6 +917,48 @@ function hitungRezeki(){
     (w.total<=11
       ? 'Bangun kebiasaan finansial yang rapi sejak sekarang. Kestabilan adalah kekuatanmu — manfaatkan, jangan lawan.'
       : 'Energi rezekimu besar; pasangkan dengan disiplin. Sisihkan lebih dulu sebelum membelanjakan, dan pilih satu fokus utama.');
+
+  // Premium preview content (blurred, untuk Pamungkas)
+  const periodeMap = {
+    Legi: 'Rezekimu menguat di hari-hari dengan pasaran Legi dan Kliwon. Secara bulanan, pertengahan bulan Jawa (sekitar tanggal 13-17) cenderung membawa peluang terbaik. Hindari memulai usaha baru di hari Selasa Wage karena energinya berlawanan dengan wetonmu.',
+    Pahing: 'Hari dengan pasaran Pahing dan Pon adalah puncak energi rezekinya. Bulan-bulan bernafaskan api (Suro, Mulud) membawa gelombang keberuntungan untukmu. Waspadai keputusan finansial di hari Jumat Kliwon.',
+    Pon: 'Pasaran Pon dan Wage membuka saluran rezeki terlebar bagimu. Periode terbaik adalah awal bulan Jawa (tanggal 1-5) dan akhir bulan (25-30). Hindari transaksi besar di hari Senin Pahing.',
+    Wage: 'Hari Wage dan Legi adalah hari-hari paling produktif secara finansial. Setiap kali tanggal Masehi habis dibagi 4, itu adalah sinyal untuk mengambil keputusan besar. Hindari pinjaman di hari Kamis Pon.',
+    Kliwon: 'Kliwon adalah pasaran yang paling kuat secara spiritual — rezekinya mengalir deras di hari-hari bertanda "keramat". Setiap malam Jumat Kliwon adalah waktu terbaik untuk berdoa dan merencanakan langkah finansial. Hindari pengeluaran besar di hari Rabu Wage.'
+  };
+
+  const pantanganMap = {
+    Legi: 'Hindari investasi di bidang yang terlalu spekulatif — wetonmu butuh fondasi yang nyata, bukan harapan. Jangan mengambil pinjaman di luar kemampuan bayar, karena utang yang tidak terencana akan terasa 2x lebih berat bagimu. Hindari juga membeli aset besar (tanah, kendaraan) di bulan Suro.',
+    Pahing: 'Waspadai godaan cepat kaya — wetonmu memang punya energi besar, tapi mudah terbakar jika salah arah. Hindari kongsi bisnis dengan orang yang wetonnya berpasaran Kliwon karena sering memunculkan gesekan. Jangan meminjamkan uang dalam jumlah besar kepada saudara.',
+    Pon: 'Hindari berdagang dengan cara yang tidak transparan — energi Pon akan berbalik jika digunakan untuk yang tidak jujur. Waspadai pengeluaran impulsif saat emosi sedang tinggi. Hindari investasi di bidang hiburan malam atau hal-hal yang tidak selaras dengan nilai pribadimu.',
+    Wage: 'Kemandirian adalah kekuatanmu, tapi juga bisa jadi jebakan — jangan menolak bantuan atau kerjasama yang tulus. Hindari berinvestasi di bisnis yang membutuhkan banyak orang untuk dikelola karena akan menguras energimu. Waspadai penipuan dari orang yang tampak sangat percaya diri.',
+    Kliwon: 'Energi Kliwon sangat sensitif terhadap niat — uang yang dicari dengan cara yang tidak bersih akan cepat pergi. Hindari bisnis yang berkaitan dengan hal-hal yang bertentangan dengan spiritualitasmu. Jangan mengambil keputusan finansial besar saat sedang emosi atau dalam kondisi tidak tenang.'
+  };
+
+  const usahaMap = {
+    Legi: '✦ Cocok: Bisnis berbasis hubungan manusia (konsultan, coach, event organizer), usaha kuliner dengan nuansa kehangatan, atau profesi yang melibatkan seni dan keindahan. ✦ Hindari: Bisnis yang terlalu solitary atau tidak ada interaksi manusianya — energimu butuh "panggung".',
+    Pahing: '✦ Cocok: Wirausaha mandiri di bidang yang kompetitif (trading, properti, teknologi), posisi kepemimpinan, atau bisnis yang butuh nyali dan keberanian. ✦ Hindari: Pekerjaan rutinal tanpa tantangan — wetonmu akan stagnan jika tidak ada sesuatu yang "dimenangkan".',
+    Pon: '✦ Cocok: Perdagangan, jual-beli, negosiasi, dunia hukum atau mediasi, komunikasi dan media. Apapun yang butuh kecakapan berbicara dan membaca orang. ✦ Hindari: Pekerjaan yang butuh kesendirian total — kamu perlu interaksi untuk berkembang.',
+    Wage: '✦ Cocok: Keahlian khusus yang dibangun bertahun-tahun (pengrajin, dokter, programmer, chef), usaha yang dimulai kecil tapi konsisten, atau karir yang butuh dedikasi jangka panjang. ✦ Hindari: Bisnis yang butuh banyak modal awal dan tidak jelas hasilnya.',
+    Kliwon: '✦ Cocok: Konsultasi spiritual atau psikologi, penelitian, pengobatan alternatif, seni yang dalam, atau profesi yang menggunakan intuisi sebagai modal utama. ✦ Hindari: Lingkungan kerja yang penuh persaingan tidak sehat — energimu sensitif terhadap niat buruk orang lain.'
+  };
+
+  const nasihatMap = {
+    Legi: 'Leluhur berpesan: "Wong Legi iku kaya banyu mili — tidak bisa dibendung, tidak bisa dipaksa, tapi selalu menemukan jalannya sendiri." Rezekinya mengalir pada yang tidak memaksakan. Perbanyak sedekah di hari Legi — dalam tradisi Jawa, memberi di hari wetonmu sendiri adalah cara membuka pintu rezeki yang paling ampuh.',
+    Pahing: 'Leluhur berpesan: "Pahing iku geni — bisa masak, bisa bakar." Energimu besar, tapi perlu diarahkan. Amalan yang dianjurkan: puasa Senin-Kamis untuk menjernihkan arah, dan shalat hajat setiap kali akan mengambil keputusan besar. Wetonmu punya "wahyu" yang terbuka saat pikiran tenang.',
+    Pon: 'Leluhur berpesan: "Pon iku pucuk gunung — tinggi, tapi butuh akar yang kuat." Kecerdasanmu adalah anugerah, tapi tanpa kerendahan hati bisa membawamu jauh dari sumber rezeki aslimu. Amalan: rutin bersyukur dengan cara konkrit — catat 3 hal yang kamu syukuri setiap malam Pon.',
+    Wage: 'Leluhur berpesan: "Wage iku watu karang — keras, tapi lambat lama jadi benteng." Rezekinya tidak cepat, tapi paling tahan lama. Amalan: bersedekah setiap hari Wage tanpa disebut kepada siapapun. Dalam tradisi Jawa, kebaikan yang tersembunyi dari pemilik weton Wage akan kembali berlipat ganda.',
+    Kliwon: 'Leluhur berpesan: "Kliwon iku sakral — ora saben uwong iso ngerti." Tidak semua orang bisa memahami kedalamanmu, dan itu tidak apa-apa. Rezekinya mengalir dari kejernihan batin. Amalan yang paling kuat: meditasi atau dzikir di malam Jumat Kliwon, saat energi spiritualmu berada di puncak.'
+  };
+
+  // Isi konten premium
+  document.getElementById('rz-periode').textContent = periodeMap[w.pas.n] || periodeMap['Legi'];
+  document.getElementById('rz-pantangan').textContent = pantanganMap[w.pas.n] || pantanganMap['Legi'];
+  document.getElementById('rz-usaha').textContent = usahaMap[w.pas.n] || usahaMap['Legi'];
+  document.getElementById('rz-nasihat').textContent = nasihatMap[w.pas.n] || nasihatMap['Legi'];
+
+  // Tampilkan premium preview
+  document.getElementById('rz-premium-preview').style.display = 'block';
   document.getElementById('rezeki-result').classList.add('show');
 }
 
