@@ -962,21 +962,93 @@ function watakNeptu(total,lang){
   if(total<=16) return lang==='id'?'Energimu kuat dan ekspresif — kamu punya dorongan besar untuk mencapai sesuatu.':'Your energy is strong and expressive — you carry a powerful drive to achieve.';
   return lang==='id'?'Energimu sangat besar dan berkharisma — kamu ditakdirkan menonjol, namun perlu belajar mengelolanya.':'Your energy is immense and charismatic — you are bound to stand out, yet must learn to channel it.';
 }
-function ramalanHariIni(selisih,lang){
-  const s=((selisih%5)+5)%5;
-  const map={
-    id:['Hari ini energimu selaras dengan alam — waktu yang baik untuk memulai hal kecil yang berarti.',
-        'Hari ini menuntut kesabaran. Tahan diri sebelum mengambil keputusan besar.',
-        'Hari ini cocok untuk menjalin hubungan — hubungi seseorang yang sudah lama tak kamu sapa.',
-        'Hari ini baik untuk merapikan dan menata, baik urusan kerja maupun batinmu.',
-        'Hari ini intuisimu tajam — percayai firasatmu, namun tetap berpikir jernih.'],
-    en:['Today your energy aligns with nature — a good time to begin something small but meaningful.',
-        'Today calls for patience. Hold back before making any big decisions.',
-        'Today favors connection — reach out to someone you have not spoken to in a while.',
-        'Today is good for tidying and ordering, both your work and your inner world.',
-        'Today your intuition is sharp — trust your instincts, but keep a clear mind.']
+function ramalanHariIni(selisihRaw, lang, wetonKey) {
+  const s = ((selisihRaw % 5) + 5) % 5;
+
+  // Ramalan per weton spesifik (ID only, EN fallback generic)
+  const RAMALAN_WETON = {
+    'Jumat Legi': [
+      'Energimu hari ini seperti air yang tenang tapi dalam. Orang di sekitarmu butuh kehadiranmu lebih dari yang mereka tunjukkan — satu kata hangat darimu bisa mengubah hari seseorang.',
+      'Hari ini bukan waktunya terburu-buru. Ada sesuatu yang perlu kamu pahami lebih dalam sebelum mengambil tindakan. Kepercayaanmu pada proseslah yang akan membedakan hasilnya.',
+      'Ada peluang tersembunyi hari ini yang hanya bisa dilihat oleh yang tenang. Jangan biarkan kebisingan sekitar mengalihkan fokusmu dari hal yang benar-benar penting.',
+      'Seseorang hari ini membutuhkan kejujuranmu, bukan basa-basi. Berani berkata yang sebenarnya dengan cara yang lembut — itu kekuatanmu yang sesungguhnya.',
+      'Hari ini energimu berada di puncak keselarasan. Apapun yang kamu mulai hari ini dengan niat tulus, akan menemukan jalannya sendiri menuju kebaikan.'
+    ],
+    'Senin Kliwon': [
+      'Intuisimu hari ini sangat tajam — percayai bisikan batinmu meskipun logika berkata lain. Ada sesuatu yang ingin alam semesta sampaikan padamu hari ini.',
+      'Hari ini cocok untuk menarik diri sejenak dari keramaian. Kedalaman pikiranmu adalah aset terbesar — beri ruang untuk berpikir jernih sebelum memutuskan.',
+      'Ada orang yang akan datang meminta nasihatmu hari ini. Jangan ragu — kedalaman pandanganmu lebih berharga dari yang kamu kira.',
+      'Hari ini energimu sensitif terhadap lingkungan sekitar. Pilih dengan siapa kamu menghabiskan waktu — energi orang lain akan sangat mempengaruhimu.',
+      'Sesuatu yang lama kamu pertanyakan akan mendapat jawaban hari ini — bukan melalui kata-kata, tapi melalui kejadian kecil yang perlu kamu perhatikan.'
+    ],
+    'Selasa Kliwon': [
+      'Hari ini adalah hari untuk bertindak, bukan hanya berpikir. Keteguhanmu adalah senjata terkuatmu — gunakan dengan bijak dan tidak gegabah.',
+      'Ada situasi hari ini yang menguji ketenanganmu. Ingat: sikapmu saat ditekan jauh lebih bermakna dari sikapmu saat segalanya mudah.',
+      'Energimu hari ini cocok untuk menyelesaikan hal yang sudah lama tertunda. Satu langkah kecil yang konsisten lebih powerful dari satu langkah besar yang sporadis.',
+      'Seseorang mungkin menantang sudut pandangmu hari ini. Dengarkan, timbang, tapi jangan kehilangan pendirian hanya karena tekanan sosial.',
+      'Hari ini ada energi transformasi yang kuat. Sesuatu yang kamu lepaskan hari ini — kebiasaan buruk, hubungan yang menguras, atau pikiran negatif — akan memberi ruang untuk yang lebih baik.'
+    ]
   };
-  return map[lang][s];
+
+  // Ramalan generic per pasaran (untuk weton yang belum ada spesifiknya)
+  const RAMALAN_PASARAN = {
+    Legi: [
+      'Hari ini energimu mengalir dengan lancar — manfaatkan untuk mempererat hubungan yang penting bagimu.',
+      'Ada keramahan yang kamu pancarkan hari ini tanpa kamu sadari. Seseorang sedang sangat terbantu hanya dengan kehadiranmu.',
+      'Hari yang baik untuk memulai percakapan yang sudah lama tertunda. Ketulusanmu adalah jembatan terbaik.',
+      'Rezekim hari ini datang dari arah yang tidak kamu duga. Tetap terbuka dan jangan terlalu terpaku pada rencana awal.',
+      'Hari ini cocok untuk berkreasi dan mengekspresikan diri. Apa yang kamu hasilkan hari ini punya nilai lebih dari biasanya.'
+    ],
+    Pahing: [
+      'Energimu tinggi hari ini — gunakan untuk hal yang benar-benar bermakna, bukan sekadar sibuk.',
+      'Hari ini kamu mungkin diuji kesabarannya. Ambisi besar butuh timing yang tepat — bukan selalu hari ini.',
+      'Ada keputusan yang menunggu. Percayai insting pertamamu — tapi verifikasi dengan satu pertanyaan: apakah ini selaras dengan nilai-nilaimu?',
+      'Hari yang kuat untuk negosiasi dan persuasi. Energimu convincing hari ini — gunakan untuk hal yang baik.',
+      'Waspadai impulsivitas hari ini. Dorongan hatimu kuat, tapi satu jeda napas sebelum bertindak akan mengubah hasilnya.'
+    ],
+    Pon: [
+      'Hari ini cocok untuk networking dan membangun koneksi baru. Orang yang kamu temui hari ini mungkin penting di masa depan.',
+      'Kecerdasanmu sedang tajam hari ini — waktu yang tepat untuk menyelesaikan masalah yang sudah lama dicari jawabannya.',
+      'Ada kabar yang akan datang hari ini — siapkan dirimu untuk beradaptasi dengan cepat.',
+      'Hari yang baik untuk belajar sesuatu yang baru. Pikiranmu sangat receptive hari ini.',
+      'Komunikasikan apa yang kamu rasakan hari ini — mendiamkan justru akan menciptakan kesalahpahaman.'
+    ],
+    Wage: [
+      'Hari ini cocok untuk bekerja dalam diam dan fokus. Hasilmu akan berbicara lebih keras dari kata-katamu.',
+      'Ketahananmu sedang diuji hari ini. Ingat: kamu sudah melewati hal yang lebih berat dari ini.',
+      'Hari yang baik untuk mengevaluasi apa yang sudah kamu bangun. Apa yang perlu diperkuat? Apa yang perlu dilepaskan?',
+      'Energimu hari ini stabil dan dapat diandalkan — orang di sekitarmu sedang bergantung pada stabilitas itu.',
+      'Jangan underestimate kemajuanmu. Apa yang terasa lambat hari ini sebenarnya sedang membangun fondasi yang kuat.'
+    ],
+    Kliwon: [
+      'Hari ini adalah hari yang sakral — perhatikan tanda-tanda kecil yang muncul di sekitarmu.',
+      'Intuisimu sangat kuat hari ini. Jika ada sesuatu yang terasa tidak beres, percayailah perasaan itu.',
+      'Hari yang tepat untuk berdoa, bermeditasi, atau sekadar duduk dalam ketenangan. Batin yang tenang adalah sumber kekuatan terbesar hari ini.',
+      'Ada energi perlindungan yang mengelilingimu hari ini. Lakukan niatmu dengan keyakinan penuh.',
+      'Sesuatu yang spiritual atau meaningful akan menyentuhmu hari ini — mungkin lewat mimpi, percakapan, atau momen tiba-tiba yang dalam.'
+    ]
+  };
+
+  if (lang === 'en') {
+    const enMap = [
+      'Today your energy aligns with nature — a good time to begin something small but meaningful.',
+      'Today calls for patience. Hold back before making any big decisions.',
+      'Today favors connection — reach out to someone you have not spoken to in a while.',
+      'Today is good for tidying and ordering, both your work and your inner world.',
+      'Today your intuition is sharp — trust your instincts, but keep a clear mind.'
+    ];
+    return enMap[s];
+  }
+
+  // Cek apakah ada ramalan spesifik per weton
+  if (wetonKey && RAMALAN_WETON[wetonKey]) {
+    return RAMALAN_WETON[wetonKey][s];
+  }
+
+  // Fallback ke ramalan per pasaran
+  const pasaran = wetonKey ? wetonKey.split(' ')[1] : 'Legi';
+  const ramalanPasaran = RAMALAN_PASARAN[pasaran] || RAMALAN_PASARAN['Legi'];
+  return ramalanPasaran[s];
 }
 
 const REF = new Date(1945,7,17,12,0,0);
@@ -1192,7 +1264,7 @@ function renderResult(res){
       : `As a person of the ${hariName} ${pasName} weton, you tend to be ${sh}, and at the same time ${sp}. ${watak}`;
   }
   
-  document.getElementById('r-today').textContent=ramalanHariIni(w.total-today.total,currentLang);
+  document.getElementById('r-today').textContent=ramalanHariIni(w.total-today.total, currentLang, wetonKey);
 }
 
 buildDayYearOptions();
