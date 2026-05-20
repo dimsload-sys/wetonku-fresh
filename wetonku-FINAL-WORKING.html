@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="sage">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wetonku — Kenali Dirimu Lewat Kearifan Jawa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Supabase Client -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+  /* ============ THEMES ============ */
+  :root, [data-theme="sage"] {
+    --accent: #3B4A39;
+    --accent-2: #BC6C3C;
+    --accent-deep: #2A3528;
+  }
+  [data-theme="indigo"] {
+    --accent: #303A5E;
+    --accent-2: #B58A48;
+    --accent-deep: #232B47;
+  }
+  [data-theme="clay"] {
+    --accent: #8A4632;
+    --accent-2: #5A6647;
+    --accent-deep: #6B3424;
+  }
+  :root {
+    --paper: #F4F2EC;
+    --paper-2: #ECE9DF;
+    --ink: #1E1C18;
+    --ink-soft: #6B655B;
+    --line: #DDD8CC;
+    --white: #FBFAF6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Hanken Grotesk', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+  /* batik kawung texture, very subtle */
+  body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cg fill='none' stroke='%23B8AE97' stroke-width='1'%3E%3Cellipse cx='45' cy='22' rx='13' ry='20'/%3E%3Cellipse cx='45' cy='68' rx='13' ry='20'/%3E%3Cellipse cx='22' cy='45' rx='20' ry='13'/%3E%3Cellipse cx='68' cy='45' rx='20' ry='13'/%3E%3Ccircle cx='45' cy='45' r='3'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  body > * { position: relative; z-index: 1; }
+  .display { font-family: 'Fraunces', serif; }
+  .wrap { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--accent); color: var(--paper); }
+  select, input, button { font-family: inherit; }
+
+  /* ============ ORNAMENT DIVIDER ============ */
+  .ornament {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px; padding: 8px 0; color: var(--accent-2);
+  }
+  .ornament .line { height: 1px; width: 70px; background: var(--line); }
+  .ornament .glyph { font-size: 13px; opacity: 0.8; }
+
+  /* ============ NAV ============ */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(244,242,236,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-family: 'Fraunces', serif; font-size: 21px; font-weight: 600; letter-spacing: -0.02em; }
+  .logo svg { width: 32px; height: 32px; flex-shrink: 0; }
+  .nav-links { display: flex; align-items: center; gap: 30px; }
+  .nav-links a { font-size: 14.5px; color: var(--ink-soft); transition: color .2s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+
+  /* theme switcher */
+  .theme-switch { display: flex; align-items: center; gap: 6px; padding: 5px 8px; border: 1px solid var(--line); border-radius: 999px; background: var(--white); }
+  .theme-dot {
+    width: 18px; height: 18px; border-radius: 50%; cursor: pointer;
+    border: 2px solid transparent; transition: transform .15s, border-color .15s;
+    padding: 0; display: block;
+  }
+  .theme-dot:hover { transform: scale(1.15); }
+  .theme-dot.active { border-color: var(--ink); }
+  .theme-dot.sage { background: #3B4A39; }
+  .theme-dot.indigo { background: #303A5E; }
+  .theme-dot.clay { background: #8A4632; }
+
+  .lang-toggle { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+  .lang-toggle button {
+    border: none; background: none; padding: 6px 12px; cursor: pointer;
+    color: var(--ink-soft); font-weight: 600; font-size: 12.5px; transition: all .2s;
+  }
+  .lang-toggle button.active { background: var(--accent); color: var(--paper); }
+  .btn {
+    font-size: 14.5px; font-weight: 600; padding: 11px 22px; border-radius: 999px;
+    cursor: pointer; border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
+    transition: transform .15s, opacity .2s; white-space: nowrap;
+  }
+  .btn:hover { transform: translateY(-1px); opacity: .9; }
+  .btn-ghost { background: none; color: var(--ink); }
+  .btn-ghost:hover { background: var(--ink); color: var(--paper); }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; font-size: 23px; color: var(--ink); }
+
+  /* ============ HERO ============ */
+  .hero { padding: 84px 0 70px; position: relative; }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 58px; align-items: center; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--accent); padding: 7px 15px; border: 1px solid var(--line);
+    border-radius: 999px; background: var(--white); margin-bottom: 24px;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-2); }
+  h1.hero-title {
+    font-family: 'Fraunces', serif; font-weight: 500;
+    font-size: clamp(38px, 5.5vw, 60px); line-height: 1.06;
+    letter-spacing: -0.025em; margin-bottom: 22px;
+  }
+  h1.hero-title em { font-style: italic; color: var(--accent); }
+  .hero-sub { font-size: 17.5px; color: var(--ink-soft); max-width: 440px; margin-bottom: 30px; }
+  .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
+  .hero-stats { display: flex; gap: 32px; }
+  .stat-num { font-family: 'Fraunces', serif; font-size: 27px; font-weight: 600; line-height: 1; }
+  .stat-label { font-size: 13px; color: var(--ink-soft); margin-top: 4px; }
+
+  .hero-card {
+    background: var(--accent); color: var(--paper); border-radius: 22px;
+    padding: 34px 32px; position: relative; overflow: hidden;
+    box-shadow: 0 30px 60px -28px rgba(0,0,0,0.5);
+  }
+  /* gunungan-inspired corner ornament */
+  .hero-card .corner-ornament {
+    position: absolute; top: 0; right: 0; width: 130px; height: 130px;
+    opacity: 0.16; color: var(--paper);
+  }
+  .hc-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; opacity: .68; margin-bottom: 16px; }
+  .hc-weton { font-family: 'Fraunces', serif; font-size: 39px; font-weight: 500; line-height: 1.1; margin-bottom: 5px; }
+  .hc-neptu { font-size: 14.5px; opacity: .85; }
+  .hc-divider { height: 1px; background: rgba(255,255,255,0.18); margin: 22px 0; }
+  .hc-row { display: flex; justify-content: space-between; font-size: 14px; padding: 5px 0; }
+  .hc-row span:last-child { opacity: .82; }
+  .hc-tag {
+    display: inline-block; margin-top: 20px; font-size: 12.5px;
+    background: var(--accent-2); padding: 6px 13px; border-radius: 999px; font-weight: 600;
+  }
+
+  /* ============ SECTIONS ============ */
+  section { padding: 76px 0; }
+  .sec-head { max-width: 620px; margin-bottom: 46px; }
+  .sec-tag { font-size: 12.5px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent-2); margin-bottom: 13px; }
+  h2.sec-title {
+    font-family: 'Fraunces', serif; font-weight: 500;
+    font-size: clamp(28px, 3.8vw, 42px); line-height: 1.12;
+    letter-spacing: -0.02em; margin-bottom: 13px;
+  }
+  .sec-desc { font-size: 16.5px; color: var(--ink-soft); }
+
+  /* ============ CALCULATOR ============ */
+  .calc-section { background: var(--white); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .calc-box { display: grid; grid-template-columns: 0.85fr 1.15fr; border: 1px solid var(--line); border-radius: 22px; overflow: hidden; background: var(--paper); }
+  .calc-input-side { padding: 40px 36px; border-right: 1px solid var(--line); }
+  .calc-input-side h3 { font-family: 'Fraunces', serif; font-size: 25px; font-weight: 500; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .calc-input-side p { font-size: 14.5px; color: var(--ink-soft); margin-bottom: 24px; }
+  .field-label { font-size: 13px; font-weight: 600; margin-bottom: 8px; display: block; }
+  .date-inputs { display: grid; grid-template-columns: 1fr 1.3fr 1fr; gap: 9px; margin-bottom: 18px; }
+  .date-inputs select {
+    font-size: 14.5px; padding: 11px 10px; border: 1px solid var(--line);
+    border-radius: 10px; background: var(--white); color: var(--ink);
+    width: 100%; -webkit-appearance: none; appearance: none; cursor: pointer;
+  }
+  .date-inputs select:focus { outline: 2px solid var(--accent); border-color: var(--accent); }
+  .calc-btn {
+    width: 100%; font-size: 15px; font-weight: 600; padding: 13px;
+    border-radius: 10px; border: none; background: var(--accent); color: var(--paper);
+    cursor: pointer; transition: transform .15s, opacity .2s;
+  }
+  .calc-btn:hover { transform: translateY(-1px); opacity: .92; }
+  .calc-hint { font-size: 12.5px; color: var(--ink-soft); margin-top: 14px; text-align: center; }
+
+  .calc-result-side { padding: 40px 36px; }
+  .result-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; color: var(--ink-soft); }
+  .result-empty .circle { width: 66px; height: 66px; border-radius: 50%; border: 1.5px dashed var(--line); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; color: var(--accent-2); }
+  .result-empty .circle svg { width: 30px; height: 30px; }
+  .result-empty p { font-size: 14.5px; max-width: 240px; }
+  .result-content { display: none; }
+  .result-content.show { display: block; animation: fadeUp .5s ease; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  .result-weton { font-family: 'Fraunces', serif; font-size: 38px; font-weight: 600; color: var(--accent); letter-spacing: -0.02em; line-height: 1.1; }
+  .result-date-label { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 20px; }
+  .neptu-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 22px; }
+  .neptu-cell { background: var(--white); border: 1px solid var(--line); border-radius: 12px; padding: 13px 12px; text-align: center; }
+  .neptu-cell .nlabel { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); }
+  .neptu-cell .nval { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 600; line-height: 1.2; }
+  .neptu-cell .nsub { font-size: 12px; color: var(--ink-soft); }
+  .neptu-cell.total { background: var(--accent); border-color: var(--accent); }
+  .neptu-cell.total .nlabel, .neptu-cell.total .nsub { color: rgba(255,255,255,0.72); }
+  .neptu-cell.total .nval { color: var(--paper); }
+  .result-char-box { background: var(--paper-2); border-radius: 12px; padding: 17px 18px; margin-bottom: 14px; }
+  .result-char-box h4 { font-size: 12.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-2); margin-bottom: 8px; }
+  .result-char-box p { font-size: 14.5px; color: var(--ink); }
+  .result-locked { border: 1px solid var(--line); border-radius: 12px; padding: 15px 18px; display: flex; align-items: center; gap: 14px; background: var(--white); }
+  .lock-icon { width: 38px; height: 38px; border-radius: 9px; background: var(--paper-2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--accent); }
+  .lock-icon svg { width: 18px; height: 18px; }
+  .result-locked .lk-text { flex: 1; }
+  .result-locked .lk-text strong { font-size: 14px; display: block; }
+  .result-locked .lk-text span { font-size: 12.5px; color: var(--ink-soft); }
+  .result-locked .btn { padding: 8px 16px; font-size: 13px; }
+
+  /* ============ ABOUT ============ */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 54px; align-items: center; }
+  .about-visual { background: var(--paper-2); border-radius: 20px; padding: 34px; border: 1px solid var(--line); }
+  .pasaran-ring { display: flex; flex-direction: column; gap: 10px; }
+  .pasaran-item { display: flex; align-items: center; gap: 14px; background: var(--white); border: 1px solid var(--line); border-radius: 12px; padding: 13px 16px; }
+  .pasaran-dot {
+    width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif; font-weight: 600; font-size: 14px; color: var(--paper);
+  }
+  .pasaran-item .pname { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 600; }
+  .pasaran-item .pneptu { font-size: 12.5px; color: var(--ink-soft); }
+  .pasaran-item .pmean { margin-left: auto; font-size: 13px; color: var(--ink-soft); text-align: right; max-width: 180px; }
+  .about-text h2 { margin-bottom: 16px; }
+  .about-text p { font-size: 16px; color: var(--ink-soft); margin-bottom: 15px; }
+  .about-points { list-style: none; margin-top: 20px; }
+  .about-points li { display: flex; gap: 12px; font-size: 14.5px; margin-bottom: 11px; align-items: flex-start; }
+  .about-points .check { width: 21px; height: 21px; border-radius: 50%; background: var(--accent); color: var(--paper); display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; margin-top: 2px; }
+
+  /* ============ PRICING ============ */
+  .pricing-section { background: var(--white); border-top: 1px solid var(--line); }
+  .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .price-card { border: 1px solid var(--line); border-radius: 18px; padding: 30px 26px; background: var(--paper); display: flex; flex-direction: column; transition: transform .2s; }
+  .price-card:hover { transform: translateY(-4px); }
+  .price-card.featured { background: var(--accent); color: var(--paper); border-color: var(--accent); box-shadow: 0 28px 50px -24px rgba(0,0,0,0.45); }
+  .price-badge { align-self: flex-start; font-size: 11.5px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 5px 11px; border-radius: 999px; margin-bottom: 15px; background: var(--accent-2); color: var(--paper); }
+  .price-card:not(.featured) .price-badge { background: var(--paper-2); color: var(--ink-soft); }
+  .price-name { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .price-tag { display: flex; align-items: baseline; gap: 4px; margin-bottom: 6px; }
+  .price-amount { font-family: 'Fraunces', serif; font-size: 38px; font-weight: 600; line-height: 1; }
+  .price-period { font-size: 14px; color: var(--ink-soft); }
+  .featured .price-period { color: rgba(255,255,255,0.7); }
+  .price-desc { font-size: 14px; color: var(--ink-soft); margin-bottom: 20px; min-height: 42px; }
+  .featured .price-desc { color: rgba(255,255,255,0.8); }
+  .price-features { list-style: none; margin-bottom: 24px; flex: 1; }
+  .price-features li { display: flex; gap: 10px; font-size: 14px; padding: 7px 0; border-bottom: 1px solid var(--line); align-items: flex-start; }
+  .featured .price-features li { border-color: rgba(255,255,255,0.15); }
+  .price-features li:last-child { border-bottom: none; }
+  .pf-mark { color: var(--accent); font-weight: 700; flex-shrink: 0; }
+  .featured .pf-mark { color: var(--accent-2); }
+  .pf-mark.off { color: var(--line); }
+  .featured .pf-mark.off { color: rgba(255,255,255,0.3); }
+  .price-card .btn { width: 100%; text-align: center; }
+  .featured .btn { background: var(--paper); color: var(--accent); border-color: var(--paper); }
+
+  /* ============ STEPS ============ */
+  .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .step-num { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 600; width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid var(--accent); color: var(--accent); display: flex; align-items: center; justify-content: center; margin-bottom: 15px; }
+  .step-card h3 { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 600; margin-bottom: 7px; }
+  .step-card p { font-size: 14.5px; color: var(--ink-soft); }
+
+  /* ============ CTA ============ */
+  .cta-band { background: var(--accent-deep); color: var(--paper); position: relative; overflow: hidden; }
+  .cta-band .corner-ornament { position: absolute; bottom: -30px; left: -30px; width: 180px; height: 180px; opacity: 0.1; color: var(--paper); }
+  .cta-inner { text-align: center; max-width: 600px; margin: 0 auto; position: relative; }
+  .cta-inner h2 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(28px, 4vw, 42px); line-height: 1.12; margin-bottom: 15px; }
+  .cta-inner h2 em { font-style: italic; color: var(--accent-2); }
+  .cta-inner p { font-size: 16.5px; color: rgba(255,255,255,0.72); margin-bottom: 26px; }
+  .cta-band .btn { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+
+  /* ============ FOOTER ============ */
+  footer { background: var(--paper); border-top: 1px solid var(--line); padding: 52px 0 30px; }
+  .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 38px; }
+  .footer-brand p { font-size: 14px; color: var(--ink-soft); margin-top: 13px; max-width: 260px; }
+  .footer-col h4 { font-size: 13px; font-weight: 600; margin-bottom: 13px; letter-spacing: 0.04em; }
+  .footer-col a { display: block; font-size: 14px; color: var(--ink-soft); padding: 5px 0; transition: color .2s; }
+  .footer-col a:hover { color: var(--ink); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 22px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-soft); flex-wrap: wrap; gap: 12px; }
+
+  /* ============ ANIMATIONS ============ */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .animate-on-scroll {
+    opacity: 0;
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .hero-left { animation: fadeInUp 0.8s ease-out 0.1s both; }
+  .hero-right { animation: fadeInUp 0.8s ease-out 0.3s both; }
+  .btn { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+  .btn:active { transform: translateY(0); }
+  .price-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+  .price-card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px -10px rgba(0,0,0,0.2); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 880px) {
+    .nav-links { display: none; }
+    .nav-toggle { display: block; }
+    .hero-grid { grid-template-columns: 1fr; gap: 38px; }
+    .hero { padding: 52px 0 48px; }
+    .calc-box { grid-template-columns: 1fr; }
+    .calc-input-side { border-right: none; border-bottom: 1px solid var(--line); }
+    .about-grid { grid-template-columns: 1fr; gap: 34px; }
+    .price-grid { grid-template-columns: 1fr; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+    section { padding: 54px 0; }
+  }
+  @media (max-width: 480px) {
+    .hero-stats { gap: 20px; }
+    .neptu-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .calc-input-side, .calc-result-side { padding: 30px 24px; }
+    .nav-right .lang-toggle { display: none; }
+  }
+
+  /* ============ AUTH MODAL ============ */
+  .auth-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 9999;
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+  }
+  .auth-modal-overlay.show { display: flex; }
+  .auth-modal {
+    background: var(--white);
+    border-radius: 20px;
+    max-width: 440px;
+    width: 90%;
+    padding: 38px 32px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    position: relative;
+    animation: fadeInUp 0.3s ease-out;
+  }
+  .auth-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 26px;
+    cursor: pointer;
+    color: var(--ink-soft);
+    line-height: 1;
+    padding: 4px 8px;
+  }
+  .auth-modal-close:hover { color: var(--ink); }
+  .auth-modal h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    margin-bottom: 8px;
+  }
+  .auth-modal > p {
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    margin-bottom: 26px;
+  }
+  .auth-form { display: none; }
+  .auth-form.active { display: block; }
+  .auth-input {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    font-size: 15px;
+    margin-bottom: 12px;
+    background: var(--paper);
+    color: var(--ink);
+    transition: border-color .2s;
+  }
+  .auth-input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .auth-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    margin-bottom: 10px;
+  }
+  .auth-btn-primary {
+    background: var(--accent);
+    color: var(--paper);
+  }
+  .auth-btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+  .auth-btn-google {
+    background: var(--white);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .auth-btn-google:hover { background: var(--paper-2); }
+  .auth-divider {
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 13px;
+    margin: 18px 0;
+    position: relative;
+  }
+  .auth-divider::before,
+  .auth-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background: var(--line);
+  }
+  .auth-divider::before { left: 0; }
+  .auth-divider::after { right: 0; }
+  .auth-switch {
+    text-align: center;
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-top: 20px;
+  }
+  .auth-switch a {
+    color: var(--accent);
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .auth-switch a:hover { opacity: 0.8; }
+  .auth-error {
+    background: rgba(176, 70, 58, 0.1);
+    color: #B0463A;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    margin-bottom: 14px;
+    display: none;
+  }
+  .auth-error.show { display: block; }
+  .auth-success {
+    background: rgba(60, 122, 78, 0.1);
+    color: #3C7A4E;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    margin-bottom: 14px;
+    display: none;
+  }
+  .auth-success.show { display: block; }
+  .user-menu {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .user-name-display {
+    font-size: 14px;
+    color: var(--ink);
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav>
+  <div class="wrap nav-inner">
+    <a href="#" class="logo">
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="16" cy="16" r="15" fill="var(--accent)"/>
+        <ellipse cx="16" cy="9" rx="4.2" ry="6" fill="none" stroke="var(--paper)" stroke-width="1.4"/>
+        <ellipse cx="16" cy="23" rx="4.2" ry="6" fill="none" stroke="var(--paper)" stroke-width="1.4"/>
+        <ellipse cx="9" cy="16" rx="6" ry="4.2" fill="none" stroke="var(--paper)" stroke-width="1.4"/>
+        <ellipse cx="23" cy="16" rx="6" ry="4.2" fill="none" stroke="var(--paper)" stroke-width="1.4"/>
+        <circle cx="16" cy="16" r="2" fill="var(--paper)"/>
+      </svg>
+      Wetonku
+    </a>
+    <div class="nav-links">
+      <a href="#kalkulator" data-i18n="nav_calc">Kalkulator</a>
+      <a href="#tentang" data-i18n="nav_about">Tentang Weton</a>
+      <a href="#paket" data-i18n="nav_pricing">Paket</a>
+      <a href="#cara" data-i18n="nav_how">Cara Kerja</a>
+    </div>
+    <div class="nav-right">
+      <div class="theme-switch" title="Ganti warna">
+        <button class="theme-dot sage active" onclick="setTheme('sage')" aria-label="Tema Sage"></button>
+        <button class="theme-dot indigo" onclick="setTheme('indigo')" aria-label="Tema Indigo"></button>
+        <button class="theme-dot clay" onclick="setTheme('clay')" aria-label="Tema Clay"></button>
+      </div>
+      <div class="lang-toggle">
+        <button id="lang-id" class="active" onclick="setLang('id')">ID</button>
+        <button id="lang-en" onclick="setLang('en')">EN</button>
+      </div>
+      <button class="btn auth-logged-out" onclick="showAuthModal()">Masuk</button>
+      <div class="user-menu auth-logged-in" style="display: none;">
+        <span class="user-name-display"></span>
+        <button class="btn btn-ghost" onclick="handleSignOut()">Keluar</button>
+      </div>
+    </div>
+    <button class="nav-toggle" onclick="scrollToCalc()">☰</button>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-left">
+      <div class="eyebrow"><span class="dot"></span><span data-i18n="hero_eyebrow">Kearifan Jawa, kemasan modern</span></div>
+      <h1 class="hero-title" data-i18n="hero_title">Kenali dirimu lewat <em>weton</em> kelahiranmu.</h1>
+      <p class="hero-sub" data-i18n="hero_sub">Hitung weton, neptu, dan karakter dirimu berdasarkan penanggalan Jawa — gratis, akurat, dan mudah dipahami.</p>
+      <div class="hero-cta">
+        <button class="btn" onclick="scrollToCalc()" data-i18n="hero_cta1">Cek Weton Gratis</button>
+        <button class="btn btn-ghost" onclick="document.getElementById('tentang').scrollIntoView()" data-i18n="hero_cta2">Pelajari Dulu</button>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-num">35</div><div class="stat-label" data-i18n="hero_stat1">Kombinasi weton</div></div>
+        <div><div class="stat-num">100%</div><div class="stat-label" data-i18n="hero_stat2">Gratis dicoba</div></div>
+        <div><div class="stat-num">ID·EN</div><div class="stat-label" data-i18n="hero_stat3">Dwibahasa</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-card">
+        <svg class="corner-ornament" viewBox="0 0 100 100" fill="currentColor">
+          <path d="M50 5 L62 30 L58 30 L68 55 L62 55 L72 80 L28 80 L38 55 L32 55 L42 30 L38 30 Z"/>
+        </svg>
+        <div class="hc-label" data-i18n="hc_label">Contoh hasil weton</div>
+        <div class="hc-weton">Jumat Legi</div>
+        <div class="hc-neptu" data-i18n="hc_neptu">Neptu 11 · 6 + 5</div>
+        <div class="hc-divider"></div>
+        <div class="hc-row"><span data-i18n="hc_r1">Hari</span><span>Jumat · 6</span></div>
+        <div class="hc-row"><span data-i18n="hc_r2">Pasaran</span><span>Legi · 5</span></div>
+        <div class="hc-row"><span data-i18n="hc_r3">Watak dominan</span><span data-i18n="hc_r3v">Tenang & bijak</span></div>
+        <span class="hc-tag" data-i18n="hc_tag">★ Weton Proklamasi RI</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ KALKULATOR ============ -->
+<section class="calc-section" id="kalkulator">
+  <div class="wrap">
+    <div class="ornament"><span class="line"></span><span class="glyph">✦ ❋ ✦</span><span class="line"></span></div>
+    <div class="sec-head" style="margin-top:30px">
+      <div class="sec-tag" data-i18n="calc_tag">Kalkulator Gratis</div>
+      <h2 class="sec-title" data-i18n="calc_title">Hitung weton kelahiranmu</h2>
+      <p class="sec-desc" data-i18n="calc_desc">Masukkan tanggal lahirmu dan temukan hari, pasaran, neptu, serta karakter dasarmu menurut primbon Jawa.</p>
+    </div>
+    <div class="calc-box">
+      <div class="calc-input-side">
+        <h3 data-i18n="calc_form_title">Tanggal Lahir</h3>
+        <p data-i18n="calc_form_desc">Pilih tanggal, bulan, dan tahun kelahiranmu.</p>
+        <label class="field-label" data-i18n="calc_field">Tanggal kelahiran</label>
+        <div class="date-inputs">
+          <select id="sel-day"></select><select id="sel-month"></select><select id="sel-year"></select>
+        </div>
+        <button class="calc-btn" onclick="hitungWeton()" data-i18n="calc_button">Hitung Weton Saya</button>
+        <p class="calc-hint" data-i18n="calc_hint">Perhitungan berbasis penanggalan Jawa & Masehi.</p>
+      </div>
+      <div class="calc-result-side">
+        <div class="result-empty" id="result-empty">
+          <div class="circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/>
+            </svg>
+          </div>
+          <p data-i18n="result_empty">Hasil weton akan muncul di sini setelah kamu memasukkan tanggal lahir.</p>
+        </div>
+        <div class="result-content" id="result-content">
+          <div class="result-weton" id="r-weton">—</div>
+          <div class="result-date-label" id="r-date">—</div>
+          <div class="neptu-grid">
+            <div class="neptu-cell">
+              <div class="nlabel" data-i18n="r_hari">Hari</div>
+              <div class="nval" id="r-hari-neptu">—</div>
+              <div class="nsub" id="r-hari-name">—</div>
+            </div>
+            <div class="neptu-cell">
+              <div class="nlabel" data-i18n="r_pasaran">Pasaran</div>
+              <div class="nval" id="r-pasaran-neptu">—</div>
+              <div class="nsub" id="r-pasaran-name">—</div>
+            </div>
+            <div class="neptu-cell total">
+              <div class="nlabel" data-i18n="r_total">Total Neptu</div>
+              <div class="nval" id="r-total">—</div>
+              <div class="nsub" data-i18n="r_total_sub">jumlah</div>
+            </div>
+          </div>
+          <div class="result-char-box">
+            <h4 data-i18n="r_char_title">Karakter Dasar</h4>
+            <p id="r-character">—</p>
+          </div>
+          <div class="result-char-box" style="background:var(--white);border:1px solid var(--line)">
+            <h4 data-i18n="r_today_title">Ramalan Hari Ini</h4>
+            <p id="r-today">—</p>
+          </div>
+          <div class="result-locked">
+            <div class="lock-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </div>
+            <div class="lk-text">
+              <strong data-i18n="r_lock_title">Kecocokan jodoh, hari baik & tafsir mimpi</strong>
+              <span data-i18n="r_lock_sub">Buka semua fitur dengan paket berbayar.</span>
+            </div>
+            <button class="btn" onclick="document.getElementById('paket').scrollIntoView()" data-i18n="r_lock_btn">Lihat</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TENTANG WETON ============ -->
+<section id="tentang">
+  <div class="wrap about-grid">
+    <div class="about-visual">
+      <div class="pasaran-ring" id="pasaran-ring"></div>
+    </div>
+    <div class="about-text">
+      <div class="sec-tag" data-i18n="about_tag">Apa itu Weton?</div>
+      <h2 class="sec-title" data-i18n="about_title">Penanggalan yang mengenal dirimu</h2>
+      <p data-i18n="about_p1">Weton adalah perpaduan hari kelahiran (Senin–Minggu) dengan pasaran Jawa yang berputar setiap lima hari: Legi, Pahing, Pon, Wage, dan Kliwon.</p>
+      <p data-i18n="about_p2">Setiap weton punya nilai neptu — angka yang dipercaya menggambarkan watak, potensi rezeki, dan kecocokan seseorang. Selama berabad-abad, masyarakat Jawa memakainya sebagai cermin untuk mengenal diri dan mengambil keputusan.</p>
+      <ul class="about-points">
+        <li><span class="check">✓</span><span data-i18n="about_pt1">Mengenali karakter dan kecenderungan alami dirimu</span></li>
+        <li><span class="check">✓</span><span data-i18n="about_pt2">Memahami kecocokan dengan pasangan dan orang sekitar</span></li>
+        <li><span class="check">✓</span><span data-i18n="about_pt3">Memilih waktu baik untuk hajat penting dalam hidup</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAKET ============ -->
+<section class="pricing-section" id="paket">
+  <div class="wrap">
+    <div class="ornament"><span class="line"></span><span class="glyph">✦ ❋ ✦</span><span class="line"></span></div>
+    <div class="sec-head" style="margin-top:30px">
+      <div class="sec-tag" data-i18n="price_tag">Pilih Paket</div>
+      <h2 class="sec-title" data-i18n="price_title">Mulai gratis, perdalam saat siap</h2>
+      <p class="sec-desc" data-i18n="price_desc">Coba kalkulator weton tanpa biaya. Tingkatkan kapan saja untuk membuka kecocokan jodoh, hari baik, tafsir mimpi, dan konsultasi AI.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <span class="price-badge" data-i18n="p1_badge">Gratis</span>
+        <div class="price-name" data-i18n="p1_name">Penjajakan</div>
+        <div class="price-tag"><span class="price-amount">Rp 0</span></div>
+        <p class="price-desc" data-i18n="p1_desc">Untuk siapa saja yang ingin mengenal weton-nya.</p>
+        <ul class="price-features">
+          <li><span class="pf-mark">✓</span><span data-i18n="p1_f1">Kalkulator weton & neptu</span></li>
+          <li><span class="pf-mark">✓</span><span data-i18n="p1_f2">Karakter dasar weton</span></li>
+          <li><span class="pf-mark">✓</span><span data-i18n="p1_f3">1 ramalan harian</span></li>
+          <li><span class="pf-mark off">✕</span><span data-i18n="p1_f4">Kecocokan jodoh</span></li>
+          <li><span class="pf-mark off">✕</span><span data-i18n="p1_f5">Konsultasi AI</span></li>
+        </ul>
+        <button class="btn btn-ghost" onclick="scrollToCalc()" data-i18n="p1_btn">Coba Sekarang</button>
+      </div>
+      <div class="price-card featured">
+        <span class="price-badge" data-i18n="p2_badge">Paling Populer</span>
+        <div class="price-name" data-i18n="p2_name">Pendalaman</div>
+        <div class="price-tag"><span class="price-amount">Rp 29rb</span><span class="price-period" data-i18n="p2_period">/ bulan</span></div>
+        <p class="price-desc" data-i18n="p2_desc">Untuk yang ingin memahami hubungan & waktu baik.</p>
+        <ul class="price-features">
+          <li><span class="pf-mark">✓</span><span data-i18n="p2_f1">Semua fitur Gratis</span></li>
+          <li><span class="pf-mark">✓</span><span data-i18n="p2_f2">Kecocokan jodoh (petung)</span></li>
+          <li><span class="pf-mark">✓</span><span data-i18n="p2_f3">Ramalan rezeki & pekerjaan</span></li>
+          <li><span class="pf-mark">✓</span><span data-i18n="p2_f4">Tafsir mimpi (50 jenis)</span></li>
+          <li><span class="pf-mark">✓</span><span data-i18n="p2_f5">Hari baik umum</span></li>
+        </ul>
+        <button class="btn auth-logged-out" onclick="showAuthModal()">Pilih Pendalaman</button>
+        <button class="btn auth-logged-in" onclick="window.location.href='wetonku-fitur.html'" style="display: none;">Buka Fitur</button>
+      </div>
+      <div class="price-card">
+        <span class="price-badge" data-i18n="p3_badge">Lengkap</span>
+        <div class="price-name" data-i18n="p3_name">Pamungkas</div>
+        <div class="price-tag"><span class="price-amount">Rp 79rb</span><span class="price-period" data-i18n="p3_period">/ bulan</span></div>
+        <p class="price-desc" data-i18n="p3_desc">Akses penuh, termasuk konsultasi AI personal.</p>
+        <ul class="price-features">
+          <li><span class="pf-mark">✓</span><span data-i18n="p3_f1">Semua fitur Pendalaman</span></li>
+          <li><span class="pf-mark">✓</span><span data-i18n="p3_f2">Hari baik nikah, pindah & usaha</span></li>
+          <li><span class="pf-mark">✓</span><span data-i18n="p3_f3">Tafsir mimpi lengkap (200+)</span></li>
+          <li><span class="pf-mark">✓</span><span data-i18n="p3_f4">Primbon nama bayi</span></li>
+          <li><span class="pf-mark">✓</span><span data-i18n="p3_f5">Konsultasi AI personal</span></li>
+        </ul>
+        <button class="btn btn-ghost auth-logged-out" onclick="showAuthModal()">Pilih Pamungkas</button>
+        <button class="btn btn-ghost auth-logged-in" onclick="window.location.href='wetonku-fitur.html'" style="display: none;">Buka Fitur</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CARA KERJA ============ -->
+<section id="cara">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag" data-i18n="how_tag">Cara Kerja</div>
+      <h2 class="sec-title" data-i18n="how_title">Tiga langkah sederhana</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3 data-i18n="how_s1t">Masukkan tanggal lahir</h3>
+        <p data-i18n="how_s1d">Cukup pilih tanggal, bulan, dan tahun kelahiranmu pada kalkulator.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3 data-i18n="how_s2t">Lihat weton & karaktermu</h3>
+        <p data-i18n="how_s2d">Sistem menghitung hari, pasaran, neptu, dan menampilkan karakter dasarmu.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3 data-i18n="how_s3t">Perdalam dengan paket</h3>
+        <p data-i18n="how_s3d">Buka kecocokan jodoh, hari baik, dan konsultasi AI sesuai kebutuhanmu.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta-band">
+  <svg class="corner-ornament" viewBox="0 0 100 100" fill="currentColor">
+    <path d="M50 5 L62 30 L58 30 L68 55 L62 55 L72 80 L28 80 L38 55 L32 55 L42 30 L38 30 Z"/>
+  </svg>
+  <div class="wrap cta-inner">
+    <h2 data-i18n="cta_title">Sudah siap mengenal <em>weton</em> dirimu?</h2>
+    <p data-i18n="cta_sub">Mulai dari kalkulator gratis — tidak perlu daftar, tidak perlu bayar.</p>
+    <button class="btn" onclick="scrollToCalc()" data-i18n="cta_btn">Cek Weton Saya Sekarang</button>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="16" r="15" fill="var(--accent)"/>
+            <ellipse cx="16" cy="9" rx="4.2" ry="6" fill="none" stroke="var(--paper)" stroke-width="1.4"/>
+            <ellipse cx="16" cy="23" rx="4.2" ry="6" fill="none" stroke="var(--paper)" stroke-width="1.4"/>
+            <ellipse cx="9" cy="16" rx="6" ry="4.2" fill="none" stroke="var(--paper)" stroke-width="1.4"/>
+            <ellipse cx="23" cy="16" rx="6" ry="4.2" fill="none" stroke="var(--paper)" stroke-width="1.4"/>
+            <circle cx="16" cy="16" r="2" fill="var(--paper)"/>
+          </svg>
+          Wetonku
+        </a>
+        <p data-i18n="foot_desc">Kearifan primbon Jawa dalam kemasan modern — untuk mengenal diri, bukan ramalan buta.</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="foot_c1">Produk</h4>
+        <a href="#kalkulator" data-i18n="foot_c1a">Kalkulator Weton</a>
+        <a href="#paket" data-i18n="foot_c1b">Paket Berlangganan</a>
+        <a href="#tentang" data-i18n="foot_c1c">Tentang Weton</a>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="foot_c2">Perusahaan</h4>
+        <a href="#" data-i18n="foot_c2a">Tentang Kami</a>
+        <a href="#" data-i18n="foot_c2b">Kontak</a>
+        <a href="#" data-i18n="foot_c2c">Blog</a>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="foot_c3">Bantuan</h4>
+        <a href="#" data-i18n="foot_c3a">Pertanyaan Umum</a>
+        <a href="#" data-i18n="foot_c3b">Kebijakan Privasi</a>
+        <a href="#" data-i18n="foot_c3c">Syarat & Ketentuan</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Wetonku — <span data-i18n="foot_rights">Dibuat dengan menghormati tradisi Jawa.</span></span>
+      <span data-i18n="foot_disclaimer">Untuk refleksi diri & hiburan budaya.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============ DATA WETON ============ */
+const HARI = {
+  0:{id:'Minggu',en:'Sunday',neptu:5}, 1:{id:'Senin',en:'Monday',neptu:4},
+  2:{id:'Selasa',en:'Tuesday',neptu:3}, 3:{id:'Rabu',en:'Wednesday',neptu:7},
+  4:{id:'Kamis',en:'Thursday',neptu:8}, 5:{id:'Jumat',en:'Friday',neptu:6},
+  6:{id:'Sabtu',en:'Saturday',neptu:9}
+};
+const PASARAN = [
+  {id:'Legi',neptu:5,color:'#C9A23B'},{id:'Pahing',neptu:9,color:'#B3402F'},
+  {id:'Pon',neptu:7,color:'#C2761F'},{id:'Wage',neptu:4,color:'#3C5A4A'},
+  {id:'Kliwon',neptu:8,color:'#39426B'}
+];
+const SIFAT_HARI = {
+  Minggu:{id:'hangat dan suka menjadi pusat perhatian',en:'warm and naturally draws attention'},
+  Senin:{id:'lembut, sabar, dan penuh pertimbangan',en:'gentle, patient, and thoughtful'},
+  Selasa:{id:'tenang namun teguh pada pendirian',en:'calm yet firm in conviction'},
+  Rabu:{id:'cerdas, komunikatif, dan adaptif',en:'sharp-minded, communicative, and adaptable'},
+  Kamis:{id:'berwibawa dan punya jiwa pemimpin',en:'dignified with natural leadership'},
+  Jumat:{id:'bijaksana, peka, dan murah hati',en:'wise, sensitive, and generous'},
+  Sabtu:{id:'pekerja keras dan bertanggung jawab',en:'hardworking and deeply responsible'}
+};
+const SIFAT_PASARAN = {
+  Legi:{id:'berhati lembut dan disukai banyak orang',en:'soft-hearted and well-liked by many'},
+  Pahing:{id:'punya tekad kuat dan ambisi besar',en:'driven by strong will and big ambition'},
+  Pon:{id:'cekatan, terampil, dan pandai bergaul',en:'agile, skillful, and socially capable'},
+  Wage:{id:'mandiri, sederhana, dan tahan banting',en:'independent, modest, and resilient'},
+  Kliwon:{id:'memiliki intuisi tajam dan jiwa spiritual',en:'gifted with sharp intuition and spiritual depth'}
+};
+// Comprehensive profiles untuk 10 weton paling umum
+const COMPREHENSIVE = {
+  'Jumat Legi':{char:'Sebagai pemilik weton Jumat Legi, kamu membawa aura yang tenang namun penuh kehangatan. Ada kebijaksanaan alami dalam caramu melihat hidup — kamu tidak terburu-buru menghakimi, lebih memilih memahami dulu sebelum mengambil sikap. Orang merasa nyaman berbicara denganmu karena kamu mendengarkan dengan sepenuh hati. Kelebihanmu: empati yang tulus, kebijaksanaan dalam keputusan, kemampuan menenangkan orang, dan murah hati tanpa mengharap balasan. Tantanganmu: terlalu mengalah demi harmoni, sulit bilang "tidak", dan overthinking soal perasaan orang lain.'},
+  'Senin Kliwon':{char:'Weton Senin Kliwon membawamu pada perpaduan menarik: kelembutan Senin yang sabar bertemu kedalaman spiritual Kliwon. Kamu adalah pemikir sejati — tidak asal bertindak, selalu ada pertimbangan matang di balik setiap langkahmu. Ada aura misterius dalam dirimu; orang merasa kamu memahami hal-hal yang tidak semua orang bisa lihat. Kelebihanmu: intuisi tajam, kesabaran luar biasa, kedalaman pemikiran, dan loyalitas kuat. Tantanganmu: overthinking yang exhausting, sulit move on dari masa lalu, dan kadang terlalu serius hingga lupa bersenang-senang.'},
+  'Selasa Kliwon':{char:'Kombinasi Selasa yang teguh dengan Kliwon yang spiritual menciptakan karakter unik. Kamu adalah orang yang tenang namun tegas — jarang bicara keras, tapi saat bicara, orang dengar. Ada kekuatan diam dalam dirimu yang membuat orang respek tanpa kamu perlu memaksa. Kelebihanmu: keteguhan luar biasa, ketenangan di tengah badai, integritas tinggi, dan kemampuan fokus yang dalam. Tantanganmu: terlalu keras pada diri sendiri, sulit menerima bantuan, dan kadang terlalu reserved.'},
+  'Kamis Legi':{char:'Kamis Legi memberimu kombinasi powerful: wibawa alami Kamis bertemu kelembutan hati Legi. Kamu adalah tipe pemimpin yang people-first — kamu peduli pada kesejahteraan tim, bukan hanya results. Ada charisma dalam dirimu yang membuat orang mau follow karena mereka trust kamu. Kelebihanmu: natural leadership, empati kuat untuk tim, energi tinggi yang inspiring, dan kemampuan melihat big picture. Tantanganmu: terlalu mengambil tanggung jawab orang lain, sulit delegate, dan kadang terlalu optimistic tentang orang.'},
+  'Rabu Pahing':{char:'Rabu Pahing adalah kombinasi explosive dalam arti positif — kecerdasan komunikatif Rabu bertemu ambisi besar Pahing. Kamu selalu punya ide, selalu punya rencana, dan selalu ready to make things happen. Energimu contagious — kamu bisa bikin orang excited. Kelebihanmu: komunikasi persuasif, ambisi dan drive luar biasa, quick thinking, dan charisma natural. Tantanganmu: impatient karena ingin hasil sekarang, kadang terlalu banyak mulai kurang finish, dan risk of burnout karena always go-go-go.'},
+  'Jumat Kliwon':{char:'Jumat Kliwon adalah perpaduan langka dan istimewa — kebijaksanaan Jumat yang penuh kasih bertemu kedalaman spiritual Kliwon yang intense. Kamu bukan orang yang hidup di permukaan; kamu selalu mencari makna yang lebih dalam. Ada old soul quality dalam dirimu. Kelebihanmu: wisdom beyond your years, empati spiritual, kemampuan healing, dan integrity unshakeable. Tantanganmu: terlalu banyak merasa beban dunia, sulit untuk truly relax, dan kadang terlalu idealistic.'},
+  'Sabtu Pahing':{char:'Sabtu Pahing memberikanmu kombinasi powerful: tanggung jawab dan disiplin Sabtu bertemu ambisi dan drive Pahing. Kamu adalah hard worker yang tidak kenal lelah, tapi bukan asal kerja — kamu kerja dengan purpose dan strategy. Kelebihanmu: work ethic luar biasa, ambisi terukur, kemampuan deliver under pressure, dan leadership through example. Tantanganmu: workaholic tendencies, terlalu keras pada diri sendiri, dan sulit for fun karena always dalam mode produktif.'},
+  'Kamis Wage':{char:'Kamis Wage memberikanmu kombinasi grounded namun berwibawa — natural authority Kamis bertemu kesederhanaan dan ketahanan Wage. Kamu adalah tipe yang tidak perlu banyak bicara untuk didengar; presence-mu sudah speak volumes. Kelebihanmu: grounded wisdom, resilience luar biasa, no-nonsense approach, dan humble confidence. Tantanganmu: terlalu independent hingga sulit ask for help, kadang too blunt, dan underestimate pentingnya networking.'},
+  'Senin Legi':{char:'Senin Legi memberikanmu kombinasi gentle namun strong — patience Senin yang nurturing bertemu kelembutan hati Legi yang tulus. Kamu adalah peacemaker alami, orang yang bisa menenangkan situasi tegang hanya dengan presence-mu. Kelebihanmu: patience luar biasa, nurturing nature, peacemaking skills, dan emotional intelligence tinggi. Tantanganmu: terlalu mengalah hingga sacrifice your needs, sulit set boundaries, dan kadang too passive hingga miss opportunities.'},
+  'Selasa Pahing':{char:'Selasa Pahing adalah kombinasi fierce — keteguhan Selasa yang unwavering bertemu ambisi Pahing yang burning. Kamu adalah warrior yang tidak takut fight for what you believe in. Ada fire dalam dirimu yang bisa intimidating tapi inspiring. Kelebihanmu: courage luar biasa, determination unshakeable, strategic thinking, dan protective dengan fierce loyalty. Tantanganmu: temperamental, kadang too aggressive, dan sulit for compromise.'}
+};
+
+function watakNeptu(total,lang){
+  if(total<=9) return lang==='id'?'Energimu cenderung tenang dan membumi — kamu menapaki hidup dengan hati-hati dan tidak tergesa.':'Your energy tends to be calm and grounded — you move through life carefully and without haste.';
+  if(total<=13) return lang==='id'?'Energimu seimbang — kamu mampu memadukan logika dan perasaan dengan cukup luwes.':'Your energy is balanced — you blend logic and feeling with notable flexibility.';
+  if(total<=16) return lang==='id'?'Energimu kuat dan ekspresif — kamu punya dorongan besar untuk mencapai sesuatu.':'Your energy is strong and expressive — you carry a powerful drive to achieve.';
+  return lang==='id'?'Energimu sangat besar dan berkharisma — kamu ditakdirkan menonjol, namun perlu belajar mengelolanya.':'Your energy is immense and charismatic — you are bound to stand out, yet must learn to channel it.';
+}
+function ramalanHariIni(selisih,lang){
+  const s=((selisih%5)+5)%5;
+  const map={
+    id:['Hari ini energimu selaras dengan alam — waktu yang baik untuk memulai hal kecil yang berarti.',
+        'Hari ini menuntut kesabaran. Tahan diri sebelum mengambil keputusan besar.',
+        'Hari ini cocok untuk menjalin hubungan — hubungi seseorang yang sudah lama tak kamu sapa.',
+        'Hari ini baik untuk merapikan dan menata, baik urusan kerja maupun batinmu.',
+        'Hari ini intuisimu tajam — percayai firasatmu, namun tetap berpikir jernih.'],
+    en:['Today your energy aligns with nature — a good time to begin something small but meaningful.',
+        'Today calls for patience. Hold back before making any big decisions.',
+        'Today favors connection — reach out to someone you have not spoken to in a while.',
+        'Today is good for tidying and ordering, both your work and your inner world.',
+        'Today your intuition is sharp — trust your instincts, but keep a clear mind.']
+  };
+  return map[lang][s];
+}
+
+const REF = new Date(1945,7,17,12,0,0);
+function getWeton(y,m,d){
+  const date=new Date(y,m,d,12,0,0);
+  const hari=HARI[date.getDay()];
+  const diff=Math.round((date-REF)/86400000);
+  const pas=PASARAN[(((diff%5)+5)%5)];
+  return {date,hari,pas,total:hari.neptu+pas.neptu};
+}
+
+/* ============ I18N ============ */
+const I18N = {
+  id:{
+    nav_calc:'Kalkulator',nav_about:'Tentang Weton',nav_pricing:'Paket',nav_how:'Cara Kerja',nav_cta:'Masuk',
+    hero_eyebrow:'Kearifan Jawa, kemasan modern',
+    hero_title:'Kenali dirimu lewat <em>weton</em> kelahiranmu.',
+    hero_sub:'Hitung weton, neptu, dan karakter dirimu berdasarkan penanggalan Jawa — gratis, akurat, dan mudah dipahami.',
+    hero_cta1:'Cek Weton Gratis',hero_cta2:'Pelajari Dulu',
+    hero_stat1:'Kombinasi weton',hero_stat2:'Gratis dicoba',hero_stat3:'Dwibahasa',
+    hc_label:'Contoh hasil weton',hc_neptu:'Neptu 11 · 6 + 5',
+    hc_r1:'Hari',hc_r2:'Pasaran',hc_r3:'Watak dominan',hc_r3v:'Tenang & bijak',hc_tag:'★ Weton Proklamasi RI',
+    calc_tag:'Kalkulator Gratis',calc_title:'Hitung weton kelahiranmu',
+    calc_desc:'Masukkan tanggal lahirmu dan temukan hari, pasaran, neptu, serta karakter dasarmu menurut primbon Jawa.',
+    calc_form_title:'Tanggal Lahir',calc_form_desc:'Pilih tanggal, bulan, dan tahun kelahiranmu.',
+    calc_field:'Tanggal kelahiran',calc_button:'Hitung Weton Saya',
+    calc_hint:'Perhitungan berbasis penanggalan Jawa & Masehi.',
+    result_empty:'Hasil weton akan muncul di sini setelah kamu memasukkan tanggal lahir.',
+    r_hari:'Hari',r_pasaran:'Pasaran',r_total:'Total Neptu',r_total_sub:'jumlah',
+    r_char_title:'Karakter Dasar',r_today_title:'Ramalan Hari Ini',
+    r_lock_title:'Kecocokan jodoh, hari baik & tafsir mimpi',
+    r_lock_sub:'Buka semua fitur dengan paket berbayar.',r_lock_btn:'Lihat',
+    about_tag:'Apa itu Weton?',about_title:'Penanggalan yang mengenal dirimu',
+    about_p1:'Weton adalah perpaduan hari kelahiran (Senin–Minggu) dengan pasaran Jawa yang berputar setiap lima hari: Legi, Pahing, Pon, Wage, dan Kliwon.',
+    about_p2:'Setiap weton punya nilai neptu — angka yang dipercaya menggambarkan watak, potensi rezeki, dan kecocokan seseorang. Selama berabad-abad, masyarakat Jawa memakainya sebagai cermin untuk mengenal diri dan mengambil keputusan.',
+    about_pt1:'Mengenali karakter dan kecenderungan alami dirimu',
+    about_pt2:'Memahami kecocokan dengan pasangan dan orang sekitar',
+    about_pt3:'Memilih waktu baik untuk hajat penting dalam hidup',
+    price_tag:'Pilih Paket',price_title:'Mulai gratis, perdalam saat siap',
+    price_desc:'Coba kalkulator weton tanpa biaya. Tingkatkan kapan saja untuk membuka kecocokan jodoh, hari baik, tafsir mimpi, dan konsultasi AI.',
+    p1_badge:'Gratis',p1_name:'Penjajakan',p1_desc:'Untuk siapa saja yang ingin mengenal weton-nya.',
+    p1_f1:'Kalkulator weton & neptu',p1_f2:'Karakter dasar weton',p1_f3:'1 ramalan harian',
+    p1_f4:'Kecocokan jodoh',p1_f5:'Konsultasi AI',p1_btn:'Coba Sekarang',
+    p2_badge:'Paling Populer',p2_name:'Pendalaman',p2_period:'/ bulan',
+    p2_desc:'Untuk yang ingin memahami hubungan & waktu baik.',
+    p2_f1:'Semua fitur Gratis',p2_f2:'Kecocokan jodoh (petung)',p2_f3:'Ramalan rezeki & pekerjaan',
+    p2_f4:'Tafsir mimpi (50 jenis)',p2_f5:'Hari baik umum',p2_btn:'Pilih Pendalaman',
+    p3_badge:'Lengkap',p3_name:'Pamungkas',p3_period:'/ bulan',
+    p3_desc:'Akses penuh, termasuk konsultasi AI personal.',
+    p3_f1:'Semua fitur Pendalaman',p3_f2:'Hari baik nikah, pindah & usaha',p3_f3:'Tafsir mimpi lengkap (200+)',
+    p3_f4:'Primbon nama bayi',p3_f5:'Konsultasi AI personal',p3_btn:'Pilih Pamungkas',
+    how_tag:'Cara Kerja',how_title:'Tiga langkah sederhana',
+    how_s1t:'Masukkan tanggal lahir',how_s1d:'Cukup pilih tanggal, bulan, dan tahun kelahiranmu pada kalkulator.',
+    how_s2t:'Lihat weton & karaktermu',how_s2d:'Sistem menghitung hari, pasaran, neptu, dan menampilkan karakter dasarmu.',
+    how_s3t:'Perdalam dengan paket',how_s3d:'Buka kecocokan jodoh, hari baik, dan konsultasi AI sesuai kebutuhanmu.',
+    cta_title:'Sudah siap mengenal <em>weton</em> dirimu?',
+    cta_sub:'Mulai dari kalkulator gratis — tidak perlu daftar, tidak perlu bayar.',
+    cta_btn:'Cek Weton Saya Sekarang',
+    foot_desc:'Kearifan primbon Jawa dalam kemasan modern — untuk mengenal diri, bukan ramalan buta.',
+    foot_c1:'Produk',foot_c1a:'Kalkulator Weton',foot_c1b:'Paket Berlangganan',foot_c1c:'Tentang Weton',
+    foot_c2:'Perusahaan',foot_c2a:'Tentang Kami',foot_c2b:'Kontak',foot_c2c:'Blog',
+    foot_c3:'Bantuan',foot_c3a:'Pertanyaan Umum',foot_c3b:'Kebijakan Privasi',foot_c3c:'Syarat & Ketentuan',
+    foot_rights:'Dibuat dengan menghormati tradisi Jawa.',foot_disclaimer:'Untuk refleksi diri & hiburan budaya.',
+    months:['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'],
+    weton_word:'Weton',dino:'pada'
+  },
+  en:{
+    nav_calc:'Calculator',nav_about:'About Weton',nav_pricing:'Plans',nav_how:'How It Works',nav_cta:'Sign In',
+    hero_eyebrow:'Javanese wisdom, modern form',
+    hero_title:'Know yourself through your birth <em>weton</em>.',
+    hero_sub:'Calculate your weton, neptu, and core character based on the Javanese calendar — free, accurate, and easy to understand.',
+    hero_cta1:'Check Weton Free',hero_cta2:'Learn First',
+    hero_stat1:'Weton combinations',hero_stat2:'Free to try',hero_stat3:'Bilingual',
+    hc_label:'Sample weton result',hc_neptu:'Neptu 11 · 6 + 5',
+    hc_r1:'Day',hc_r2:'Market day',hc_r3:'Dominant trait',hc_r3v:'Calm & wise',hc_tag:'★ Indonesia Independence Weton',
+    calc_tag:'Free Calculator',calc_title:'Calculate your birth weton',
+    calc_desc:'Enter your birth date and discover your day, market day, neptu, and core character according to Javanese primbon.',
+    calc_form_title:'Birth Date',calc_form_desc:'Select your day, month, and year of birth.',
+    calc_field:'Date of birth',calc_button:'Calculate My Weton',
+    calc_hint:'Calculation based on the Javanese & Gregorian calendars.',
+    result_empty:'Your weton result will appear here once you enter your birth date.',
+    r_hari:'Day',r_pasaran:'Market Day',r_total:'Total Neptu',r_total_sub:'sum',
+    r_char_title:'Core Character',r_today_title:'Today\u2019s Reading',
+    r_lock_title:'Compatibility, auspicious days & dream meanings',
+    r_lock_sub:'Unlock all features with a paid plan.',r_lock_btn:'View',
+    about_tag:'What is Weton?',about_title:'A calendar that knows you',
+    about_p1:'Weton is the pairing of your day of birth (Mon–Sun) with the Javanese market day that cycles every five days: Legi, Pahing, Pon, Wage, and Kliwon.',
+    about_p2:'Each weton carries a neptu value — a number believed to reflect a person\u2019s character, fortune, and compatibility. For centuries, Javanese society has used it as a mirror for self-understanding and decision-making.',
+    about_pt1:'Recognise your natural character and tendencies',
+    about_pt2:'Understand compatibility with your partner and others',
+    about_pt3:'Choose auspicious timing for life\u2019s important moments',
+    price_tag:'Choose a Plan',price_title:'Start free, go deeper when ready',
+    price_desc:'Try the weton calculator at no cost. Upgrade anytime to unlock compatibility, auspicious days, dream meanings, and AI consultation.',
+    p1_badge:'Free',p1_name:'Exploration',p1_desc:'For anyone who wants to know their weton.',
+    p1_f1:'Weton & neptu calculator',p1_f2:'Core weton character',p1_f3:'1 daily reading',
+    p1_f4:'Match compatibility',p1_f5:'AI consultation',p1_btn:'Try It Now',
+    p2_badge:'Most Popular',p2_name:'Deepening',p2_period:'/ month',
+    p2_desc:'For those who want to understand bonds & timing.',
+    p2_f1:'All Free features',p2_f2:'Match compatibility (petung)',p2_f3:'Fortune & career readings',
+    p2_f4:'Dream meanings (50 types)',p2_f5:'General auspicious days',p2_btn:'Choose Deepening',
+    p3_badge:'Complete',p3_name:'Mastery',p3_period:'/ month',
+    p3_desc:'Full access, including personal AI consultation.',
+    p3_f1:'All Deepening features',p3_f2:'Auspicious days: wedding, moving & business',p3_f3:'Full dream meanings (200+)',
+    p3_f4:'Baby name primbon',p3_f5:'Personal AI consultation',p3_btn:'Choose Mastery',
+    how_tag:'How It Works',how_title:'Three simple steps',
+    how_s1t:'Enter your birth date',how_s1d:'Just select your day, month, and year of birth in the calculator.',
+    how_s2t:'See your weton & character',how_s2d:'The system calculates your day, market day, neptu, and shows your core character.',
+    how_s3t:'Go deeper with a plan',how_s3d:'Unlock compatibility, auspicious days, and AI consultation as you need.',
+    cta_title:'Ready to know your own <em>weton</em>?',
+    cta_sub:'Start with the free calculator — no sign-up, no payment needed.',
+    cta_btn:'Check My Weton Now',
+    foot_desc:'Javanese primbon wisdom in a modern form — for self-understanding, not blind fortune-telling.',
+    foot_c1:'Product',foot_c1a:'Weton Calculator',foot_c1b:'Subscription Plans',foot_c1c:'About Weton',
+    foot_c2:'Company',foot_c2a:'About Us',foot_c2b:'Contact',foot_c2c:'Blog',
+    foot_c3:'Help',foot_c3a:'FAQ',foot_c3b:'Privacy Policy',foot_c3c:'Terms & Conditions',
+    foot_rights:'Built with respect for Javanese tradition.',foot_disclaimer:'For self-reflection & cultural enjoyment.',
+    months:['January','February','March','April','May','June','July','August','September','October','November','December'],
+    weton_word:'Weton',dino:'on'
+  }
+};
+
+let currentLang='id', lastResult=null;
+
+function applyLang(){
+  const t=I18N[currentLang];
+  document.documentElement.lang=currentLang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    if(t[key]!==undefined) el.innerHTML=t[key];
+  });
+  buildMonthOptions();
+  buildPasaranRing();
+  if(lastResult) renderResult(lastResult);
+}
+function setLang(lang){
+  currentLang=lang;
+  document.getElementById('lang-id').classList.toggle('active',lang==='id');
+  document.getElementById('lang-en').classList.toggle('active',lang==='en');
+  applyLang();
+}
+function setTheme(theme){
+  document.documentElement.setAttribute('data-theme',theme);
+  document.querySelectorAll('.theme-dot').forEach(d=>{
+    d.classList.toggle('active',d.classList.contains(theme));
+  });
+}
+function scrollToCalc(){ document.getElementById('kalkulator').scrollIntoView({behavior:'smooth'}); }
+function bukaFitur(){
+  window.location.href='wetonku-fitur.html';
+}
+
+function buildDayYearOptions(){
+  const dSel=document.getElementById('sel-day'),ySel=document.getElementById('sel-year');
+  dSel.innerHTML='';ySel.innerHTML='';
+  for(let d=1;d<=31;d++){const o=document.createElement('option');o.value=d;o.textContent=d;dSel.appendChild(o);}
+  const ty=new Date().getFullYear();
+  for(let y=ty;y>=1940;y--){const o=document.createElement('option');o.value=y;o.textContent=y;ySel.appendChild(o);}
+  dSel.value=17;ySel.value=1995;
+}
+function buildMonthOptions(){
+  const mSel=document.getElementById('sel-month');const prev=mSel.value;mSel.innerHTML='';
+  I18N[currentLang].months.forEach((name,i)=>{const o=document.createElement('option');o.value=i;o.textContent=name;mSel.appendChild(o);});
+  mSel.value=(prev!==''&&prev!==undefined)?prev:7;
+}
+function buildPasaranRing(){
+  const ring=document.getElementById('pasaran-ring');ring.innerHTML='';
+  PASARAN.forEach(p=>{
+    const meaning=SIFAT_PASARAN[p.id][currentLang];
+    const div=document.createElement('div');div.className='pasaran-item';
+    div.innerHTML=`<div class="pasaran-dot" style="background:${p.color}">${p.neptu}</div>
+      <div><div class="pname">${p.id}</div><div class="pneptu">Neptu ${p.neptu}</div></div>
+      <div class="pmean">${meaning.charAt(0).toUpperCase()+meaning.slice(1)}</div>`;
+    ring.appendChild(div);
+  });
+}
+function hitungWeton(){
+  const d=+document.getElementById('sel-day').value;
+  const m=+document.getElementById('sel-month').value;
+  const y=+document.getElementById('sel-year').value;
+  const test=new Date(y,m,d,12,0,0);
+  if(test.getDate()!==d||test.getMonth()!==m){
+    alert(currentLang==='id'?'Tanggal tidak valid. Mohon periksa kembali.':'Invalid date. Please check again.');return;
+  }
+  const w=getWeton(y,m,d);
+  const now=new Date();
+  const today=getWeton(now.getFullYear(),now.getMonth(),now.getDate());
+  lastResult={w,today,d,m,y};
+  renderResult(lastResult);
+}
+function renderResult(res){
+  const t=I18N[currentLang];const{w,today,d,m,y}=res;
+  const hariName=w.hari[currentLang],pasName=w.pas.id;
+  document.getElementById('result-empty').style.display='none';
+  document.getElementById('result-content').classList.add('show');
+  document.getElementById('r-weton').textContent=`${hariName} ${pasName}`;
+  document.getElementById('r-date').textContent=`${t.weton_word} ${t.dino} ${d} ${t.months[m]} ${y}`;
+  document.getElementById('r-hari-neptu').textContent=w.hari.neptu;
+  document.getElementById('r-hari-name').textContent=hariName;
+  document.getElementById('r-pasaran-neptu').textContent=w.pas.neptu;
+  document.getElementById('r-pasaran-name').textContent=pasName;
+  document.getElementById('r-total').textContent=w.total;
+  
+  const wetonKey=`${w.hari.id} ${w.pas.id}`;
+  const comprehensive=COMPREHENSIVE[wetonKey];
+  
+  if(comprehensive && currentLang==='id'){
+    document.getElementById('r-character').textContent=comprehensive.char;
+  } else {
+    const sh=SIFAT_HARI[w.hari.id][currentLang],sp=SIFAT_PASARAN[w.pas.id][currentLang];
+    const watak=watakNeptu(w.total,currentLang);
+    document.getElementById('r-character').textContent=currentLang==='id'
+      ? `Sebagai pemilik weton ${hariName} ${pasName}, kamu cenderung ${sh}, sekaligus ${sp}. ${watak}`
+      : `As a person of the ${hariName} ${pasName} weton, you tend to be ${sh}, and at the same time ${sp}. ${watak}`;
+  }
+  
+  document.getElementById('r-today').textContent=ramalanHariIni(w.total-today.total,currentLang);
+}
+
+buildDayYearOptions();
+applyLang();
+
+/* ============ SCROLL ANIMATIONS ============ */
+const observerOptions = {
+  threshold: 0.15,
+  rootMargin: '0px 0px -50px 0px'
+};
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.calc-section, #tentang, .pricing-section, #cara, .cta-band').forEach(el => {
+  el.classList.add('animate-on-scroll');
+  el.style.transform = 'translateY(20px)';
+  observer.observe(el);
+});
+</script>
+
+<!-- ============ AUTH MODAL ============ -->
+<div class="auth-modal-overlay" id="authModal">
+  <div class="auth-modal">
+    <button class="auth-modal-close" onclick="closeAuthModal()">×</button>
+    
+    <!-- Login Form -->
+    <div class="auth-form active" id="loginForm">
+      <h2>Masuk ke Wetonku</h2>
+      <p>Lanjutkan perjalanan spiritual Anda</p>
+      
+      <div class="auth-error" id="loginError"></div>
+      
+      <input type="email" class="auth-input" id="loginEmail" placeholder="Email">
+      <input type="password" class="auth-input" id="loginPassword" placeholder="Password">
+      
+      <button class="auth-btn auth-btn-primary" onclick="handleLogin()">
+        Masuk
+      </button>
+      
+      <div class="auth-switch">
+        Belum punya akun? <a onclick="showSignup()">Daftar di sini</a>
+      </div>
+    </div>
+    
+    <!-- Signup Form -->
+    <div class="auth-form" id="signupForm">
+      <h2>Daftar di Wetonku</h2>
+      <p>Mulai kenali diri lewat kearifan Jawa</p>
+      
+      <div class="auth-error" id="signupError"></div>
+      <div class="auth-success" id="signupSuccess"></div>
+      
+      <input type="text" class="auth-input" id="signupName" placeholder="Nama Lengkap">
+      <input type="email" class="auth-input" id="signupEmail" placeholder="Email">
+      <input type="password" class="auth-input" id="signupPassword" placeholder="Password (min. 6 karakter)">
+      
+      <button class="auth-btn auth-btn-primary" onclick="handleSignup()">
+        Daftar Sekarang
+      </button>
+      
+      <div class="auth-switch">
+        Sudah punya akun? <a onclick="showLogin()">Masuk di sini</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SUPABASE INTEGRATION ============ -->
+<script>
+// ============ Configuration ============
+// GANTI DENGAN CREDENTIALS SUPABASE ANDA:
+const SUPABASE_CONFIG = {
+  url: 'https://nrfqfoftksicfuhsdfec.supabase.co', // Project URL Anda
+  anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5yZnFmb2Z0a3NpY2Z1aHNkZmVjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQ2OTAxNTMsImV4cCI6MjA1MDI2NjE1M30.ey3pc3MtOjJzoxNWFmZS1zSzIs1n1JZIGta6y-eyJpc3MtOjJzoxNWFmZS1zSzIs1n1JZIGta6yzZG1mw2JlZmU1c4Mn0wNH0.1YxkGcTdqtjO-BxVOtfHBKoN0Nwaqi76O_V8v0U2o6s' // anon public key (SUDAH DIISI!)
+};
+
+// Initialize Supabase client
+const supabase = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+
+// ============ Auth Modal Functions ============
+function showAuthModal() {
+  document.getElementById('authModal').classList.add('show');
+}
+
+function closeAuthModal() {
+  document.getElementById('authModal').classList.remove('show');
+  clearErrors();
+}
+
+function showLogin() {
+  document.getElementById('loginForm').classList.add('active');
+  document.getElementById('signupForm').classList.remove('active');
+  clearErrors();
+}
+
+function showSignup() {
+  document.getElementById('signupForm').classList.add('active');
+  document.getElementById('loginForm').classList.remove('active');
+  clearErrors();
+}
+
+function clearErrors() {
+  document.querySelectorAll('.auth-error, .auth-success').forEach(el => {
+    el.classList.remove('show');
+    el.textContent = '';
+  });
+}
+
+function showError(formId, message) {
+  const errorEl = document.getElementById(formId + 'Error');
+  errorEl.textContent = message;
+  errorEl.classList.add('show');
+}
+
+function showSuccess(formId, message) {
+  const successEl = document.getElementById(formId + 'Success');
+  successEl.textContent = message;
+  successEl.classList.add('show');
+}
+
+// ============ Auth Handlers ============
+async function handleLogin() {
+  clearErrors();
+  
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  
+  if (!email || !password) {
+    showError('login', 'Email dan password wajib diisi');
+    return;
+  }
+  
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
+    
+    if (error) throw error;
+    
+    closeAuthModal();
+    location.reload();
+  } catch (error) {
+    console.error('Login error:', error);
+    showError('login', error.message);
+  }
+}
+
+async function handleSignup() {
+  clearErrors();
+  
+  const name = document.getElementById('signupName').value.trim();
+  const email = document.getElementById('signupEmail').value.trim();
+  const password = document.getElementById('signupPassword').value;
+  
+  if (!name || !email || !password) {
+    showError('signup', 'Semua field wajib diisi');
+    return;
+  }
+  
+  if (password.length < 6) {
+    showError('signup', 'Password minimal 6 karakter');
+    return;
+  }
+  
+  // Get weton data dari kalkulator (jika sudah dihitung)
+  const wetonData = {
+    hari: window.lastResult?.w?.hari?.id || null,
+    pasaran: window.lastResult?.w?.pas?.id || null,
+    neptu: window.lastResult?.w?.total || null,
+    birthDate: window.lastResult ? 
+      `${window.lastResult.y}-${String(window.lastResult.m + 1).padStart(2, '0')}-${String(window.lastResult.d).padStart(2, '0')}` 
+      : null
+  };
+  
+  try {
+    // 1. Create auth user
+    const { data: authData, error: authError } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          full_name: name
+        }
+      }
+    });
+    
+    if (authError) throw authError;
+    
+    // 2. Insert user profile
+    const { error: profileError } = await supabase
+      .from('users')
+      .insert({
+        id: authData.user.id,
+        email: email,
+        full_name: name,
+        weton_hari: wetonData.hari,
+        weton_pasaran: wetonData.pasaran,
+        weton_neptu: wetonData.neptu,
+        birth_date: wetonData.birthDate
+      });
+    
+    if (profileError) throw profileError;
+    
+    // 3. Create free tier subscription
+    const { data: freeTier } = await supabase
+      .from('subscription_tiers')
+      .select('id')
+      .eq('tier_code', 'free')
+      .single();
+    
+    await supabase
+      .from('user_subscriptions')
+      .insert({
+        user_id: authData.user.id,
+        tier_id: freeTier.id,
+        tier_code: 'free',
+        status: 'active'
+      });
+    
+    showSuccess('signup', 'Akun berhasil dibuat! Silakan login.');
+    setTimeout(() => showLogin(), 2000);
+  } catch (error) {
+    console.error('Signup error:', error);
+    showError('signup', error.message);
+  }
+}
+
+async function handleSignOut() {
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+    location.reload();
+  } catch (error) {
+    console.error('Sign out error:', error);
+    alert('Error: ' + error.message);
+  }
+}
+
+// ============ Get Current User ============
+async function getCurrentUser() {
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (!session) return null;
+    
+    // Get user profile
+    const { data: profile } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', session.user.id)
+      .single();
+    
+    return {
+      ...session.user,
+      profile: profile
+    };
+  } catch (error) {
+    console.error('Get current user error:', error);
+    return null;
+  }
+}
+
+// ============ Update UI Based on Auth State ============
+async function updateUIForUser() {
+  const user = await getCurrentUser();
+  
+  if (user) {
+    // Logged in
+    document.querySelectorAll('.auth-logged-out').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.auth-logged-in').forEach(el => el.style.display = 'flex');
+    document.querySelectorAll('.user-name-display').forEach(el => {
+      el.textContent = user.profile?.full_name || user.email.split('@')[0];
+    });
+  } else {
+    // Not logged in
+    document.querySelectorAll('.auth-logged-out').forEach(el => el.style.display = 'block');
+    document.querySelectorAll('.auth-logged-in').forEach(el => el.style.display = 'none');
+  }
+}
+
+// ============ Initialize ============
+document.addEventListener('DOMContentLoaded', async () => {
+  await updateUIForUser();
+  
+  // Listen for auth changes
+  supabase.auth.onAuthStateChange(async (event, session) => {
+    console.log('Auth state changed:', event);
+    await updateUIForUser();
+  });
+});
+
+// Close modal when clicking outside
+document.getElementById('authModal')?.addEventListener('click', (e) => {
+  if (e.target.id === 'authModal') {
+    closeAuthModal();
+  }
+});
+</script>
+
+</body>
+</html>
