@@ -1266,97 +1266,92 @@ function hitungWetonAnak(){
 /* ============== 5. HARI BAIK ============== */
 let currentHajat='nikah';
 
-const BULAN_JAWA = ['Sura','Sapar','Mulud','Bakda Mulud','Jumadil Awal','Jumadil Akhir','Rejeb','Ruwah','Pasa','Sawal','Sela','Besar'];
+// 12 bulan Jawa dengan watak per keperluan — dari sumber primbon asli
+const BULAN_JAWA_DATA = [
+  {nama:'Sura',
+   nikah:{baik:false,warn:false,teks:'Sangat dihindari — bulan sakral & introspeksi, bukan untuk perayaan'},
+   pindah:{baik:false,warn:false,teks:'Tidak baik — bulan penuh energi gaib, bukan untuk menetap'},
+   usaha:{baik:false,warn:false,teks:'Tidak disarankan — energi tidak menentu, risiko lebih tinggi'},
+   naga:'Timur'},
+  {nama:'Sapar',
+   nikah:{baik:false,warn:true,teks:'Kurang dianjurkan — banyak yang menghindari meski tidak sepantang Sura'},
+   pindah:{baik:true,warn:false,teks:'Baik — penghuni akan disegani dan dihormati banyak orang (becik akeh janmo wedi asih). Hindari arah Barat & Utara (posisi Naga)'},
+   usaha:{baik:false,warn:true,teks:'Netral — bisa, tapi perlu hitungan hari yang cermat'},
+   naga:'Timur'},
+  {nama:'Mulud',
+   nikah:{baik:true,warn:false,teks:'Baik — bulan kelahiran Nabi, membawa berkah dan keselamatan bagi pasangan baru'},
+   pindah:{baik:false,warn:true,teks:'Hati-hati — Naga Tahun di Timur, hindari pindah ke arah Timur. Arah Selatan/Barat/Utara aman'},
+   usaha:{baik:true,warn:false,teks:'Baik — usaha yang dimulai di bulan ini mendapat perlindungan'},
+   naga:'Timur'},
+  {nama:'Bakda Mulud',
+   nikah:{baik:true,warn:false,teks:'Baik — energi tenang dan menetap untuk membangun rumah tangga'},
+   pindah:{baik:true,warn:false,teks:'Sangat baik — membawa keselamatan, kasih sayang, dan keberuntungan. Hindari arah Selatan (posisi Naga)'},
+   usaha:{baik:true,warn:false,teks:'Baik — fondasi usaha kuat dan berkelanjutan'},
+   naga:'Selatan'},
+  {nama:'Jumadil Awal',
+   nikah:{baik:true,warn:false,teks:'Cukup baik — energi awal yang stabil'},
+   pindah:{baik:true,warn:false,teks:'Baik — Naga Tahun di Selatan, aman pindah ke Utara, Timur, dan Barat'},
+   usaha:{baik:true,warn:false,teks:'Baik — energi mulai yang kuat untuk lembaran baru'},
+   naga:'Selatan'},
+  {nama:'Jumadil Akhir',
+   nikah:{baik:true,warn:false,teks:'Sangat baik — membawa ketentraman dan keharmonisan rumah tangga'},
+   pindah:{baik:true,warn:false,teks:'Baik — energi stabil untuk menetap dan membangun'},
+   usaha:{baik:true,warn:false,teks:'Baik — membawa kestabilan jangka panjang'},
+   naga:'Selatan'},
+  {nama:'Rejeb',
+   nikah:{baik:true,warn:false,teks:'Sangat baik — bulan suci, membawa ketenangan dan berkah yang kuat'},
+   pindah:{baik:true,warn:false,teks:'Sangat baik — rezeki dan kekayaan mengikuti penghuni rumah baru. Hindari arah Barat (posisi Naga)'},
+   usaha:{baik:true,warn:false,teks:'Sangat baik — usaha mudah dipercaya, diberkahi, dan cepat dikenal'},
+   naga:'Barat'},
+  {nama:'Ruwah',
+   nikah:{baik:true,warn:false,teks:'Baik — doa lebih mudah dikabulkan, persiapan spiritual kuat'},
+   pindah:{baik:true,warn:false,teks:'Baik — disayangi banyak orang di lingkungan baru. Catatan: perlu usaha ekstra di sisi finansial awal'},
+   usaha:{baik:true,warn:false,teks:'Baik untuk persiapan — kurang ideal untuk renovasi, tapi baik untuk membuka usaha baru'},
+   naga:'Barat'},
+  {nama:'Pasa',
+   nikah:{baik:false,warn:false,teks:'Dihindari — bulan puasa Ramadan, fokus ibadah bukan hajat pesta'},
+   pindah:{baik:true,warn:false,teks:'Baik — penuh kemuliaan dan rezeki, sering mendapat rezeki besar dan berlimpah (berbeda dari nikah!)'},
+   usaha:{baik:false,warn:true,teks:'Kurang ideal untuk pembukaan, tapi baik untuk persiapan & perencanaan'},
+   naga:'Barat'},
+  {nama:'Sawal',
+   nikah:{baik:true,warn:false,teks:'Sangat baik — bulan kemenangan setelah Ramadan, penuh kegembiraan dan berkah'},
+   pindah:{baik:true,warn:false,teks:'Baik — penuh semangat, energi kemenangan. Hindari arah Utara (posisi Naga)'},
+   usaha:{baik:true,warn:false,teks:'Baik — penuh semangat dan keberuntungan pasca puasa'},
+   naga:'Utara'},
+  {nama:'Sela',
+   nikah:{baik:true,warn:false,teks:'Cukup baik — bulan yang tenang'},
+   pindah:{baik:true,warn:false,teks:'Baik — bulan yang tenang, cocok untuk menetap'},
+   usaha:{baik:true,warn:false,teks:'Baik untuk usaha yang butuh ketenangan dan ketelitian'},
+   naga:'Utara'},
+  {nama:'Besar',
+   nikah:{baik:true,warn:false,teks:'Sangat baik — bulan penutup tahun, membawa kesempurnaan dan kemapanan'},
+   pindah:{baik:true,warn:false,teks:'Sangat baik — membawa kemapanan dan kesempurnaan bagi penghuni'},
+   usaha:{baik:true,warn:false,teks:'Sangat baik — energi kemapanan, usaha yang dimulai sini cenderung bertahan lama'},
+   naga:'Utara'}
+];
 
-const HAJAT_DATA={
-  nikah:{
-    label:'Pernikahan',
-    goodMonths:[
-      {nama:'Mulud', alasan:'Bulan kelahiran Nabi — membawa berkah dan keselamatan bagi pasangan baru'},
-      {nama:'Jumadil Akhir', alasan:'Energinya stabil dan tentram, cocok untuk memulai kehidupan rumah tangga'},
-      {nama:'Rejeb', alasan:'Bulan yang disucikan, membawa ketenangan dan keharmonisan'},
-      {nama:'Ruwah', alasan:'Bulan persiapan spiritual, doa lebih mudah dikabulkan'},
-      {nama:'Sawal', alasan:'Bulan kemenangan setelah Pasa, penuh kegembiraan dan berkah'},
-      {nama:'Besar', alasan:'Bulan penutup tahun, membawa kesempurnaan dan kemapanan'}
-    ],
-    avoidMonths:[
-      {nama:'Sura', alasan:'Bulan sakral yang tidak dianjurkan untuk hajat duniawi'},
-      {nama:'Pasa', alasan:'Bulan puasa — fokus ibadah, bukan pesta'}
-    ],
-    tipsTambahan: [
-      'Pilih hari dengan total neptu kedua mempelai habis dibagi 5 atau 4',
-      'Hindari hari yang merupakan weton nahas salah satu mempelai',
-      'Waktu akad: pagi hari lebih dianjurkan dari malam hari',
-      'Hindari hari Selasa dan Sabtu untuk akad nikah menurut tradisi Jawa'
-    ]
-  },
-  pindah:{
-    label:'Pindah Rumah',
-    goodMonths:[
-      {nama:'Sapar', alasan:'Bulan pembersihan — cocok untuk memulai lembaran baru di tempat baru'},
-      {nama:'Mulud', alasan:'Membawa berkah dan perlindungan bagi penghuni rumah baru'},
-      {nama:'Bakda Mulud', alasan:'Energi tenang dan menetap, cocok untuk membangun hunian'},
-      {nama:'Ruwah', alasan:'Membawa ketenangan batin dan kedamaian di rumah baru'},
-      {nama:'Sawal', alasan:'Penuh semangat dan keceriaan untuk memulai kehidupan baru'},
-      {nama:'Sela', alasan:'Bulan yang tenang dan stabil untuk menetap'}
-    ],
-    avoidMonths:[
-      {nama:'Sura', alasan:'Energinya penuh perubahan, tidak cocok untuk menetap'},
-      {nama:'Pasa', alasan:'Fokus spiritual, bukan perpindahan fisik'}
-    ],
-    tipsTambahan: [
-      'Pindah di pagi hari saat matahari sudah terbit — bawa energi terang ke rumah baru',
-      'Bawa beras, garam, dan air putih sebagai simbol kemakmuran saat pertama masuk',
-      'Arah masuk pertama kali disesuaikan dengan weton kepala keluarga',
-      'Jangan pindah saat salah satu anggota keluarga sedang sakit'
-    ]
-  },
-  usaha:{
-    label:'Mulai Usaha',
-    goodMonths:[
-      {nama:'Mulud', alasan:'Bulan berkah — usaha yang dimulai di bulan ini mendapat perlindungan'},
-      {nama:'Jumadil Awal', alasan:'Energi awal yang kuat, cocok untuk membuka lembaran baru'},
-      {nama:'Jumadil Akhir', alasan:'Membawa kestabilan jangka panjang untuk usaha'},
-      {nama:'Rejeb', alasan:'Bulan yang diberkahi, usaha lebih mudah mendapat kepercayaan'},
-      {nama:'Sawal', alasan:'Penuh semangat dan keberuntungan setelah bulan puasa'},
-      {nama:'Besar', alasan:'Energi kemapanan — usaha yang dimulai sini cenderung bertahan lama'}
-    ],
-    avoidMonths:[
-      {nama:'Sura', alasan:'Penuh ketidakpastian, risiko lebih besar dari biasanya'},
-      {nama:'Pasa', alasan:'Fokus pada introspeksi, bukan ekspansi'}
-    ],
-    tipsTambahan: [
-      'Mulai di hari dengan neptu yang selaras dengan weton pemilik usaha',
-      'Nama usaha sebaiknya memiliki jumlah huruf yang menghasilkan neptu baik',
-      'Buka pertama kali di pagi hari, antara pukul 07.00-09.00',
-      'Lakukan syukuran kecil saat pertama buka untuk mengundang berkah'
-    ]
-  }
-};
-
-// Narasi per pasaran untuk hari baik
-const NARASI_WETON_HAJAT = {
-  nikah: {
-    Legi:   'Pemilik weton Legi membawa energi keramahan dan kelimpahan dalam pernikahan. Hari terbaik untuk akad adalah saat pasaran Legi atau Kliwon jatuh di hari Rabu atau Kamis. Pernikahan yang digelar di bawah energi Legi cenderung hangat, penuh tamu, dan dikelilingi kebahagiaan.',
-    Pahing: 'Weton Pahing membawa ambisi dan semangat dalam rumah tangga. Pilih hari dengan total neptu yang kuat (13-17) untuk akad. Hindari hari yang neptunya kurang dari 10 karena bertentangan dengan energi besar Pahing.',
-    Pon:    'Weton Pon adalah pembicara ulung — pernikahannya sebaiknya digelar saat banyak saksi hadir. Hari Kamis Pon atau Kamis Wage sangat dianjurkan. Hindari akad saat hari berselisih 5 neptu dengan weton Anda.',
-    Wage:   'Weton Wage membawa kesabaran dan ketahanan dalam pernikahan. Hari yang paling selaras adalah Senin Wage atau Senin Legi. Ritual pernikahan sebaiknya sederhana tapi penuh makna — energi Wage tidak suka hal yang berlebihan.',
-    Kliwon: 'Weton Kliwon adalah yang paling spiritual — pernikahannya sebaiknya digelar di hari sakral. Jumat Kliwon adalah puncak terbaik, diikuti Selasa Kliwon. Pastikan ada doa dan ritual pembersihan sebelum hari H.'
-  },
-  pindah: {
-    Legi:   'Kepala keluarga berweton Legi sebaiknya masuk rumah baru dari arah Timur atau Selatan — dua arah yang mengalirkan energi keramahan dan kemakmuran untuk Legi. Pindah di hari Legi atau Kliwon membawa berkah tambahan.',
-    Pahing: 'Weton Pahing cocok masuk dari arah Utara atau Barat — arah yang menguatkan ambisi dan visi jauh ke depan. Bawa sesaji kecil berupa bunga 7 rupa saat pertama kali menyapu rumah baru.',
-    Pon:    'Kepala keluarga Pon sebaiknya masuk dari pintu Timur sambil membaca doa. Arah ini menyelaraskan energi komunikasi Pon dengan energi rumah baru. Hindari pindah di hari Selasa.',
-    Wage:   'Weton Wage sebaiknya masuk rumah dari arah Barat — arah yang melambangkan ketekunan dan kerja keras. Pindah di pagi hari sebelum pukul 10 untuk hasil terbaik.',
-    Kliwon: 'Kepala keluarga Kliwon sebaiknya menyucikan rumah baru sebelum pindah — bakar kemenyan atau minyak wangi di setiap sudut ruangan. Masuk dari arah Selatan saat matahari bersinar terang.'
-  },
-  usaha: {
-    Legi:   'Pebisnis Legi paling cocok membuka usaha di bidang yang berhubungan dengan manusia — kuliner, jasa, atau retail. Buka pertama kali di hari Legi untuk efek ganda. Pasang nama usaha di depan sebelum hari pembukaan.',
-    Pahing: 'Energi Pahing paling kuat untuk usaha kompetitif — perdagangan, properti, atau teknologi. Mulai di hari Pahing atau Pon untuk mengaktifkan energi ambisi. Jangan ragu memasang harga yang sepadan dengan kualitas.',
-    Pon:    'Weton Pon sangat cocok untuk usaha yang butuh negosiasi dan komunikasi. Buka di hari yang neptunya 7 atau 9 untuk resonansi terbaik. Sertakan nama yang mudah diucapkan agar mudah diingat pelanggan.',
-    Wage:   'Usaha milik Wage paling kuat kalau dibangun perlahan — jangan terburu-buru ekspansi. Mulai kecil, kuatkan fondasi. Buka di hari Wage atau Legi. Kerajinan, keahlian khusus, atau jasa profesional adalah lahan terbaik.',
-    Kliwon: 'Weton Kliwon cocok untuk usaha yang butuh kepercayaan dan intuisi — konsultasi, pengobatan, atau jasa spiritual. Buka di malam Jumat Kliwon dengan doa dan niat yang kuat. Hindari mitra bisnis yang energinya negatif.'
-  }
+const TIPS_HAJAT = {
+  nikah: [
+    'Hitung total neptu kedua mempelai → cari hari yang hasilnya sisa 1 (Guru) atau 2 (Ratu) saat dibagi 4 — sistem Catursuda',
+    'Hindari hari Selasa dan Sabtu untuk akad menurut kebanyakan tradisi Jawa',
+    'Jumat Kliwon dan Kamis Kliwon adalah hari paling kuat untuk pernikahan',
+    'Waktu akad: pagi hari 07.00–10.00 lebih dianjurkan',
+    'Jika hitungan jodoh kurang baik (Pegat/Sujanan), pertimbangkan ruwatan atau pilih hari yang sangat kuat sebagai penebus'
+  ],
+  pindah: [
+    'Perhatikan Naga Tahun — hindari pindah ke arah yang ditempati Naga Tahun di bulan tersebut',
+    'Hitung Catursuda: neptu weton kepala keluarga + neptu hari pindah, bagi 4. Sisa 1 (Guru) atau 2 (Ratu) = hari terbaik',
+    'Pindah di pagi hari sebelum matahari tinggi — bawa beras, garam, dan air putih saat pertama masuk',
+    'Gunakan weton suami/kepala keluarga sebagai patokan utama',
+    'Sapu rumah baru dari dalam ke luar sebelum memasukkan barang — simbol membuang energi lama'
+  ],
+  usaha: [
+    'Hitung Pancasuda: neptu weton pemilik + neptu hari buka, bagi 5. Sisa 1 (Sandang = rezeki melimpah) atau 3 (Bejo = beruntung) adalah terbaik',
+    'Buka pertama kali pagi hari 07.00–09.00 untuk energi terbaik',
+    'Nama usaha sebaiknya punya jumlah huruf yang menghasilkan neptu baik saat dihitung',
+    'Hindari memulai usaha di hari yang neptunya sama persis dengan neptu weton pemilik',
+    'Lakukan selamatan/syukuran kecil di hari pembukaan untuk mengundang berkah'
+  ]
 };
 
 function pilihHajat(h){
@@ -1370,55 +1365,59 @@ function hitungHariBaik(){
   const a=readDate('hb');
   if(!a){ alert('Tanggal tidak valid. Mohon periksa kembali.'); return; }
   const w=getWeton(a.y,a.m,a.d);
-  const data=HAJAT_DATA[currentHajat];
-  const narasi=NARASI_WETON_HAJAT[currentHajat][w.pas.n];
 
-  document.getElementById('hb-hajat-label').textContent=data.label;
+  document.getElementById('hb-hajat-label').textContent=
+    currentHajat==='nikah'?'Pernikahan':currentHajat==='pindah'?'Pindah Rumah':'Mulai Usaha';
   document.getElementById('hb-weton').textContent=w.label+' (neptu '+w.total+')';
 
-  // Bulan dengan penjelasan
+  // Tampilkan semua 12 bulan dengan status berbeda per hajat
   const mBox=document.getElementById('hb-months'); mBox.innerHTML='';
-  data.goodMonths.forEach(m=>{
+  BULAN_JAWA_DATA.forEach(bln=>{
+    const info=bln[currentHajat];
     const c=document.createElement('div');
-    c.className='month-chip good';
-    c.innerHTML=`<span class="mc-dot"></span><div><strong>${m.nama}</strong><br><span style="font-size:12px;opacity:0.8">${m.alasan}</span></div>`;
-    c.style.alignItems='flex-start';
-    c.style.gap='10px';
-    c.style.padding='10px 14px';
-    mBox.appendChild(c);
-  });
-  data.avoidMonths.forEach(m=>{
-    const c=document.createElement('div');
-    c.className='month-chip avoid';
-    c.innerHTML=`<span class="mc-dot"></span><div><strong>${m.nama}</strong><br><span style="font-size:12px;opacity:0.8">${m.alasan}</span></div>`;
-    c.style.alignItems='flex-start';
-    c.style.gap='10px';
-    c.style.padding='10px 14px';
+    const bg=info.baik?'rgba(60,122,78,0.08)':info.warn?'rgba(176,122,42,0.08)':'rgba(176,70,58,0.08)';
+    const border=info.baik?'rgba(60,122,78,0.25)':info.warn?'rgba(176,122,42,0.25)':'rgba(176,70,58,0.25)';
+    const icon=info.baik?'✓':info.warn?'⚠':'✗';
+    const iconColor=info.baik?'#3C7A4E':info.warn?'#B07A2A':'#B0463A';
+    const nagaNote=currentHajat==='pindah'?`<span style="font-size:11px;color:#999;margin-left:4px">· Naga: ${bln.naga}</span>`:'';
+    c.style.cssText=`display:flex;gap:10px;padding:10px 14px;margin-bottom:6px;border-radius:10px;background:${bg};border:1px solid ${border}`;
+    c.innerHTML=`
+      <span style="font-size:16px;color:${iconColor};flex-shrink:0;margin-top:1px">${icon}</span>
+      <div>
+        <strong style="font-size:13.5px">${bln.nama}</strong>${nagaNote}
+        <div style="font-size:12.5px;line-height:1.5;color:var(--ink);margin-top:2px">${info.teks}</div>
+      </div>`;
     mBox.appendChild(c);
   });
 
-  // Weton hari pelaksanaan
+  // Hari pelaksanaan terbaik — Catursuda (bagi 4)
   const wBox=document.getElementById('hb-wetons'); wBox.innerHTML='';
   const goodList=[];
-  const hariKeys=Object.keys(HARI);
-  for(const hk of hariKeys){
-    for(const p of PASARAN){
+  Object.keys(HARI).forEach(hk=>{
+    PASARAN.forEach(p=>{
       const t=HARI[hk].neptu+p.neptu;
-      const sisa=(t+w.total)%5;
-      if(sisa===1||sisa===3){ goodList.push(HARI[hk].n+' '+p.n); }
-    }
-  }
-  goodList.slice(0,6).forEach(g=>{
-    const s=document.createElement('span'); s.textContent=g; wBox.appendChild(s);
+      const sisa=(t+w.total)%4;
+      if(sisa===1||sisa===2){
+        goodList.push({label:HARI[hk].n+' '+p.n, ket:sisa===1?'Guru':'Ratu'});
+      }
+    });
+  });
+  goodList.slice(0,8).forEach(g=>{
+    const s=document.createElement('span');
+    s.innerHTML=`${g.label}<small style="display:block;font-size:10px;color:var(--accent)">${g.ket}</small>`;
+    s.style.cssText='display:inline-flex;flex-direction:column;align-items:center;padding:8px 12px;';
+    wBox.appendChild(s);
   });
 
-  // Narasi personal
-  document.getElementById('hb-pantangan').innerHTML = `
-    <div style="margin-bottom:14px">${narasi}</div>
-    <div style="font-size:13px;font-weight:600;margin-bottom:8px;color:var(--accent)">Tips Tambahan:</div>
-    <ul style="padding-left:16px;margin:0">
-      ${data.tipsTambahan.map(t=>`<li style="margin-bottom:6px;font-size:13.5px;line-height:1.5">${t}</li>`).join('')}
+  // Tips panduan
+  document.getElementById('hb-pantangan').innerHTML=`
+    <div style="font-size:13px;font-weight:600;margin-bottom:10px;color:var(--accent)">Panduan Perhitungan Primbon:</div>
+    <ul style="padding-left:18px;margin:0">
+      ${TIPS_HAJAT[currentHajat].map(t=>`<li style="margin-bottom:8px;font-size:13.5px;line-height:1.6">${t}</li>`).join('')}
     </ul>
+    <div style="margin-top:14px;padding:12px 14px;background:var(--paper-2);border-radius:8px;font-size:12.5px;color:var(--ink-soft);line-height:1.6">
+      <strong>Catatan:</strong> Primbon bukan dogma kaku — ada perbedaan pandangan antar tradisi Jawa Tengah, Jawa Timur, dan pesisir. Panduan di atas mengacu pada sumber primbon yang paling banyak digunakan. Hasil akhir sebaiknya dikonsultasikan dengan orang tua atau sesepuh keluarga.
+    </div>
   `;
   document.getElementById('haribaik-result').classList.add('show');
 }
