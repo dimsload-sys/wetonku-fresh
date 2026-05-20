@@ -1696,7 +1696,6 @@ fillDate('bb',1,0,2026);
 fillDate('wa',1,0,2024);
 fillDate('waibu',17,7,1995);
 fillDate('waayah',10,5,1993);
-fillDate('mimpi',17,7,1995);
 buildDreamTags();
 buildMobileTabs();
 
@@ -1777,7 +1776,7 @@ async function checkAuthAndInit() {
   if (!user) {
     // Not logged in - redirect to landing page
     alert('Silakan login terlebih dahulu untuk mengakses fitur.');
-    window.location.href = 'wetonku.html';
+    window.location.href = '/';
     return;
   }
   
