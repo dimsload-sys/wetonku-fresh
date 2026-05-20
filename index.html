@@ -333,6 +333,74 @@
     .nav-right .lang-toggle { display: none; }
   }
 
+  /* ============ KALENDER JAWA WIDGET ============ */
+  .jawacal-wrap {
+    background: var(--ink);
+    padding: 0;
+    overflow: hidden;
+  }
+  .jawacal {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .jawacal-aksara {
+    font-family: 'Noto Serif Javanese', 'Segoe UI', serif;
+    font-size: 18px;
+    color: var(--accent);
+    opacity: 0.7;
+    letter-spacing: 2px;
+    flex-shrink: 0;
+  }
+  .jawacal-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    flex-wrap: wrap;
+  }
+  .jawacal-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .jawacal-label {
+    font-family: 'Noto Serif Javanese', serif;
+    font-size: 13px;
+    color: var(--accent);
+    opacity: 0.6;
+  }
+  .jawacal-val {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--paper);
+    letter-spacing: 0.3px;
+  }
+  .jawacal-sep {
+    color: var(--accent);
+    opacity: 0.4;
+    font-size: 18px;
+  }
+  .jawacal-sub {
+    font-size: 12.5px;
+    color: var(--paper);
+    opacity: 0.45;
+    margin-left: auto;
+    font-style: italic;
+    flex-shrink: 0;
+  }
+  @media (max-width: 640px) {
+    .jawacal { padding: 12px 20px; gap: 10px; }
+    .jawacal-aksara { display: none; }
+    .jawacal-sub { display: none; }
+    .jawacal-val { font-size: 13.5px; }
+  }
+
   /* ============ AUTH MODAL ============ */
   .auth-modal-overlay {
     display: none;
@@ -544,8 +612,41 @@
     </div>
     <div class="hero-right">
       <div class="hero-card">
-        <svg class="corner-ornament" viewBox="0 0 100 100" fill="currentColor">
-          <path d="M50 5 L62 30 L58 30 L68 55 L62 55 L72 80 L28 80 L38 55 L32 55 L42 30 L38 30 Z"/>
+        <svg class="corner-ornament" viewBox="0 0 100 120" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <!-- Semar wayang silhouette -->
+          <!-- Mahkota/Ikat Kepala -->
+          <path d="M38 8 Q40 3 45 4 Q50 2 55 4 Q60 3 62 8 L60 12 Q55 8 50 7 Q45 8 40 12 Z"/>
+          <path d="M40 12 L42 16 L58 16 L60 12 Q55 8 50 7 Q45 8 40 12 Z"/>
+          <!-- Kepala bulat khas Semar -->
+          <ellipse cx="50" cy="26" rx="14" ry="13"/>
+          <!-- Hidung pesek khas Semar -->
+          <ellipse cx="50" cy="28" rx="5" ry="3.5"/>
+          <!-- Mata sipit -->
+          <path d="M42 22 Q44 20 46 21" stroke="var(--paper)" stroke-width="1.2" fill="none"/>
+          <path d="M54 22 Q56 20 58 21" stroke="var(--paper)" stroke-width="1.2" fill="none"/>
+          <!-- Senyum khas Semar -->
+          <path d="M43 32 Q50 37 57 32" stroke="var(--paper)" stroke-width="1.2" fill="none"/>
+          <!-- Leher -->
+          <rect x="46" y="38" width="8" height="5" rx="2"/>
+          <!-- Badan gemuk khas Semar -->
+          <path d="M30 43 Q28 50 29 60 Q30 72 35 76 L65 76 Q70 72 71 60 Q72 50 70 43 Q62 38 50 38 Q38 38 30 43 Z"/>
+          <!-- Perut buncit khas Semar -->
+          <ellipse cx="50" cy="62" rx="18" ry="12" opacity="0.3"/>
+          <!-- Lengan kiri (melambai) -->
+          <path d="M30 45 Q20 40 14 35 Q12 33 14 31 Q16 29 18 31 Q24 37 30 42"/>
+          <!-- Tangan kiri -->
+          <ellipse cx="13" cy="30" rx="4" ry="3" transform="rotate(-20 13 30)"/>
+          <!-- Lengan kanan (ke bawah) -->
+          <path d="M70 45 Q78 52 80 60 Q81 63 79 64 Q77 65 76 63 Q74 56 68 50"/>
+          <!-- Tangan kanan -->
+          <ellipse cx="80" cy="64" rx="4" ry="3" transform="rotate(10 80 64)"/>
+          <!-- Kain/Jarik -->
+          <path d="M35 76 Q32 85 33 95 Q34 100 38 100 L62 100 Q66 100 67 95 Q68 85 65 76 Z"/>
+          <!-- Lipatan kain -->
+          <path d="M40 76 Q42 88 43 100" stroke="var(--paper)" stroke-width="0.8" fill="none" opacity="0.4"/>
+          <path d="M57 76 Q56 88 57 100" stroke="var(--paper)" stroke-width="0.8" fill="none" opacity="0.4"/>
+          <!-- Kuncir rambut khas Semar -->
+          <path d="M58 14 Q65 10 68 14 Q66 20 60 18 Z"/>
         </svg>
         <div class="hc-label" data-i18n="hc_label">Contoh hasil weton</div>
         <div class="hc-weton">Jumat Legi</div>
@@ -559,6 +660,30 @@
     </div>
   </div>
 </header>
+
+<!-- ============ WIDGET KALENDER JAWA ============ -->
+<div class="jawacal-wrap">
+  <div class="jawacal">
+    <div class="jawacal-aksara">ꦢꦶꦤ꧀ꦢꦶꦤꦠꦼꦤꦶ</div>
+    <div class="jawacal-main">
+      <div class="jawacal-item">
+        <span class="jawacal-label">ꦲꦫꦶ</span>
+        <span class="jawacal-val" id="jc-weton">—</span>
+      </div>
+      <div class="jawacal-sep">·</div>
+      <div class="jawacal-item">
+        <span class="jawacal-label">ꦠꦁꦒꦭ꧀</span>
+        <span class="jawacal-val" id="jc-tanggal">—</span>
+      </div>
+      <div class="jawacal-sep">·</div>
+      <div class="jawacal-item">
+        <span class="jawacal-label">ꦤꦼꦥ꧀ꦠꦸ</span>
+        <span class="jawacal-val" id="jc-neptu">—</span>
+      </div>
+    </div>
+    <div class="jawacal-sub" id="jc-watak">Memuat kalender Jawa hari ini...</div>
+  </div>
+</div>
 
 <!-- ============ KALKULATOR ============ -->
 <section class="calc-section" id="kalkulator">
@@ -1100,6 +1225,80 @@ document.querySelectorAll('.calc-section, #tentang, .pricing-section, #cara, .ct
   el.style.transform = 'translateY(20px)';
   observer.observe(el);
 });
+
+/* ============ KALENDER JAWA HARI INI ============ */
+(function() {
+  const HARI_JAWA = {0:'Minggu',1:'Senin',2:'Selasa',3:'Rabu',4:'Kamis',5:'Jumat',6:'Sabtu'};
+  const PASARAN   = ['Legi','Pahing','Pon','Wage','Kliwon'];
+  const NEPTU_H   = {0:5,1:4,2:3,3:7,4:8,5:6,6:9};
+  const NEPTU_P   = {Legi:5,Pahing:9,Pon:7,Wage:4,Kliwon:8};
+  const BULAN_J   = ['Sura','Sapar','Mulud','Bakda Mulud','Jumadil Awal','Jumadil Akhir','Rejeb','Ruwah','Pasa','Sawal','Sela','Besar'];
+
+  // Watak singkat per weton hari ini
+  const WATAK_SINGKAT = {
+    Legi:'Hari yang manis & penuh keramahan',
+    Pahing:'Hari yang tegas & berenergi tinggi',
+    Pon:'Hari yang cekatan & komunikatif',
+    Wage:'Hari yang tekun & mandiri',
+    Kliwon:'Hari yang sakral & penuh intuisi'
+  };
+
+  // Konversi Masehi → Jawa (pendekatan berbasis siklus)
+  function getMasehiToJawa(date) {
+    const REF = new Date(1945, 7, 17, 12, 0, 0); // Jumat Legi
+    const diff = Math.round((new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12) - REF) / 86400000);
+    const pasIdx = (((diff % 5) + 5) % 5);
+    return { pas: PASARAN[pasIdx] };
+  }
+
+  // Konversi ke tahun Jawa (Saka Islam / Anno Javanico)
+  function getJawaDate(date) {
+    // Tahun Jawa dimulai dari 1 Sura 1555 AJ = 8 Juli 1633 M
+    // Gunakan pendekatan sederhana berbasis Hijriah
+    const y = date.getFullYear();
+    const m = date.getMonth() + 1;
+    const d = date.getDate();
+    // Konversi ke Julian Day Number
+    const a = Math.floor((14 - m) / 12);
+    const y2 = y + 4800 - a;
+    const m2 = m + 12 * a - 3;
+    let jdn = d + Math.floor((153 * m2 + 2) / 5) + 365 * y2 + Math.floor(y2 / 4) - Math.floor(y2 / 100) + Math.floor(y2 / 400) - 32045;
+    // JDN 1 Muharram 1 H = 1948440, siklus 30 tahun Jawa = 10631 hari
+    // Epoch AJ: 1 Sura 1 AJ = JDN 1948440 (8 Muharam 1 H = 16 Juli 622 M pendekatan)
+    // Siklus Jawa sama dgn Hijriah
+    const EPOCH_AJ = 1948440;
+    const N = jdn - EPOCH_AJ;
+    const siklus30 = Math.floor(N / 10631);
+    const sisa30 = N % 10631;
+    const tahunDalamSiklus = Math.floor((30 * sisa30 + 29) / 10631);
+    const tahunAJ = siklus30 * 30 + tahunDalamSiklus + 1;
+    // Hari dalam tahun
+    const sisaHariDalamTahun = sisa30 - Math.floor((tahunDalamSiklus * 10631) / 30);
+    // Tentukan bulan
+    const panjangBulan = [30,29,30,29,30,29,30,29,30,29,30,29];
+    // Cek tahun kabisat Jawa (tahun ke 2,5,8,10,13,16,18,21,24,26,29 dalam siklus 30)
+    const kabisat = [2,5,8,10,13,16,18,21,24,26,29];
+    const tDlmSiklus = tahunAJ % 30 === 0 ? 30 : tahunAJ % 30;
+    if (kabisat.includes(tDlmSiklus)) panjangBulan[11] = 30;
+    let bulanAJ = 0, hariAJ = sisaHariDalamTahun + 1;
+    for (let i = 0; i < 12; i++) {
+      if (hariAJ <= panjangBulan[i]) { bulanAJ = i; break; }
+      hariAJ -= panjangBulan[i];
+    }
+    return { tanggal: hariAJ, bulan: BULAN_J[bulanAJ], tahun: tahunAJ };
+  }
+
+  const today = new Date();
+  const hari = HARI_JAWA[today.getDay()];
+  const { pas } = getMasehiToJawa(today);
+  const neptu = NEPTU_H[today.getDay()] + NEPTU_P[pas];
+  const jawaDate = getJawaDate(today);
+
+  document.getElementById('jc-weton').textContent = `${hari} ${pas}`;
+  document.getElementById('jc-tanggal').textContent = `${jawaDate.tanggal} ${jawaDate.bulan} ${jawaDate.tahun} J`;
+  document.getElementById('jc-neptu').textContent = `Neptu ${neptu}`;
+  document.getElementById('jc-watak').textContent = WATAK_SINGKAT[pas];
+})();
 </script>
 
 <!-- ============ AUTH MODAL ============ -->
