@@ -1992,13 +1992,19 @@ function openShareCard() {
     : (lang === 'id'
         ? hariName + ' ' + pasName + ' — ' + SIFAT_HARI[w.hari.id].id + ', sekaligus ' + SIFAT_PASARAN[pasName].id + '.'
         : hariName + ' ' + pasName + ' — tends to be ' + SIFAT_HARI[w.hari.id].en + ', and ' + SIFAT_PASARAN[pasName].en + '.');
-  document.getElementById('sc-char-text').textContent = smartTruncate(rawChar, 110);
+  document.getElementById('sc-char-text').textContent = firstSentence(rawChar);
 
   document.getElementById('shareModal').classList.add('show');
 }
 
 function closeShareModal() {
   document.getElementById('shareModal').classList.remove('show');
+}
+
+/* Ambil kalimat pertama yang lengkap */
+function firstSentence(text) {
+  const m = text.match(/^.+?[.!?](?:\s|$)/);
+  return m ? m[0].trim() : smartTruncate(text, 110);
 }
 
 /* Potong di akhir kalimat terdekat sebelum maxLen.
