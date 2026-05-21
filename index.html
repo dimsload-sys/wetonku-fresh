@@ -2092,11 +2092,8 @@ async function handleSignOut() {
   try {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
-    // Update UI immediately before reload
-    document.querySelectorAll('.auth-logged-out').forEach(el => el.style.display = 'block');
-    document.querySelectorAll('.auth-logged-in').forEach(el => el.style.display = 'none');
-    document.querySelector('.user-menu')?.style.setProperty('display', 'none');
-    location.reload();
+    // onAuthStateChange akan otomatis trigger updateUIForUser()
+    // Tidak perlu reload — UI langsung update
   } catch (error) {
     console.error('Sign out error:', error);
     alert('Error: ' + error.message);
