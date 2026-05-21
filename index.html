@@ -753,6 +753,94 @@
     .share-card { transform: scale(0.85); transform-origin: top left; }
     .share-card-preview { height: 340px; overflow: hidden; }
   }
+
+  /* ============ ONBOARDING MODAL ============ */
+  .ob-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.65); z-index: 10000;
+    backdrop-filter: blur(8px);
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .ob-overlay.show { display: flex; }
+  .ob-modal {
+    background: var(--white); border-radius: 22px;
+    max-width: 460px; width: 100%;
+    box-shadow: 0 28px 70px rgba(0,0,0,0.4);
+    overflow: hidden; animation: fadeInUp .35s ease-out;
+  }
+  .ob-header {
+    background: var(--accent-deep); padding: 28px 28px 24px;
+    color: #F4F2EC; position: relative;
+  }
+  .ob-step-dots {
+    display: flex; gap: 6px; margin-bottom: 18px;
+  }
+  .ob-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(244,242,236,0.25); transition: all .3s;
+  }
+  .ob-dot.active { width: 22px; border-radius: 3px; background: #F4F2EC; }
+  .ob-dot.done  { background: rgba(244,242,236,0.55); }
+  .ob-greeting {
+    font-family: 'Fraunces', serif; font-size: 26px;
+    font-weight: 600; line-height: 1.2; margin-bottom: 6px;
+  }
+  .ob-sub { font-size: 14px; color: rgba(244,242,236,0.62); line-height: 1.5; }
+  .ob-body { padding: 24px 28px 28px; }
+
+  /* Step 1 — date input */
+  .ob-date-row {
+    display: grid; grid-template-columns: 1fr 1.4fr 1fr; gap: 8px; margin-bottom: 18px;
+  }
+  .ob-date-row select {
+    padding: 11px 10px; border: 1.5px solid var(--line);
+    border-radius: 10px; font-size: 14.5px; background: var(--paper);
+    color: var(--ink); outline: none; transition: border-color .2s;
+    -webkit-appearance: none; font-family: inherit;
+  }
+  .ob-date-row select:focus { border-color: var(--accent); }
+  .ob-hint { font-size: 12.5px; color: var(--ink-soft); margin-bottom: 18px; line-height: 1.5; }
+  .ob-btn-primary {
+    width: 100%; padding: 13px; background: var(--accent);
+    color: var(--paper); border: none; border-radius: 11px;
+    font-size: 15px; font-weight: 700; cursor: pointer;
+    transition: opacity .2s; font-family: inherit;
+  }
+  .ob-btn-primary:hover { opacity: .88; }
+  .ob-btn-primary:disabled { opacity: .55; cursor: not-allowed; }
+  .ob-skip {
+    display: block; text-align: center; margin-top: 12px;
+    font-size: 13px; color: var(--ink-soft); cursor: pointer;
+    background: none; border: none; width: 100%; font-family: inherit;
+  }
+  .ob-skip:hover { color: var(--ink); }
+
+  /* Step 2 — weton reveal */
+  .ob-weton-reveal { text-align: center; padding: 8px 0 4px; }
+  .ob-weton-big {
+    font-family: 'Fraunces', serif; font-size: 42px;
+    font-weight: 500; color: var(--accent); line-height: 1.1;
+    margin-bottom: 8px; letter-spacing: -0.02em;
+  }
+  .ob-neptu-pill {
+    display: inline-block; background: var(--accent-2);
+    color: var(--paper); font-size: 12px; font-weight: 700;
+    padding: 4px 14px; border-radius: 999px; margin-bottom: 16px;
+  }
+  .ob-char-preview {
+    font-size: 14px; color: var(--ink-soft); line-height: 1.7;
+    text-align: left; background: var(--paper-2);
+    border-radius: 12px; padding: 14px 16px; margin-bottom: 20px;
+    border-left: 3px solid var(--accent);
+  }
+  .ob-actions { display: flex; flex-direction: column; gap: 8px; }
+  .ob-btn-secondary {
+    width: 100%; padding: 12px; background: var(--paper-2);
+    color: var(--ink); border: 1px solid var(--line); border-radius: 11px;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    transition: background .2s; font-family: inherit;
+  }
+  .ob-btn-secondary:hover { background: var(--line); }
 </style>
 </head>
 <body>
@@ -1712,6 +1800,56 @@ document.querySelectorAll('.calc-section, #tentang, .pricing-section, #cara, .te
 })();
 </script>
 
+<!-- ============ ONBOARDING MODAL ============ -->
+<div class="ob-overlay" id="obModal">
+  <div class="ob-modal">
+
+    <!-- Header (berubah per step) -->
+    <div class="ob-header">
+      <div class="ob-step-dots">
+        <div class="ob-dot active" id="ob-dot-1"></div>
+        <div class="ob-dot" id="ob-dot-2"></div>
+      </div>
+      <div class="ob-greeting" id="ob-greeting">Halo, —! 👋</div>
+      <div class="ob-sub" id="ob-sub">Satu langkah lagi — masukkan tanggal lahirmu untuk menghitung weton.</div>
+    </div>
+
+    <!-- Body Step 1: Input tanggal -->
+    <div class="ob-body" id="ob-step-1">
+      <p style="font-size:13.5px;font-weight:600;color:var(--ink-soft);margin-bottom:10px">Tanggal Lahir</p>
+      <div class="ob-date-row">
+        <select id="ob-day"></select>
+        <select id="ob-month">
+          <option value="0">Januari</option><option value="1">Februari</option>
+          <option value="2">Maret</option><option value="3">April</option>
+          <option value="4">Mei</option><option value="5">Juni</option>
+          <option value="6">Juli</option><option value="7">Agustus</option>
+          <option value="8">September</option><option value="9">Oktober</option>
+          <option value="10">November</option><option value="11">Desember</option>
+        </select>
+        <select id="ob-year"></select>
+      </div>
+      <p class="ob-hint">Tanggal lahirmu digunakan untuk menghitung weton, neptu, dan semua fitur personalmu. Data ini tersimpan aman di akunmu.</p>
+      <button class="ob-btn-primary" id="ob-btn-next" onclick="obNext()">Hitung Wetonku →</button>
+      <button class="ob-skip" onclick="obSkip()">Lewati untuk sekarang</button>
+    </div>
+
+    <!-- Body Step 2: Weton reveal -->
+    <div class="ob-body" id="ob-step-2" style="display:none">
+      <div class="ob-weton-reveal">
+        <div class="ob-weton-big" id="ob-weton-name">—</div>
+        <div class="ob-neptu-pill" id="ob-neptu-pill">Neptu —</div>
+        <div class="ob-char-preview" id="ob-char-preview">—</div>
+      </div>
+      <div class="ob-actions">
+        <button class="ob-btn-primary" onclick="obGoToFitur()">Jelajahi Fitur Wetonku →</button>
+        <button class="ob-btn-secondary" onclick="obClose()">Tetap di Beranda</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <!-- ============ AUTH MODAL ============ -->
 <div class="auth-modal-overlay" id="authModal">
   <div class="auth-modal">
@@ -2161,7 +2299,164 @@ document.getElementById('authModal')?.addEventListener('click', (e) => {
     closeAuthModal();
   }
 });
+
+// Close onboarding when clicking backdrop
+document.getElementById('obModal')?.addEventListener('click', (e) => {
+  if (e.target.id === 'obModal') obClose();
+});
 </script>
 
-</body>
-</html>
+<!-- ============ ONBOARDING JS ============ -->
+<script>
+/* ===== Build day/year selects ===== */
+(function(){
+  const ds = document.getElementById('ob-day');
+  const ys = document.getElementById('ob-year');
+  if(!ds||!ys) return;
+  for(let i=1;i<=31;i++){
+    const o=document.createElement('option'); o.value=i; o.textContent=i; ds.appendChild(o);
+  }
+  const now=new Date().getFullYear();
+  for(let y=now;y>=1930;y--){
+    const o=document.createElement('option'); o.value=y; o.textContent=y; ys.appendChild(o);
+  }
+  ds.value=17; ys.value=1995;
+})();
+
+/* ===== Simple karakter snippet per neptu ===== */
+const OB_NEPTU_CHAR = {
+  7:'Berapi-api dan penuh inisiatif — kamu tidak pernah kehabisan ide.',
+  8:'Percaya diri dan berani melangkah — kamu lahir untuk memimpin.',
+  9:'Hangat dan mudah bergaul — orang-orang selalu nyaman di dekatmu.',
+  10:'Teliti dan disiplin — kerja kerasmu selalu membuahkan hasil.',
+  11:'Bijaksana dan penuh empati — kamu memahami orang lebih dalam dari yang mereka sadari.',
+  12:'Intuitif dan kreatif — pikiranmu sering melompat jauh ke depan.',
+  13:'Tangguh dan mandiri — tekanannya justru membuatmu semakin kuat.',
+  14:'Berwibawa alami — orang-orang cenderung mempercayai dan mengikutimu.',
+  15:'Sabar dan bijak — kamu tipe yang selalu berpikir sebelum bertindak.',
+  16:'Setia dan penuh kasih — orang yang dicintaimu tidak akan pernah merasa sendiri.',
+  17:'Visioner dan karismatik — kamu punya kemampuan melihat apa yang orang lain tidak lihat.',
+  18:'Bersemangat tinggi — ada magnet alami dalam dirimu yang menarik orang dan peluang.'
+};
+
+let _obUserId = null;
+let _obIsNewUser = false;
+
+/* ===== Called after successful signup ===== */
+async function triggerOnboarding(userId, userName) {
+  _obUserId = userId;
+  _obIsNewUser = true;
+  const firstName = (userName||'').split(' ')[0] || 'kamu';
+  document.getElementById('ob-greeting').textContent = 'Halo, ' + firstName + '! 👋';
+  document.getElementById('ob-sub').textContent =
+    'Satu langkah lagi — masukkan tanggal lahirmu untuk menghitung weton.';
+  document.getElementById('obModal').classList.add('show');
+}
+
+/* ===== Called after login for existing users WITHOUT birth_date ===== */
+async function maybeShowOnboarding(user) {
+  if(user.profile?.birth_date) return; // sudah ada, skip
+  _obUserId = user.id;
+  _obIsNewUser = false;
+  const firstName = (user.profile?.full_name || user.email.split('@')[0]).split(' ')[0];
+  document.getElementById('ob-greeting').textContent = 'Halo lagi, ' + firstName + '! 👋';
+  document.getElementById('ob-sub').textContent =
+    'Wetonmu belum tersimpan. Masukkan tanggal lahir untuk fitur personal.';
+  document.getElementById('obModal').classList.add('show');
+}
+
+/* ===== Step dot update ===== */
+function obSetStep(n) {
+  document.getElementById('ob-dot-1').className = 'ob-dot ' + (n===1?'active':'done');
+  document.getElementById('ob-dot-2').className = 'ob-dot ' + (n===2?'active':'');
+  document.getElementById('ob-step-1').style.display = n===1 ? 'block' : 'none';
+  document.getElementById('ob-step-2').style.display = n===2 ? 'block' : 'none';
+}
+
+/* ===== Next: calculate weton, save, show step 2 ===== */
+async function obNext() {
+  const d = parseInt(document.getElementById('ob-day').value);
+  const m = parseInt(document.getElementById('ob-month').value);
+  const y = parseInt(document.getElementById('ob-year').value);
+
+  const check = new Date(y,m,d);
+  if(check.getDate()!==d||check.getMonth()!==m){
+    alert('Tanggal tidak valid, coba lagi.'); return;
+  }
+
+  const btn = document.getElementById('ob-btn-next');
+  btn.disabled = true; btn.textContent = 'Menghitung…';
+
+  const w = getWeton(y, m, d);
+  const mm = String(m+1).padStart(2,'0');
+  const dd = String(d).padStart(2,'0');
+  const birthDate = `${y}-${mm}-${dd}`;
+
+  /* Save to Supabase */
+  if(_obUserId) {
+    await supabase.from('users').update({
+      birth_date: birthDate,
+      weton_hari: w.hari.id,
+      weton_pasaran: w.pas.id,
+      weton_neptu: w.total
+    }).eq('id', _obUserId);
+  }
+
+  /* Populate step 2 */
+  document.getElementById('ob-weton-name').textContent = w.hari.id + ' ' + w.pas.id;
+  document.getElementById('ob-neptu-pill').textContent = 'Neptu ' + w.total + ' · ' + w.hari.id + ' ' + w.hari.neptu + ' + ' + w.pas.id + ' ' + w.pas.neptu;
+  document.getElementById('ob-char-preview').textContent = OB_NEPTU_CHAR[w.total] || 'Weton dengan karakter yang kuat dan unik.';
+
+  document.getElementById('ob-greeting').textContent = 'Wetonmu sudah tersimpan ✦';
+  document.getElementById('ob-sub').textContent = 'Ini adalah wetonmu berdasarkan primbon Jawa.';
+
+  btn.disabled = false; btn.textContent = 'Hitung Wetonku →';
+  obSetStep(2);
+}
+
+function obGoToFitur() {
+  obClose();
+  window.location.href = '/wetonku-fitur-with-auth.html';
+}
+
+function obClose() {
+  document.getElementById('obModal').classList.remove('show');
+}
+
+function obSkip() {
+  obClose();
+}
+
+/* ===== Patch handleSignup to trigger onboarding ===== */
+const _origHandleSignup = handleSignup;
+handleSignup = async function() {
+  // We need to intercept after success — patch showSuccess
+  const name  = document.getElementById('signupName')?.value?.trim() || '';
+  const email = document.getElementById('signupEmail')?.value?.trim() || '';
+  // run original
+  await _origHandleSignup();
+  // If signup succeeded, auth state change will fire
+  // We listen once for SIGNED_IN to open onboarding
+  const unsub = supabase.auth.onAuthStateChange(async (event, session) => {
+    if(event === 'SIGNED_IN' && session) {
+      unsub.data?.subscription?.unsubscribe?.();
+      closeAuthModal();
+      await updateUIForUser();
+      triggerOnboarding(session.user.id, name);
+    }
+  });
+};
+
+/* ===== Show onboarding after login if birth_date missing ===== */
+const _origHandleLogin = handleLogin;
+handleLogin = async function() {
+  const emailVal = document.getElementById('loginEmail')?.value?.trim();
+  await _origHandleLogin.call(this);
+  // Check after short delay if user has birth_date
+  setTimeout(async () => {
+    const user = await getCurrentUser();
+    if(user) maybeShowOnboarding(user);
+  }, 800);
+};
+</script>
+
