@@ -584,9 +584,7 @@
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
             <div>
               <label class="field-label">Tanggal lahirmu</label>
-              <div class="date-inputs">
-                <select id="mimpi-day"></select><select id="mimpi-month"></select><select id="mimpi-year"></select>
-              </div>
+              <input type="date" class="text-input" id="mimpi-tgl" style="width:100%;margin-top:0" max="2025-12-31" min="1940-01-01" value="1995-07-17">
             </div>
             <div>
               <label class="field-label">Mimpi terjadi saat</label>
@@ -1300,7 +1298,12 @@ function tampilMimpi(item){
   const waktu = document.getElementById('mimpi-waktu').value;
 
   /* Coba baca tanggal lahir */
-  const a = readDate('mimpi');
+  let a = null;
+  const mimpiTgl = document.getElementById('mimpi-tgl').value;
+  if (mimpiTgl) {
+    const parts = mimpiTgl.split('-');
+    if (parts.length === 3) a = {y: +parts[0], m: +parts[1]-1, d: +parts[2]};
+  }
   let hasPersonal = false;
 
   /* Tafsir waktu */
