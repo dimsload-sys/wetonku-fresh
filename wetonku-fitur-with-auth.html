@@ -318,6 +318,60 @@
     .panel-head h1 { font-size: 25px; }
   }
 
+  /* ===== RAMALAN HARI INI ===== */
+  .rh-today-banner {
+    background: var(--accent-deep); border-radius: 14px;
+    padding: 16px 20px; margin-bottom: 16px;
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    color: #F4F2EC; flex-wrap: wrap;
+  }
+  .rh-today-left { display: flex; flex-direction: column; gap: 3px; }
+  .rh-today-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(244,242,236,0.45); }
+  .rh-today-date  { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 500; }
+  .rh-today-weton { font-size: 12px; color: rgba(244,242,236,0.55); margin-top: 1px; }
+  .rh-energy-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+  .rh-energy-label{ font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(244,242,236,0.45); }
+  .rh-energy-stars { font-size: 18px; letter-spacing: 2px; }
+
+  .rh-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .rh-aspect {
+    background: var(--paper-2); border-radius: 12px; padding: 14px 15px;
+    border-left: 3px solid var(--line); transition: border-color .2s;
+  }
+  .rh-aspect.tinggi  { border-left-color: #3B6B45; }
+  .rh-aspect.sedang  { border-left-color: #B07A2A; }
+  .rh-aspect.rendah  { border-left-color: #B0463A; }
+  .rh-asp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .rh-asp-name   { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); }
+  .rh-asp-level  { font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 999px; }
+  .rh-asp-level.tinggi { background: rgba(59,107,69,0.12); color: #3B6B45; }
+  .rh-asp-level.sedang { background: rgba(176,122,42,0.12); color: #B07A2A; }
+  .rh-asp-level.rendah { background: rgba(176,70,58,0.1);  color: #B0463A; }
+  .rh-asp-text   { font-size: 13px; color: var(--ink); line-height: 1.6; }
+
+  .rh-side-grid  { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .rh-side-card  { background: var(--white); border: 1px solid var(--line); border-radius: 12px; padding: 14px 15px; }
+  .rh-side-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px; }
+  .rh-color-row  { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .rh-color-swatch { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid rgba(0,0,0,0.08); flex-shrink: 0; }
+  .rh-color-name { font-size: 13px; font-weight: 600; }
+  .rh-jam-val    { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 500; color: var(--accent); }
+  .rh-jam-sub    { font-size: 11.5px; color: var(--ink-soft); margin-top: 2px; }
+
+  .rh-nasihat-card { background: var(--accent-deep); border-radius: 12px; padding: 18px 20px; color: #F4F2EC; margin-bottom: 10px; }
+  .rh-nasihat-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(244,242,236,0.4); margin-bottom: 8px; }
+  .rh-nasihat-text  { font-family: 'Fraunces', serif; font-size: 15.5px; font-style: italic; line-height: 1.7; color: rgba(244,242,236,0.88); }
+  .rh-nasihat-text::before { content: '\201C'; } .rh-nasihat-text::after { content: '\201D'; }
+
+  .rh-pantangan-card { background: rgba(176,70,58,0.07); border: 1px solid rgba(176,70,58,0.18); border-radius: 12px; padding: 14px 16px; }
+  .rh-pantangan-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #B0463A; margin-bottom: 6px; }
+  .rh-pantangan-text  { font-size: 13.5px; color: var(--ink); line-height: 1.65; }
+
+  @media (max-width: 580px) {
+    .rh-grid { grid-template-columns: 1fr; }
+    .rh-side-grid { grid-template-columns: 1fr; }
+  }
+
   /* ===== USER GREETING CHIP ===== */
   .user-greeting {
     display: none; align-items: center; gap: 9px;
@@ -418,6 +472,13 @@
           <span class="side-tier"><span class="tier-dot basic"></span>Pendalaman</span>
         </span>
       </button>
+      <button class="side-item" data-panel="ramalanhari">
+        <span class="side-ico">☀</span>
+        <span class="side-text">
+          <span class="side-name">Ramalan Hari Ini</span>
+          <span class="side-tier"><span class="tier-dot basic"></span>Pendalaman</span>
+        </span>
+      </button>
       <button class="side-item" data-panel="rezeki">
         <span class="side-ico">❖</span>
         <span class="side-text">
@@ -433,7 +494,7 @@
         </span>
       </button>
       <button class="side-item" data-panel="wetonanak">
-        <span class="side-ico">☀</span>
+        <span class="side-ico">✿</span>
         <span class="side-text">
           <span class="side-name">Weton Anak</span>
           <span class="side-tier"><span class="tier-dot basic"></span>Pendalaman</span>
@@ -468,6 +529,69 @@
 
   <!-- CONTENT -->
   <main class="content">
+
+    <!-- ===== PANEL: RAMALAN HARI INI ===== -->
+    <section class="panel" id="panel-ramalanhari">
+      <div class="panel-head">
+        <span class="panel-tier basic">● Paket Pendalaman</span>
+        <h1>Ramalan Hari Ini</h1>
+        <p>Lihat energi, peluang, dan panduan hari ini berdasarkan interaksi weton kelahiranmu dengan weton hari ini.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Masukkan tanggal lahir</div>
+        <label class="field-label">Tanggal kelahiran</label>
+        <div class="date-inputs" style="max-width:340px">
+          <select id="rhi-day"></select>
+          <select id="rhi-month"></select>
+          <select id="rhi-year"></select>
+        </div>
+        <button class="action-btn" style="max-width:340px" onclick="hitungRamalanHari()">Lihat Ramalan Hari Ini</button>
+      </div>
+      <div class="card result-area" id="rhi-result">
+        <!-- Banner hari ini -->
+        <div class="rh-today-banner" id="rhi-banner">
+          <div class="rh-today-left">
+            <span class="rh-today-label">Hari ini</span>
+            <span class="rh-today-date" id="rhi-today-date">—</span>
+            <span class="rh-today-weton" id="rhi-today-weton">—</span>
+          </div>
+          <div class="rh-energy-wrap">
+            <span class="rh-energy-label">Energi</span>
+            <span class="rh-energy-stars" id="rhi-stars">—</span>
+          </div>
+        </div>
+
+        <!-- 4 aspek dalam grid -->
+        <div class="rh-grid" id="rhi-aspek-grid">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Warna + Jam -->
+        <div class="rh-side-grid">
+          <div class="rh-side-card">
+            <div class="rh-side-label">Warna Keberuntungan</div>
+            <div class="rh-color-row" id="rhi-warna-row">—</div>
+          </div>
+          <div class="rh-side-card">
+            <div class="rh-side-label">Jam Terbaik Hari Ini</div>
+            <div class="rh-jam-val" id="rhi-jam">—</div>
+            <div class="rh-jam-sub" id="rhi-jam-sub">—</div>
+          </div>
+        </div>
+
+        <!-- Nasihat -->
+        <div class="rh-nasihat-card">
+          <div class="rh-nasihat-label">✦ Nasihat Hari Ini</div>
+          <div class="rh-nasihat-text" id="rhi-nasihat">—</div>
+        </div>
+
+        <!-- Pantangan -->
+        <div class="rh-pantangan-card">
+          <div class="rh-pantangan-label">⚠ Pantangan Hari Ini</div>
+          <div class="rh-pantangan-text" id="rhi-pantangan">—</div>
+        </div>
+      </div>
+    </section>
 
     <!-- ===== PANEL: KECOCOKAN JODOH ===== -->
     <section class="panel active" id="panel-jodoh">
@@ -1796,6 +1920,179 @@ function hitungNama(){
   document.getElementById('nama-result').classList.add('show');
 }
 
+/* ============== RAMALAN HARI INI ============== */
+const HARI_ID_LIST = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+const BULAN_ID = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+const WARNA_PASARAN = {
+  Legi:   [{hex:'#D4A839',nama:'Kuning Emas'},{hex:'#F5F0E0',nama:'Putih Krem'}],
+  Pahing: [{hex:'#C0392B',nama:'Merah'},{hex:'#E67E22',nama:'Jingga'}],
+  Pon:    [{hex:'#2C3E6B',nama:'Biru Tua'},{hex:'#1A1A2E',nama:'Hitam'}],
+  Wage:   [{hex:'#2E7D4F',nama:'Hijau'},{hex:'#6B4C2A',nama:'Coklat'}],
+  Kliwon: [{hex:'#6B3A8C',nama:'Ungu'},{hex:'#B8860B',nama:'Emas Tua'}]
+};
+
+const JAM_BAIK_HARI = {
+  Minggu: {jam:'06.00 – 08.00',sub:'Pagi hari membawa energi Matahari yang kuat'},
+  Senin:  {jam:'08.00 – 10.00',sub:'Jam produktif dengan pikiran jernih'},
+  Selasa: {jam:'07.00 – 09.00',sub:'Waktu terbaik untuk memulai inisiatif baru'},
+  Rabu:   {jam:'09.00 – 11.00',sub:'Energi komunikasi dan negosiasi paling tinggi'},
+  Kamis:  {jam:'16.00 – 18.00',sub:'Sore Kamis penuh berkah dan kemudahan'},
+  Jumat:  {jam:'11.00 – 13.00',sub:'Tengah hari Jumat membawa kelancaran'},
+  Sabtu:  {jam:'07.00 – 09.00',sub:'Pagi Sabtu cocok untuk usaha dan kerja keras'}
+};
+
+const ASPEK_NARASI = {
+  hoki: [
+    // tinggi
+    ['Kombinasi wetonmu dengan hari ini sangat harmonis. Keberuntungan berpihak — langkah yang kamu ambil hari ini punya peluang besar membuahkan hasil nyata.',
+     'Energimu dan energi hari ini saling menguatkan. Ini salah satu hari terbaikmu untuk bertindak, bernegosiasi, atau membuat keputusan penting.',
+     'Neptu hari ini berselaras dengan neptumu. Peluang yang datang hari ini bukan kebetulan — tangkap dengan percaya diri.'],
+    // sedang
+    ['Harimu cukup seimbang. Ada peluang yang perlu sedikit usaha untuk ditangkap — jangan pasif, tapi juga jangan memaksakan yang belum waktunya.',
+     'Energi hari ini netral untukmu. Hasilnya bergantung pada seberapa konsisten kamu menjalankan rencana — standar saja, tidak istimewa.',
+     'Hari yang solid untuk pekerjaan rutin. Bukan waktu terbaik untuk risiko besar, tapi langkah kecil yang konsisten tetap membuahkan hasil.'],
+    // rendah
+    ['Hari ini lebih cocok untuk mengamati daripada bertindak. Energi kurang mendukung untuk hal baru — gunakan untuk evaluasi dan persiapan.',
+     'Neptumu dan neptu hari ini sedikit bertentangan. Jangan memaksakan keputusan besar — tunggu 1-2 hari ke depan yang lebih selaras.',
+     'Simpan energimu hari ini. Bukan hari untuk adu argumen atau mengambil risiko finansial — fokus pada pekerjaan yang sudah berjalan.']
+  ],
+  rezeki: [
+    ['Pintu rezeki terbuka lebar hari ini. Penawaran atau peluang finansial yang datang layak dipertimbangkan serius.',
+     'Hari yang baik untuk urusan uang — tagih piutang, ajukan proposal, atau diskusikan kenaikan penghasilan.',
+     'Rezekimu mengalir lancar hari ini. Perhatikan peluang kecil yang sering terlewat — bisa jadi besar.'],
+    ['Rezeki hari ini cukup, tidak lebih tidak kurang. Jaga pengeluaran tetap sesuai rencana.',
+     'Hari yang netral untuk keuangan. Hindari pengeluaran impulsif — simpan untuk hari yang lebih selaras.',
+     'Fokus pada stabilitas keuangan hari ini. Bukan waktu terbaik untuk investasi baru.'],
+    ['Hati-hati dengan pengeluaran tidak terduga hari ini. Tahan dulu keputusan finansial yang besar.',
+     'Energi rezeki agak tertekan hari ini. Hindari meminjam atau berhutang — tunggu beberapa hari.',
+     'Jaga dompet hari ini. Bukan hari yang baik untuk deal besar atau kontrak baru.']
+  ],
+  asmara: [
+    ['Energi asmara sangat positif hari ini. Ungkapkan perasaan, rencanakan pertemuan, atau selesaikan salah paham dengan pasangan.',
+     'Hari yang hangat untuk hubungan. Komunikasi mengalir lancar — manfaatkan untuk perbincangan yang selama ini tertunda.',
+     'Momen yang tepat untuk mempererat hubungan. Gestur kecil hari ini akan terasa sangat bermakna bagi orang tersayang.'],
+    ['Hubungan berjalan normal hari ini. Tidak ada energi khusus yang mendukung atau menghambat.',
+     'Hari yang biasa untuk asmara. Fokus pada rutinitas bersama — tidak perlu drama, tidak perlu kejutan besar.',
+     'Jaga komunikasi tetap ringan dan positif hari ini. Hindari topik sensitif yang bisa memicu salah paham.'],
+    ['Energi asmara kurang stabil hari ini. Tahan diri dari perdebatan soal hal-hal kecil dengan pasangan.',
+     'Hindari mengambil keputusan besar dalam hubungan hari ini. Emosi lebih mudah naik — lebih baik bicara besok.',
+     'Beri ruang untuk dirimu dan pasangan hari ini. Energi yang kurang selaras bisa membuat salah interpretasi.']
+  ],
+  kesehatan: [
+    ['Vitalitasmu tinggi hari ini — manfaatkan untuk olahraga, aktivitas fisik, atau pekerjaan yang butuh stamina.',
+     'Energi fisikmu mendukung. Hari yang baik untuk memulai kebiasaan sehat baru atau meningkatkan intensitas latihan.',
+     'Tubuhmu dalam kondisi prima hari ini. Manfaatkan untuk menyelesaikan tugas fisik yang selama ini ditunda.'],
+    ['Kondisi fisikmu stabil. Jaga pola makan dan istirahat seperti biasa.',
+     'Hari yang biasa untuk kesehatan. Pastikan cukup minum air dan tidak melewatkan waktu makan.',
+     'Energi fisik cukup untuk aktivitas normal. Jangan berlebihan, tapi juga jangan terlalu bersantai.'],
+    ['Tubuhmu butuh istirahat lebih hari ini. Kurangi aktivitas berat dan prioritaskan pemulihan.',
+     'Energi fisik agak rendah hari ini. Hindari begadang atau melewatkan makan — tubuhmu perlu diperlakukan baik.',
+     'Jaga kondisi hari ini. Bila ada gejala kurang enak badan, jangan diabaikan — istirahat lebih awal.']
+  ]
+};
+
+const NASIHAT_KOMBINASI = [
+  // index 0-4: berdasarkan (combined) % 10 → 0..9
+  'Yang kamu tanam dengan tulus hari ini akan tumbuh jauh melampaui ekspektasimu. Percayai prosesnya.',
+  'Diam bukan berarti lemah — kadang menunggu adalah strategi terkuat yang bisa kamu pilih.',
+  'Hari ini mengundangmu untuk lebih hadir. Lepaskan sebentar layar dan rencanamu — ada yang lebih berharga di depanmu.',
+  'Satu langkah kecil yang konsisten lebih berharga dari satu lompatan besar yang tidak berlanjut.',
+  'Rezeki tidak selalu datang dalam bentuk uang. Perhatikan apa yang datang hari ini dengan mata terbuka.',
+  'Keberanian bukanlah ketiadaan rasa takut — melainkan memilih bertindak meski takut itu ada.',
+  'Hari ini adalah milikmu sepenuhnya. Jangan habiskan energinya untuk memikirkan apa yang tidak bisa dikontrol.',
+  'Kejujuran, sekecil apapun, selalu menghasilkan kepercayaan yang nilainya jauh lebih besar.',
+  'Orang yang paling kamu butuhkan hari ini mungkin juga membutuhkanmu. Hubungi mereka.',
+  'Kesabaran hari ini adalah investasi terbaikmu untuk hari esok.',
+];
+
+const PANTANGAN_KOMBINASI = [
+  'Hindari membuat keputusan besar berdasarkan emosi sesaat hari ini.',
+  'Jangan memulai usaha atau proyek baru hari ini — selesaikan yang sudah berjalan dulu.',
+  'Hindari pinjam meminjam uang hari ini, baik meminjam maupun meminjamkan.',
+  'Jangan berdebat soal prinsip hari ini — ego sedang tinggi dan tidak ada yang menang.',
+  'Hindari bepergian jauh ke arah Barat hari ini jika tidak terpaksa.',
+  'Jangan mengucapkan janji yang tidak bisa dipenuhi hari ini — kata-katamu sangat berbobot.',
+  'Hindari makanan yang terlalu berat atau berlebihan hari ini — perut mudah terganggu.',
+  'Jangan abaikan firasat negatif hari ini — ada baiknya berhati-hati.',
+  'Hindari bergosip atau menyebarkan informasi yang belum jelas kebenarannya.',
+  'Jangan menunda hal penting yang sudah harus diselesaikan hari ini.',
+];
+
+function levelLabel(l){ return l===0?'Tinggi':l===1?'Sedang':'Perlu Sabar'; }
+function levelClass(l){ return l===0?'tinggi':l===1?'sedang':'rendah'; }
+
+const ASPEK_ICON = { hoki:'🌟', rezeki:'💰', asmara:'❤', kesehatan:'🌿' };
+const ASPEK_NAME = { hoki:'Keberuntungan', rezeki:'Rezeki', asmara:'Asmara', kesehatan:'Kesehatan' };
+
+function hitungRamalanHari(){
+  const a = readDate('rhi');
+  if(!a){ alert('Tanggal lahir tidak valid.'); return; }
+  const w = getWeton(a.y, a.m, a.d);
+
+  const now   = new Date();
+  const today = getWeton(now.getFullYear(), now.getMonth(), now.getDate());
+  const todayHariName = HARI_ID_LIST[now.getDay()];
+  const combined = w.total + today.total;
+
+  /* Energy stars (1-5) based on harmony */
+  const selisih = Math.abs(w.total - today.total);
+  const energiLevel = selisih <= 2 ? 5 : selisih <= 4 ? 4 : selisih <= 6 ? 3 : selisih <= 8 ? 2 : 1;
+  const stars = '★'.repeat(energiLevel) + '☆'.repeat(5 - energiLevel);
+
+  /* Banner */
+  document.getElementById('rhi-today-date').textContent =
+    now.getDate() + ' ' + BULAN_ID[now.getMonth()] + ' ' + now.getFullYear();
+  document.getElementById('rhi-today-weton').textContent =
+    'Weton hari ini: ' + today.hari.id + ' ' + today.pas.id + ' · Neptu ' + today.total;
+  document.getElementById('rhi-stars').textContent = stars;
+
+  /* Aspek levels - each uses different sub-calc for variety */
+  const lvHoki     = combined % 3;
+  const lvRezeki   = (w.hari.neptu + today.total) % 3;
+  const lvAsmara   = (w.pas.neptu  + today.total) % 3;
+  const lvKesehatan= (combined + now.getDay()) % 3;
+
+  const aspekMap = [
+    { key:'hoki',      lv: lvHoki },
+    { key:'rezeki',    lv: lvRezeki },
+    { key:'asmara',    lv: lvAsmara },
+    { key:'kesehatan', lv: lvKesehatan },
+  ];
+
+  const grid = document.getElementById('rhi-aspek-grid');
+  grid.innerHTML = aspekMap.map(({ key, lv }) => {
+    const narasi = ASPEK_NARASI[key][lv][combined % 3];
+    const cls    = levelClass(lv);
+    const lbl    = levelLabel(lv);
+    return `<div class="rh-aspect ${cls}">
+      <div class="rh-asp-header">
+        <span class="rh-asp-name">${ASPEK_ICON[key]} ${ASPEK_NAME[key]}</span>
+        <span class="rh-asp-level ${cls}">${lbl}</span>
+      </div>
+      <div class="rh-asp-text">${narasi}</div>
+    </div>`;
+  }).join('');
+
+  /* Warna */
+  const warna = WARNA_PASARAN[today.pas.id] || WARNA_PASARAN['Legi'];
+  document.getElementById('rhi-warna-row').innerHTML = warna.map(w =>
+    `<div class="rh-color-swatch" style="background:${w.hex}" title="${w.nama}"></div>
+     <span class="rh-color-name">${w.nama}</span>`
+  ).join('<span style="color:var(--line);margin:0 4px">·</span>');
+
+  /* Jam */
+  const jam = JAM_BAIK_HARI[todayHariName] || JAM_BAIK_HARI['Senin'];
+  document.getElementById('rhi-jam').textContent     = jam.jam;
+  document.getElementById('rhi-jam-sub').textContent = jam.sub;
+
+  /* Nasihat & Pantangan */
+  document.getElementById('rhi-nasihat').textContent  = NASIHAT_KOMBINASI[combined % 10];
+  document.getElementById('rhi-pantangan').textContent = PANTANGAN_KOMBINASI[(combined + now.getDay()) % 10];
+
+  document.getElementById('rhi-result').classList.add('show');
+}
+
 /* ============== NAVIGASI PANEL ============== */
 function showPanel(name){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
@@ -1810,8 +2107,9 @@ function showPanel(name){
 }
 function buildMobileTabs(){
   const tabs=[
-    {p:'jodoh',n:'Kecocokan Jodoh'},{p:'rezeki',n:'Rezeki'},{p:'mimpi',n:'Tafsir Mimpi'},
-    {p:'haribaik',n:'Hari Baik'},{p:'nama',n:'Nama Bayi'},{p:'ai',n:'Konsultasi AI'}
+    {p:'jodoh',n:'Kecocokan Jodoh'},{p:'ramalanhari',n:'Ramalan Hari Ini'},
+    {p:'rezeki',n:'Rezeki'},{p:'mimpi',n:'Tafsir Mimpi'},
+    {p:'wetonanak',n:'Weton Anak'},{p:'haribaik',n:'Hari Baik'},{p:'nama',n:'Nama Bayi'},{p:'ai',n:'Konsultasi AI'}
   ];
   const box=document.getElementById('mobile-tabs');
   tabs.forEach((t,i)=>{
@@ -1838,6 +2136,7 @@ document.querySelectorAll('.side-item').forEach(s=>{
 fillDate('j1',12,3,1995);
 fillDate('j2',8,7,1996);
 fillDate('rz',17,7,1995);
+fillDate('rhi',17,7,1995);
 fillDate('hb',17,7,1995);
 fillDate('bb',1,0,2026);
 fillDate('wa',1,0,2024);
@@ -1927,7 +2226,7 @@ function autoFillBirthDate(birthDateStr) {
   const d = parseInt(parts[2]);
 
   // All prefixes that represent the logged-in user's own birth date
-  ['rz','hb','j1','waibu'].forEach(prefix => {
+  ['rz','hb','j1','waibu','rhi'].forEach(prefix => {
     const ds = document.getElementById(prefix+'-day');
     const ms = document.getElementById(prefix+'-month');
     const ys = document.getElementById(prefix+'-year');
