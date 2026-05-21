@@ -707,8 +707,7 @@
   .sc-char {
     font-size: 12.5px; line-height: 1.7;
     color: rgba(244,242,236,0.65);
-    display: -webkit-box; -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical; overflow: hidden;
+    overflow: hidden;
   }
   .sc-footer {
     flex-shrink: 0; padding-top: 14px;
@@ -1985,20 +1984,41 @@ function openShareCard() {
   document.getElementById('sc-footer-date').textContent =
     d + ' ' + t.months[m] + ' ' + y;
 
-  // Character text (max ~140 chars for 3 lines)
+  // Smart truncate: potong di akhir kalimat terdekat sebelum batas
   const comp = COMPREHENSIVE[wetonKey];
-  let charText = comp
-    ? comp.char.substring(0, 140) + '…'
+  const rawChar = comp
+    ? comp.char
     : (lang === 'id'
         ? hariName + ' ' + pasName + ' — ' + SIFAT_HARI[w.hari.id].id + ', sekaligus ' + SIFAT_PASARAN[pasName].id + '.'
         : hariName + ' ' + pasName + ' — tends to be ' + SIFAT_HARI[w.hari.id].en + ', and ' + SIFAT_PASARAN[pasName].en + '.');
-  document.getElementById('sc-char-text').textContent = charText;
+  document.getElementById('sc-char-text').textContent = smartTruncate(rawChar, 160);
 
   document.getElementById('shareModal').classList.add('show');
 }
 
 function closeShareModal() {
   document.getElementById('shareModal').classList.remove('show');
+}
+
+/* Potong teks di akhir kalimat (titik/tanda tanya/seru) terdekat sebelum maxLen.
+   Kalau tidak ada tanda kalimat, potong di spasi terdekat. */
+function smartTruncate(text, maxLen) {
+  if (text.length <= maxLen) return text;
+  const chunk = text.substring(0, maxLen);
+  // Cari tanda akhir kalimat terakhir dalam chunk
+  const lastSentence = Math.max(
+    chunk.lastIndexOf('. '),
+    chunk.lastIndexOf('! '),
+    chunk.lastIndexOf('? '),
+    chunk.lastIndexOf('.\n')
+  );
+  if (lastSentence > maxLen * 0.5) {
+    // Potong tepat setelah tanda baca kalimat
+    return text.substring(0, lastSentence + 1).trim();
+  }
+  // Fallback: potong di spasi terdekat
+  const lastSpace = chunk.lastIndexOf(' ');
+  return text.substring(0, lastSpace > 0 ? lastSpace : maxLen).trim() + '…';
 }
 
 async function downloadCard() {
@@ -2040,7 +2060,7 @@ function copyWetonText() {
   const wetonKey = w.hari.id + ' ' + w.pas.id;
   const comp = COMPREHENSIVE[wetonKey];
   const snippet = comp
-    ? comp.char.substring(0, 200) + '…'
+    ? smartTruncate(comp.char, 220)
     : hariName + ' ' + pasName + ', neptu ' + w.total + '.';
 
   const text =
