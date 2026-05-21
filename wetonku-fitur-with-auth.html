@@ -317,6 +317,51 @@
     .two-col { grid-template-columns: 1fr; }
     .panel-head h1 { font-size: 25px; }
   }
+
+  /* ===== USER GREETING CHIP ===== */
+  .user-greeting {
+    display: none; align-items: center; gap: 9px;
+    padding: 5px 13px 5px 5px;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: var(--white);
+  }
+  .ug-avatar {
+    width: 29px; height: 29px; border-radius: 50%;
+    background: var(--accent); color: var(--paper);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif; font-size: 13px; font-weight: 600; flex-shrink: 0;
+  }
+  .ug-name  { font-size: 13px; font-weight: 600; line-height: 1.2; color: var(--ink); }
+  .ug-weton { font-size: 11px; color: var(--ink-soft); margin-top: 1px; }
+  @media (max-width: 700px) { .ug-info { display: none; } }
+
+  /* ===== ENHANCED NAMA BAYI ===== */
+  .nama-analysis-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 18px 0;
+  }
+  .na-cell {
+    background: var(--paper-2); border-radius: 11px; padding: 13px 14px;
+  }
+  .na-cell-label {
+    font-size: 10.5px; font-weight: 700; letter-spacing: 0.07em;
+    text-transform: uppercase; color: var(--ink-soft); margin-bottom: 5px;
+  }
+  .na-cell-val {
+    font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600;
+    color: var(--accent); line-height: 1.2;
+  }
+  .na-cell-sub { font-size: 12px; color: var(--ink-soft); margin-top: 3px; }
+  .nama-panduan {
+    background: var(--paper-2); border-radius: 12px; padding: 16px 18px; margin-top: 4px;
+  }
+  .nama-panduan h4 {
+    font-size: 12.5px; font-weight: 700; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+  }
+  .panduan-row { display: flex; gap: 10px; margin-bottom: 9px; font-size: 13.5px; }
+  .panduan-icon { flex-shrink: 0; font-size: 15px; margin-top: 1px; }
+  .panduan-row p { color: var(--ink); line-height: 1.6; margin: 0; }
+  @media (max-width: 500px) { .nama-analysis-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -337,6 +382,13 @@
       <span class="preview-badge">Pratinjau Fitur</span>
     </div>
     <div class="topbar-right">
+      <div class="user-greeting" id="user-greeting">
+        <div class="ug-avatar" id="ug-avatar">?</div>
+        <div class="ug-info">
+          <div class="ug-name"  id="ug-name">—</div>
+          <div class="ug-weton" id="ug-weton">—</div>
+        </div>
+      </div>
       <div class="theme-switch" title="Ganti warna">
         <button class="theme-dot sage active" onclick="setTheme('sage')" aria-label="Tema Sage"></button>
         <button class="theme-dot indigo" onclick="setTheme('indigo')" aria-label="Tema Indigo"></button>
@@ -1608,20 +1660,73 @@ function hitungHariBaik(){
 /* ============== 5. PRIMBON NAMA BAYI ============== */
 const NAMA_CAT=[
   {key:0,cat:'Wasesa Segara',color:'#3C7A4E',score:90,
-   txt:'Nama ini membawa watak <strong>Wasesa Segara</strong> — seluas samudra. Anak dengan keselarasan ini cenderung berhati lapang, pemaaf, dan berwibawa. Nama yang sangat dianjurkan.'},
+   txt:'Nama ini membawa watak <strong>Wasesa Segara</strong> — seluas samudra. Anak dengan keselarasan ini cenderung berhati lapang, pemaaf, dan berwibawa. Ia akan mudah dicintai banyak orang dan diberkahi kemampuan memaafkan yang langka. Nama yang sangat dianjurkan menurut primbon.'},
   {key:1,cat:'Tunggak Semi',color:'#3C7A4E',score:82,
-   txt:'Nama ini membawa watak <strong>Tunggak Semi</strong> — tunas yang terus tumbuh. Anak diperkirakan murah rezeki dan pandai bangkit dari kesulitan. Keselarasan yang baik.'},
+   txt:'Nama ini membawa watak <strong>Tunggak Semi</strong> — tunas yang terus tumbuh dari tunggul yang sudah ditebang. Anak diperkirakan murah rezeki, pantang menyerah, dan pandai bangkit dari kesulitan. Semakin ditekan, semakin kuat. Keselarasan yang sangat baik.'},
   {key:2,cat:'Satria Wibawa',color:'#3C7A4E',score:86,
-   txt:'Nama ini membawa watak <strong>Satria Wibawa</strong> — kemuliaan dan kehormatan. Anak diperkirakan tumbuh dihormati dan disegani. Keselarasan yang sangat baik.'},
+   txt:'Nama ini membawa watak <strong>Satria Wibawa</strong> — kemuliaan dan kehormatan seorang ksatria. Anak diperkirakan tumbuh dengan wibawa alami, dihormati lingkungannya, dan punya integritas yang kuat. Nama ini cocok untuk anak yang diharapkan jadi pemimpin.'},
   {key:3,cat:'Sumur Sinaba',color:'#3C7A4E',score:84,
-   txt:'Nama ini membawa watak <strong>Sumur Sinaba</strong> — sumur tempat menimba. Anak berpotensi menjadi tempat orang lain bertanya dan berlindung. Keselarasan yang baik.'},
+   txt:'Nama ini membawa watak <strong>Sumur Sinaba</strong> — sumur tempat semua orang menimba air. Anak berpotensi menjadi tempat orang lain bertanya, berlindung, dan mengandalkan. Ia akan dikenal sebagai pribadi yang bisa diandalkan dan penuh kebijaksanaan.'},
   {key:4,cat:'Satria Wirang',color:'#B07A2A',score:58,
-   txt:'Nama ini membawa watak <strong>Satria Wirang</strong> — kesatria yang sempat menanggung malu. Bukan nama buruk, namun primbon menyarankan menambah satu suku kata atau unsur nama lain agar lebih selaras.'},
+   txt:'Nama ini membawa watak <strong>Satria Wirang</strong> — ksatria yang pernah menanggung rasa malu sebelum akhirnya bangkit. Bukan nama yang buruk — justru membentuk ketangguhan. Namun primbon menyarankan menambah satu unsur nama (nama tengah atau akhiran) agar keselarasannya menguat.'},
   {key:5,cat:'Bumi Kapethak',color:'#B07A2A',score:54,
-   txt:'Nama ini membawa watak <strong>Bumi Kapethak</strong> — tanah yang dipendam. Anak cenderung pekerja keras namun jalannya berliku. Pertimbangkan menyelaraskan nama dengan menambah unsur baru.'},
+   txt:'Nama ini membawa watak <strong>Bumi Kapethak</strong> — tanah yang tersembunyi dan belum tergarap. Anak cenderung pekerja keras namun jalannya berliku di awal kehidupan. Kebaikan dan potensinya tidak langsung terlihat — perlu kesabaran ekstra dari orang tua untuk menggali dan mengarahkannya.'},
   {key:6,cat:'Lebu Katiup Angin',color:'#B0463A',score:42,
-   txt:'Nama ini membawa watak <strong>Lebu Katiup Angin</strong> — debu tertiup angin. Primbon menyarankan memilih atau menambah unsur nama lain agar keselarasannya dengan weton bayi menjadi lebih kuat.'}
+   txt:'Nama ini membawa watak <strong>Lebu Katiup Angin</strong> — debu yang tertiup angin, mudah berpindah dan tidak menetap. Primbon menyarankan untuk mempertimbangkan nama lain atau menambah unsur nama yang lebih kuat agar fondasi hidupnya lebih kokoh. Tidak ada yang buruk dari anaknya — hanya perlu nama yang lebih menopang.'}
 ];
+
+/* Panduan pemilihan nama per pasaran weton bayi */
+const PANDUAN_NAMA = {
+  Legi: {
+    elemen: 'Bumi', char: '⊕',
+    selaras: 'Nama yang mengandung makna kemakmuran, keharmonisan, keramahan, atau alam — seperti unsur "sri", "tani", "bumi", "asri", "rahayu".',
+    hindari: 'Nama yang terlalu bermakna api atau konflik. Makna yang terlalu keras atau agresif kurang selaras dengan energi Legi yang lembut.',
+    contoh: 'Nama dengan nuansa: keindahan alam, kesuburan, kedamaian, kemakmuran sederhana.'
+  },
+  Pahing: {
+    elemen: 'Api', char: '△',
+    selaras: 'Nama yang mengandung makna keberanian, cahaya, semangat, atau kejayaan — seperti unsur "agni", "jaya", "prabha", "surya", "tejas".',
+    hindari: 'Nama yang bermakna terlalu pasif, lemah, atau menyerah. Energi Pahing butuh nama yang memiliki "nyala" dalam maknanya.',
+    contoh: 'Nama dengan nuansa: kepemimpinan, keberanian, cahaya, perjuangan yang mulia.'
+  },
+  Pon: {
+    elemen: 'Angin', char: '◯',
+    selaras: 'Nama yang mengandung makna kecerdasan, komunikasi, kebebasan, atau kecepatan — seperti unsur "wicak", "cerdik", "bayu", "prana", "sastra".',
+    hindari: 'Nama yang terlalu kaku atau berat maknanya. Energi Pon yang lincah butuh nama yang "bernafas" dan tidak mengekang.',
+    contoh: 'Nama dengan nuansa: kecerdasan, kelincahan, kemampuan komunikasi, ketangkasan.'
+  },
+  Wage: {
+    elemen: 'Air', char: '▽',
+    selaras: 'Nama yang mengandung makna ketahanan, ketenangan, kedalaman, atau kejernihan — seperti unsur "tirta", "bening", "tegar", "kukuh", "langgeng".',
+    hindari: 'Nama yang bermakna konflik, api, atau tidak stabil. Energi Wage butuh nama yang "mengalir" dan menopang.',
+    contoh: 'Nama dengan nuansa: ketahanan mental, ketenangan, kejujuran, konsistensi.'
+  },
+  Kliwon: {
+    elemen: 'Ether / Akasa', char: '✦',
+    selaras: 'Nama yang mengandung makna spiritualitas, kebijaksanaan, keagungan, atau cahaya ilahiah — seperti unsur "noor", "cahya", "wening", "mulia", "jati".',
+    hindari: 'Nama yang terlalu duniawi atau bermakna materialistis semata. Energi Kliwon yang dalam butuh nama yang punya "ketinggian" spiritual.',
+    contoh: 'Nama dengan nuansa: kebijaksanaan, spiritualitas, kemuliaan batin, cahaya.'
+  }
+};
+
+function hitungSukuKata(nama){
+  const vokal='aeiouAEIOU'; let count=0, prev=false;
+  for(const ch of nama.replace(/\s/g,'')){
+    const v=vokal.includes(ch);
+    if(v&&!prev) count++;
+    prev=v;
+  }
+  return count;
+}
+function vokalDominan(nama){
+  const map={a:0,i:0,u:0,e:0,o:0};
+  for(const ch of nama.toLowerCase()) if(map[ch]!==undefined) map[ch]++;
+  const entries=Object.entries(map).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
+  if(!entries.length) return {v:'-',mak:'—'};
+  const vMap={a:'Kemakmuran & keberuntungan',i:'Kecerdasan & ketajaman intuisi',u:'Keteguhan & kekuatan batin',e:'Keseimbangan & kedamaian',o:'Kewibawaan & kepemimpinan'};
+  return {v:entries[0][0].toUpperCase(), mak:vMap[entries[0][0]]||'—'};
+}
+
 function hitungNama(){
   const nama=document.getElementById('baby-name').value.trim();
   if(!nama){ alert('Mohon masukkan nama bayi terlebih dahulu.'); return; }
@@ -1639,15 +1744,55 @@ function hitungNama(){
   const idx=totalGabung%7;
   const r=NAMA_CAT[idx];
 
+  /* Analisis tambahan */
+  const suku=hitungSukuKata(nama);
+  const sukuJenis=suku%2===0?'Genap (Yin)':'Ganjil (Yang)';
+  const sukuMak=suku%2===0
+    ?'Suku kata genap membawa sifat tenang dan menerima — cocok untuk anak yang diharapkan penyabar dan adaptif.'
+    :'Suku kata ganjil membawa energi aktif dan dinamis — cocok untuk anak yang diharapkan punya inisiatif kuat.';
+  const {v:vokal,mak:vokalMak}=vokalDominan(nama.replace(/\s/g,''));
+  const panduan=PANDUAN_NAMA[w.pas.n]||PANDUAN_NAMA['Legi'];
+
+  /* Isi hasil */
   document.getElementById('nb-num').textContent=r.score;
   document.getElementById('nb-badge').style.background=r.color;
   document.getElementById('nb-name').textContent=nama;
   document.getElementById('nb-sub').textContent=
-    'Weton bayi: '+w.label+' · Neptu nama: '+nilaiNama+' · Neptu weton: '+w.total;
+    'Weton: '+w.label+' · Neptu nama: '+nilaiNama+' · Neptu weton: '+w.total;
   document.getElementById('nb-interp').innerHTML=r.txt;
-  document.getElementById('nb-note').textContent=
-    'Perhitungan: neptu nama ('+nilaiNama+') + neptu weton ('+w.total+') = '+totalGabung+
-    ', menghasilkan watak '+r.cat+'. Primbon nama bersifat anjuran — keputusan tetap di tangan orang tua.';
+
+  /* Analisis grid + panduan */
+  document.getElementById('nb-note').innerHTML=`
+    <div class="nama-analysis-grid">
+      <div class="na-cell">
+        <div class="na-cell-label">Elemen Weton</div>
+        <div class="na-cell-val">${panduan.char} ${panduan.elemen}</div>
+        <div class="na-cell-sub">Unsur dominan weton ${w.pas.n}</div>
+      </div>
+      <div class="na-cell">
+        <div class="na-cell-label">Suku Kata</div>
+        <div class="na-cell-val">${suku} · ${sukuJenis}</div>
+        <div class="na-cell-sub">${sukuMak.substring(0,60)}…</div>
+      </div>
+      <div class="na-cell">
+        <div class="na-cell-label">Vokal Dominan</div>
+        <div class="na-cell-val">"${vokal}"</div>
+        <div class="na-cell-sub">${vokalMak}</div>
+      </div>
+      <div class="na-cell">
+        <div class="na-cell-label">Nilai Keselarasan</div>
+        <div class="na-cell-val" style="color:${r.color}">${r.score}/100</div>
+        <div class="na-cell-sub">Watak: ${r.cat}</div>
+      </div>
+    </div>
+    <div class="nama-panduan">
+      <h4>Panduan nama untuk weton ${w.label}</h4>
+      <div class="panduan-row"><span class="panduan-icon">✦</span><p><strong>Yang selaras:</strong> ${panduan.selaras}</p></div>
+      <div class="panduan-row"><span class="panduan-icon">⚠</span><p><strong>Yang sebaiknya dihindari:</strong> ${panduan.hindari}</p></div>
+      <div class="panduan-row"><span class="panduan-icon">◎</span><p><strong>Karakter nama yang cocok:</strong> ${panduan.contoh}</p></div>
+    </div>
+    <p style="font-size:12px;color:var(--ink-soft);margin-top:12px">Perhitungan: neptu nama (${nilaiNama}) + neptu weton (${w.total}) = ${totalGabung} → watak <em>${r.cat}</em>. Primbon nama bersifat anjuran — keputusan tetap di tangan orang tua.</p>
+  `;
   document.getElementById('nama-result').classList.add('show');
 }
 
@@ -1666,7 +1811,7 @@ function showPanel(name){
 function buildMobileTabs(){
   const tabs=[
     {p:'jodoh',n:'Kecocokan Jodoh'},{p:'rezeki',n:'Rezeki'},{p:'mimpi',n:'Tafsir Mimpi'},
-    {p:'wetonanak',n:'Weton Anak'},{p:'haribaik',n:'Hari Baik'},{p:'nama',n:'Nama Bayi'},{p:'ai',n:'Konsultasi AI'}
+    {p:'haribaik',n:'Hari Baik'},{p:'nama',n:'Nama Bayi'},{p:'ai',n:'Konsultasi AI'}
   ];
   const box=document.getElementById('mobile-tabs');
   tabs.forEach((t,i)=>{
@@ -1772,20 +1917,65 @@ async function getCurrentUser() {
   }
 }
 
+/* ===== AUTO-FILL BIRTH DATE FROM PROFILE ===== */
+function autoFillBirthDate(birthDateStr) {
+  if (!birthDateStr) return;
+  const parts = birthDateStr.split('-');
+  if (parts.length !== 3) return;
+  const y = parseInt(parts[0]);
+  const m = parseInt(parts[1]) - 1; // 0-indexed for month selectors
+  const d = parseInt(parts[2]);
+
+  // All prefixes that represent the logged-in user's own birth date
+  ['rz','hb','j1','waibu'].forEach(prefix => {
+    const ds = document.getElementById(prefix+'-day');
+    const ms = document.getElementById(prefix+'-month');
+    const ys = document.getElementById(prefix+'-year');
+    if (ds && ms && ys) { ds.value=d; ms.value=m; ys.value=y; }
+  });
+
+  // mimpi-tgl is a date input (YYYY-MM-DD format)
+  const mimpiTgl = document.getElementById('mimpi-tgl');
+  if (mimpiTgl) mimpiTgl.value = birthDateStr;
+}
+
+/* ===== GREETING CHIP IN TOPBAR ===== */
+function showGreeting(user) {
+  const firstName = (user.profile?.full_name || user.email.split('@')[0])
+    .split(' ')[0];
+
+  let wetonStr = '';
+  if (user.profile?.birth_date) {
+    const p = user.profile.birth_date.split('-');
+    const w = getWeton(parseInt(p[0]), parseInt(p[1])-1, parseInt(p[2]));
+    wetonStr = w.label + ' · Neptu ' + w.total;
+  } else if (user.profile?.weton_hari && user.profile?.weton_pasaran) {
+    wetonStr = user.profile.weton_hari + ' ' + user.profile.weton_pasaran
+      + (user.profile.weton_neptu ? ' · Neptu ' + user.profile.weton_neptu : '');
+  }
+
+  const el = document.getElementById('user-greeting');
+  if (!el) return;
+  document.getElementById('ug-avatar').textContent = firstName.charAt(0).toUpperCase();
+  document.getElementById('ug-name').textContent   = 'Halo, ' + firstName + ' 👋';
+  document.getElementById('ug-weton').textContent  = wetonStr || 'Weton belum diset';
+  el.style.display = 'flex';
+}
+
 async function checkAuthAndInit() {
   const user = await getCurrentUser();
-  
+
   if (!user) {
-    // Not logged in - redirect to landing page
     alert('Silakan login terlebih dahulu untuk mengakses fitur.');
     window.location.href = '/';
     return;
   }
-  
-  // User logged in - show user info in topbar if there's a display element
-  console.log('User logged in:', user.profile?.full_name || user.email);
-  
-  // All features accessible for now (payment integration comes later)
+
+  // Show personalized greeting in topbar
+  showGreeting(user);
+
+  // Auto-fill all date pickers with user's saved birth date
+  autoFillBirthDate(user.profile?.birth_date);
 }
 
 // Check auth on page load
