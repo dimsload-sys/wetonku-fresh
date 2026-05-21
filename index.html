@@ -911,9 +911,17 @@
             <h4 data-i18n="r_char_title">Karakter Dasar</h4>
             <p id="r-character">—</p>
           </div>
-          <div class="result-char-box" style="background:var(--white);border:1px solid var(--line)">
-            <h4 data-i18n="r_today_title">Ramalan Hari Ini</h4>
-            <p id="r-today">—</p>
+          <div class="result-locked" style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:14px 16px">
+            <div class="lock-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </div>
+            <div class="lk-text">
+              <strong>Ramalan Hari Ini (lengkap)</strong>
+              <span>Energi, rezeki, asmara, warna hoki & jam terbaik hari ini berdasarkan wetonmu — di paket Pendalaman.</span>
+            </div>
+            <button class="btn" onclick="document.getElementById('paket').scrollIntoView()">Lihat</button>
           </div>
           <div class="result-locked">
             <div class="lock-icon">
@@ -922,7 +930,7 @@
               </svg>
             </div>
             <div class="lk-text">
-              <strong data-i18n="r_lock_title">Kecocokan jodoh, hari baik & tafsir mimpi</strong>
+              <strong data-i18n="r_lock_title">Kecocokan jodoh, hari baik, tafsir mimpi & lebih banyak lagi</strong>
               <span data-i18n="r_lock_sub">Buka semua fitur dengan paket berbayar.</span>
             </div>
             <button class="btn" onclick="document.getElementById('paket').scrollIntoView()" data-i18n="r_lock_btn">Lihat</button>
@@ -974,7 +982,7 @@
         <ul class="price-features">
           <li><span class="pf-mark">✓</span><span data-i18n="p1_f1">Kalkulator weton & neptu</span></li>
           <li><span class="pf-mark">✓</span><span data-i18n="p1_f2">Karakter dasar weton</span></li>
-          <li><span class="pf-mark">✓</span><span data-i18n="p1_f3">1 ramalan harian</span></li>
+          <li><span class="pf-mark">✓</span><span>Bagikan kartu weton</span></li>
           <li><span class="pf-mark off">✕</span><span data-i18n="p1_f4">Kecocokan jodoh</span></li>
           <li><span class="pf-mark off">✕</span><span data-i18n="p1_f5">Konsultasi AI</span></li>
         </ul>
@@ -1601,8 +1609,6 @@ function renderResult(res){
       : `As a person of the ${hariName} ${pasName} weton, you tend to be ${sh}, and at the same time ${sp}. ${watak}`;
   }
   
-  document.getElementById('r-today').textContent=ramalanHariIni(w.total-today.total, currentLang, wetonKey);
-
   // Show share card button
   const shareBtn = document.getElementById('share-trigger-btn');
   if (shareBtn) shareBtn.style.display = 'block';
