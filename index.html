@@ -707,7 +707,8 @@
   .sc-char {
     font-size: 12.5px; line-height: 1.7;
     color: rgba(244,242,236,0.65);
-    overflow: hidden;
+    display: -webkit-box; -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical; overflow: hidden;
   }
   .sc-footer {
     flex-shrink: 0; padding-top: 14px;
@@ -1991,7 +1992,7 @@ function openShareCard() {
     : (lang === 'id'
         ? hariName + ' ' + pasName + ' — ' + SIFAT_HARI[w.hari.id].id + ', sekaligus ' + SIFAT_PASARAN[pasName].id + '.'
         : hariName + ' ' + pasName + ' — tends to be ' + SIFAT_HARI[w.hari.id].en + ', and ' + SIFAT_PASARAN[pasName].en + '.');
-  document.getElementById('sc-char-text').textContent = smartTruncate(rawChar, 160);
+  document.getElementById('sc-char-text').textContent = smartTruncate(rawChar, 110);
 
   document.getElementById('shareModal').classList.add('show');
 }
@@ -2000,23 +2001,24 @@ function closeShareModal() {
   document.getElementById('shareModal').classList.remove('show');
 }
 
-/* Potong teks di akhir kalimat (titik/tanda tanya/seru) terdekat sebelum maxLen.
-   Kalau tidak ada tanda kalimat, potong di spasi terdekat. */
+/* Potong di akhir kalimat terdekat sebelum maxLen.
+   Fallback: koma → spasi → hard cut. */
 function smartTruncate(text, maxLen) {
   if (text.length <= maxLen) return text;
   const chunk = text.substring(0, maxLen);
-  // Cari tanda akhir kalimat terakhir dalam chunk
+  // 1. Cari akhir kalimat (titik/seru/tanya)
   const lastSentence = Math.max(
-    chunk.lastIndexOf('. '),
-    chunk.lastIndexOf('! '),
-    chunk.lastIndexOf('? '),
-    chunk.lastIndexOf('.\n')
+    chunk.lastIndexOf('. '), chunk.lastIndexOf('! '), chunk.lastIndexOf('? ')
   );
-  if (lastSentence > maxLen * 0.5) {
-    // Potong tepat setelah tanda baca kalimat
+  if (lastSentence > maxLen * 0.45) {
     return text.substring(0, lastSentence + 1).trim();
   }
-  // Fallback: potong di spasi terdekat
+  // 2. Fallback: koma atau em-dash
+  const lastComma = Math.max(chunk.lastIndexOf(', '), chunk.lastIndexOf(' — '));
+  if (lastComma > maxLen * 0.5) {
+    return text.substring(0, lastComma).trim() + '…';
+  }
+  // 3. Fallback: spasi terdekat
   const lastSpace = chunk.lastIndexOf(' ');
   return text.substring(0, lastSpace > 0 ? lastSpace : maxLen).trim() + '…';
 }
