@@ -4,6 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wetonku — Kenali Dirimu Lewat Kearifan Jawa</title>
+<meta name="description" content="Hitung weton dan neptu kelahiranmu berdasarkan penanggalan Jawa. Temukan karakter, kecocokan jodoh, hari baik, dan tafsir mimpi — gratis, akurat, dan mudah dipahami.">
+<meta name="keywords" content="weton, kalkulator weton, neptu, primbon jawa, kecocokan jodoh, hari baik, tafsir mimpi, weton jawa">
+<meta name="author" content="Wetonku">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wetonku.app">
+<meta property="og:title" content="Wetonku — Kenali Dirimu Lewat Kearifan Jawa">
+<meta property="og:description" content="Kalkulator weton gratis. Temukan karakter, kecocokan jodoh, hari baik, dan tafsir mimpi berdasarkan primbon Jawa.">
+<meta property="og:image" content="https://wetonku.app/og-image.jpg">
+<meta property="og:locale" content="id_ID">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Wetonku — Kenali Dirimu Lewat Kearifan Jawa">
+<meta name="twitter:description" content="Kalkulator weton gratis berdasarkan primbon Jawa. Hitung neptu, karakter, dan kecocokan jodohmu.">
+<meta name="twitter:image" content="https://wetonku.app/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
@@ -334,6 +349,59 @@
     .calc-input-side, .calc-result-side { padding: 30px 24px; }
     .nav-right .lang-toggle { display: none; }
   }
+
+  /* ============ TESTIMONI ============ */
+  .testimoni-section { background: var(--white); border-top: 1px solid var(--line); }
+  .testi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .testi-card {
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: 16px; padding: 24px 22px;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .testi-quote {
+    font-family: 'Fraunces', serif; font-size: 15.5px; font-weight: 400;
+    font-style: italic; line-height: 1.65; color: var(--ink); flex: 1;
+  }
+  .testi-quote::before { content: '\201C'; color: var(--accent-2); margin-right: 2px; }
+  .testi-quote::after  { content: '\201D'; color: var(--accent-2); margin-left: 2px; }
+  .testi-meta { display: flex; align-items: center; gap: 12px; }
+  .testi-avatar {
+    width: 40px; height: 40px; border-radius: 50%; background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif; font-size: 15px; font-weight: 600;
+    color: var(--paper); flex-shrink: 0;
+  }
+  .testi-name { font-size: 14px; font-weight: 600; line-height: 1.2; }
+  .testi-weton { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+  .testi-stars { color: var(--accent-2); font-size: 12px; margin-top: 2px; letter-spacing: 1px; }
+  @media (max-width: 680px) { .testi-grid { grid-template-columns: 1fr; } }
+
+  /* ============ FAQ ============ */
+  .faq-section { border-top: 1px solid var(--line); }
+  .faq-list { max-width: 740px; }
+  .faq-item {
+    border: 1px solid var(--line); border-radius: 14px;
+    margin-bottom: 10px; overflow: hidden; background: var(--white);
+  }
+  .faq-q {
+    width: 100%; display: flex; align-items: center; justify-content: space-between;
+    gap: 14px; padding: 18px 20px; background: none; border: none;
+    text-align: left; font-size: 15px; font-weight: 600; color: var(--ink);
+    cursor: pointer; font-family: 'Hanken Grotesk', sans-serif; line-height: 1.45;
+  }
+  .faq-q:hover { background: var(--paper-2); }
+  .faq-icon {
+    font-size: 20px; color: var(--accent); flex-shrink: 0;
+    transition: transform .25s ease; line-height: 1;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height .3s ease, padding .25s ease;
+    font-size: 14.5px; color: var(--ink-soft); line-height: 1.75;
+    padding: 0 20px;
+  }
+  .faq-item.open .faq-a { max-height: 400px; padding: 0 20px 18px; }
 
   /* ============ KALENDER JAWA WIDGET ============ */
   .jawacal-wrap {
@@ -708,6 +776,8 @@
       <a href="#tentang" data-i18n="nav_about">Tentang Weton</a>
       <a href="#paket" data-i18n="nav_pricing">Paket</a>
       <a href="#cara" data-i18n="nav_how">Cara Kerja</a>
+      <a href="#testimoni">Cerita</a>
+      <a href="#faq">FAQ</a>
     </div>
     <div class="nav-right">
       <div class="theme-switch" title="Ganti warna">
@@ -967,6 +1037,125 @@
         <h3 data-i18n="how_s3t">Perdalam dengan paket</h3>
         <p data-i18n="how_s3d">Buka kecocokan jodoh, hari baik, dan konsultasi AI sesuai kebutuhanmu.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONI ============ -->
+<section class="testimoni-section" id="testimoni">
+  <div class="wrap">
+    <div class="ornament"><span class="line"></span><span class="glyph">✦ ❋ ✦</span><span class="line"></span></div>
+    <div class="sec-head" style="margin-top:30px">
+      <div class="sec-tag">Cerita Pengguna</div>
+      <h2 class="sec-title">Apa kata mereka?</h2>
+      <p class="sec-desc">Dari yang sekadar penasaran hingga yang benar-benar menemukan perspektif baru tentang diri sendiri.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <p class="testi-quote">Saya kira ini cuma hiburan biasa. Tapi waktu baca deskripsi weton Sabtu Kliwon saya, rasanya kayak ada yang nulis diary saya. Sampai nangis sedikit, haha.</p>
+        <div class="testi-meta">
+          <div class="testi-avatar">R</div>
+          <div>
+            <div class="testi-name">Rania, Jakarta</div>
+            <div class="testi-weton">Sabtu Kliwon · Neptu 17</div>
+            <div class="testi-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-quote">Fitur hari baik pernikahan-nya sangat detail — sampai ada bulan Jawa mana yang dihindari dan alasannya. Kami pakai ini untuk tentuin tanggal lamaran dan orang tua langsung setuju.</p>
+        <div class="testi-meta">
+          <div class="testi-avatar" style="background:var(--accent-2)">D</div>
+          <div>
+            <div class="testi-name">Denny, Surabaya</div>
+            <div class="testi-weton">Kamis Legi · Neptu 13</div>
+            <div class="testi-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-quote">Tafsir mimpinya bukan sekadar kata kunci → jawaban generik. Ada personalisasi berdasarkan weton dan waktu mimpinya. Beda banget dari yang lain.</p>
+        <div class="testi-meta">
+          <div class="testi-avatar" style="background:#5A6647">A</div>
+          <div>
+            <div class="testi-name">Andini, Yogyakarta</div>
+            <div class="testi-weton">Jumat Pon · Neptu 13</div>
+            <div class="testi-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-quote">Kecocokan jodoh kami keluar Jodoh dengan narasi yang njelimet banget tentang kepribadian kami berdua. Istri saya baca sampai tiga kali dan bilang "ini bener banget."</p>
+        <div class="testi-meta">
+          <div class="testi-avatar" style="background:#39426B">H</div>
+          <div>
+            <div class="testi-name">Hendra, Semarang</div>
+            <div class="testi-weton">Rabu Kliwon · Neptu 15</div>
+            <div class="testi-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq-section" id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">Pertanyaan Umum</div>
+      <h2 class="sec-title">Yang sering ditanyakan</h2>
+    </div>
+    <div class="faq-list" id="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Apakah menggunakan primbon Jawa bertentangan dengan agama?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Wetonku menyajikan primbon Jawa sebagai warisan budaya dan alat refleksi diri — bukan ramalan gaib atau keyakinan teologis. Seperti halnya Myers-Briggs atau tes kepribadian lain, hasilnya adalah cermin untuk mengenal kecenderungan diri, bukan ketetapan takdir. Keputusan tetap ada di tanganmu dan Tuhan. Banyak pengguna dari berbagai latar agama yang menggunakannya sebagai sarana introspeksi budaya.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Seberapa akurat perhitungan weton dan karakternya?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Perhitungan weton dan neptu 100% akurat secara matematis — mengikuti sistem penanggalan Jawa yang sudah baku. Untuk karakter dan interpretasi, Wetonku menggabungkan sumber primbon klasik dengan penyesuaian bahasa modern. Akurasi "perasaan" sangat subjektif — tapi banyak pengguna yang merasa resonansi kuat. Anggap saja ini cermin yang layak dipertimbangkan, bukan vonis.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Apa bedanya paket Pendalaman dan Pamungkas?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Pendalaman (Rp 29rb/bulan) membuka kecocokan jodoh, ramalan rezeki, tafsir mimpi, hari baik, dan weton anak. Pamungkas (Rp 79rb/bulan) mencakup semua itu plus analisis rezeki mendalam, primbon nama bayi, dan konsultasi AI personal yang bisa menjawab pertanyaan spesifik tentang hidupmu berdasarkan wetonmu. Untuk sebagian besar orang, Pendalaman sudah lebih dari cukup.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Bagaimana cara berlangganan? Apa metode pembayarannya?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Cukup daftar akun gratis, pilih paket, dan selesaikan pembayaran. Kami mendukung transfer bank, dompet digital (GoPay, OVO, DANA), QRIS, dan kartu kredit/debit. Akses langsung aktif setelah pembayaran dikonfirmasi.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Bisa dibatalkan kapan saja? Apakah ada kontrak?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Tidak ada kontrak, tidak ada ikatan jangka panjang. Berlangganan bulanan bisa dibatalkan kapan saja — akses tetap aktif hingga akhir periode yang sudah dibayar. Tidak ada biaya pembatalan.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Apakah data pribadi dan tanggal lahir saya aman?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Ya. Data kamu disimpan di infrastruktur Supabase dengan enkripsi standar industri. Kami tidak menjual, berbagi, atau menggunakan data pribadimu untuk keperluan iklan. Tanggal lahir hanya digunakan untuk menghitung weton — dan perhitungan dasar bahkan bisa dilakukan tanpa login sama sekali.</div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1335,6 +1524,15 @@ function setTheme(theme){
   });
 }
 function scrollToCalc(){ document.getElementById('kalkulator').scrollIntoView({behavior:'smooth'}); }
+
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+  // Open clicked (unless it was already open)
+  if (!isOpen) item.classList.add('open');
+}
 function bukaFitur(){
   window.location.href='wetonku-fitur-with-auth.html';
 }
@@ -1427,7 +1625,7 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, observerOptions);
 
-document.querySelectorAll('.calc-section, #tentang, .pricing-section, #cara, .cta-band').forEach(el => {
+document.querySelectorAll('.calc-section, #tentang, .pricing-section, #cara, .testimoni-section, .faq-section, .cta-band').forEach(el => {
   el.classList.add('animate-on-scroll');
   el.style.transform = 'translateY(20px)';
   observer.observe(el);
