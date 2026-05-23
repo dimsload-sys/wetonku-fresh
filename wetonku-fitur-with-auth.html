@@ -2434,7 +2434,9 @@ function showPanel(name){
     t.classList.toggle('active', t.getAttribute('data-panel')===name);
   });
   if (name === 'wuku') buildWukuGrid30();
-  if (name === 'ai' && aiUserData === null && window._currentUser) initAIPanel(window._currentUser);
+  if (name === 'ai') {
+    if (!aiUserData && window._currentUser) initAIPanel(window._currentUser);
+  }
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function buildMobileTabs(){
@@ -2606,6 +2608,10 @@ async function checkAuthAndInit() {
   // Show personalized greeting in topbar
   showGreeting(user);
   window._currentUser = user;
+
+  // Init AI panel data segera — supaya nama & weton sudah siap sebelum tab diklik
+  // (initAIPanel didefinisikan di bawah, dipanggil via setTimeout agar DOM sudah siap)
+  setTimeout(() => { if (typeof initAIPanel === 'function') initAIPanel(user); }, 100);
 
   // Auto-fill all date pickers with user's saved birth date
   autoFillBirthDate(user.profile?.birth_date);
@@ -2792,8 +2798,9 @@ async function kirimPesanAI() {
 
   // Tambah ke history
   if (aiChatHistory.length === 0) {
-    // Pertama kali — buat window 5 pesan + summary
-    aiChatHistory.push({ role: 'system', content: buatSystemPromptAI(aiUserData || {nama:'Pengguna',weton:'belum diset',neptu:0,wuku:'belum dihitung',elemenWuku:'Bumi',elemenPasaran:'Bumi'}) });
+    // Pertama kali — inject system prompt dengan data user terkini
+    const userData = aiUserData || {nama:'Kamu', weton:'belum diset', neptu:0, wuku:'belum dihitung', elemenWuku:'Bumi', elemenPasaran:'Bumi'};
+    aiChatHistory.push({ role: 'system', content: buatSystemPromptAI(userData) });
   }
 
   // Sliding window: simpan max 10 pesan terakhir (5 bolak-balik)
