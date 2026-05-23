@@ -66,7 +66,8 @@
     max-width: 1240px; margin: 0 auto; padding: 0 22px;
     height: 64px; display: flex; align-items: center; justify-content: space-between;
   }
-  .logo { display: flex; align-items: center; gap: 9px; font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
+  .logo { display: flex; align-items: center; gap: 9px; font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; letter-spacing: -0.02em; text-decoration: none; color: inherit; cursor: pointer; transition: opacity .15s; }
+  .logo:hover { opacity: .8; }
   .logo svg { width: 29px; height: 29px; flex-shrink: 0; }
   .preview-badge {
     font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em;
@@ -571,7 +572,7 @@
 <!-- ============ TOPBAR ============ -->
 <div class="topbar">
   <div class="topbar-inner">
-    <div class="logo">
+    <a href="/" class="logo" style="text-decoration:none;color:inherit;">
       <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="16" cy="16" r="15" fill="var(--accent)"/>
         <ellipse cx="16" cy="9" rx="4.2" ry="6" fill="none" stroke="var(--paper)" stroke-width="1.4"/>
@@ -582,7 +583,7 @@
       </svg>
       Wetonku
       <span class="preview-badge">Pratinjau Fitur</span>
-    </div>
+    </a>
     <div class="topbar-right">
       <div class="user-greeting" id="user-greeting">
         <div class="ug-avatar" id="ug-avatar">?</div>
@@ -2314,7 +2315,7 @@ function hitungRamalanHari(){
   document.getElementById('rhi-today-date').textContent =
     now.getDate() + ' ' + BULAN_ID[now.getMonth()] + ' ' + now.getFullYear();
   document.getElementById('rhi-today-weton').textContent =
-    'Weton hari ini: ' + today.hari.n + ' ' + today.pas.n + ' · Neptu ' + today.total;
+    'Weton hari ini: ' + today.hari.id + ' ' + today.pas.id + ' · Neptu ' + today.total;
   document.getElementById('rhi-stars').textContent = stars;
 
   /* Aspek levels - each uses different sub-calc for variety */
@@ -2344,51 +2345,17 @@ function hitungRamalanHari(){
     </div>`;
   }).join('');
 
-  /* Warna — kombinasi pasaran USER × pasaran HARI INI supaya personal & bervariasi */
-  const WARNA_HARI = {
-    Minggu: [{hex:'#E8A020',nama:'Kuning Matahari'},{hex:'#F5E6C8',nama:'Krem Hangat'}],
-    Senin:  [{hex:'#C0C0C0',nama:'Perak'},{hex:'#FFFFFF',nama:'Putih'}],
-    Selasa: [{hex:'#C0392B',nama:'Merah Tua'},{hex:'#F08080',nama:'Merah Muda'}],
-    Rabu:   [{hex:'#27AE60',nama:'Hijau Segar'},{hex:'#F0FFF0',nama:'Hijau Muda'}],
-    Kamis:  [{hex:'#F39C12',nama:'Oranye Emas'},{hex:'#FFF3CD',nama:'Kuning Gading'}],
-    Jumat:  [{hex:'#8E44AD',nama:'Ungu'},{hex:'#D7BDE2',nama:'Lavender'}],
-    Sabtu:  [{hex:'#2C3E50',nama:'Biru Gelap'},{hex:'#85929E',nama:'Abu-abu'}]
-  };
-  // Pilih warna utama dari pasaran user, aksen dari hari ini
-  const warnaUser  = WARNA_PASARAN[w.pas.n]   || WARNA_PASARAN['Legi'];
-  const warnaHari  = WARNA_HARI[todayHariName] || WARNA_HARI['Senin'];
-  // Tampilkan warna pasaran user sebagai primer, warna hari sebagai sekunder
-  const warnaFinal = [warnaUser[0], warnaHari[0]];
-  document.getElementById('rhi-warna-row').innerHTML = warnaFinal.map(ww =>
-    `<div class="rh-color-swatch" style="background:${ww.hex}" title="${ww.nama}"></div>
-     <span class="rh-color-name">${ww.nama}</span>`
+  /* Warna */
+  const warna = WARNA_PASARAN[today.pas.id] || WARNA_PASARAN['Legi'];
+  document.getElementById('rhi-warna-row').innerHTML = warna.map(w =>
+    `<div class="rh-color-swatch" style="background:${w.hex}" title="${w.nama}"></div>
+     <span class="rh-color-name">${w.nama}</span>`
   ).join('<span style="color:var(--line);margin:0 4px">·</span>');
 
-  /* Jam terbaik — kombinasi neptu user dengan hari ini untuk variasi */
-  const JAM_KOMBINASI = {
-    // [hari][sisa neptu user % 3]
-    Minggu: ['05.00 – 07.00','09.00 – 11.00','15.00 – 17.00'],
-    Senin:  ['07.00 – 09.00','10.00 – 12.00','14.00 – 16.00'],
-    Selasa: ['06.00 – 08.00','09.00 – 11.00','16.00 – 18.00'],
-    Rabu:   ['08.00 – 10.00','11.00 – 13.00','15.00 – 17.00'],
-    Kamis:  ['07.00 – 09.00','14.00 – 16.00','19.00 – 21.00'],
-    Jumat:  ['06.00 – 08.00','11.00 – 13.00','15.00 – 17.00'],
-    Sabtu:  ['06.00 – 08.00','10.00 – 12.00','16.00 – 18.00']
-  };
-  const JAM_SUB = {
-    Minggu: ['Energi pagi Minggu paling segar untuk memulai','Tengah hari Minggu cocok untuk diskusi','Sore hari Minggu untuk refleksi dan rencana'],
-    Senin:  ['Pagi Senin paling produktif untuk prioritas utama','Jam kerja puncak untuk negosiasi','Sore cocok untuk pekerjaan kreatif'],
-    Selasa: ['Pagi Selasa penuh semangat dan tekad','Jam strategi dan perencanaan','Sore untuk membangun koneksi'],
-    Rabu:   ['Pagi Rabu energi komunikasi paling tinggi','Tengah hari untuk presentasi dan rapat','Sore untuk evaluasi dan koreksi'],
-    Kamis:  ['Pagi Kamis membawa kemudahan dan kelancaran','Sore Kamis penuh berkah','Malam Kamis cocok untuk doa dan refleksi'],
-    Jumat:  ['Pagi Jumat paling berkah untuk niat baik','Tengah hari Jumat membawa kelancaran','Sore untuk memperkuat hubungan'],
-    Sabtu:  ['Pagi Sabtu terbaik untuk kerja keras','Siang cocok untuk urusan material','Sore untuk istirahat dan pengisian energi']
-  };
-  const hariJam  = JAM_KOMBINASI[todayHariName] || JAM_KOMBINASI['Senin'];
-  const hariSub  = JAM_SUB[todayHariName]       || JAM_SUB['Senin'];
-  const idxJam   = w.total % 3; // berbeda tiap weton
-  document.getElementById('rhi-jam').textContent     = hariJam[idxJam];
-  document.getElementById('rhi-jam-sub').textContent = hariSub[idxJam];
+  /* Jam */
+  const jam = JAM_BAIK_HARI[todayHariName] || JAM_BAIK_HARI['Senin'];
+  document.getElementById('rhi-jam').textContent     = jam.jam;
+  document.getElementById('rhi-jam-sub').textContent = jam.sub;
 
   /* Nasihat & Pantangan */
   document.getElementById('rhi-nasihat').textContent  = NASIHAT_KOMBINASI[combined % 10];
