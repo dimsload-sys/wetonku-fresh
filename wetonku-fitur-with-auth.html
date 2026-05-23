@@ -2435,7 +2435,13 @@ function showPanel(name){
   });
   if (name === 'wuku') buildWukuGrid30();
   if (name === 'ai') {
-    if (!aiUserData && window._currentUser) initAIPanel(window._currentUser);
+    if (!aiUserData && window._currentUser) {
+      initAIPanel(window._currentUser);
+    } else if (aiUserData) {
+      // Refresh chip kalau sudah ada data
+      const chip = document.getElementById('ai-weton-chip');
+      if (chip) chip.textContent = `🌀 ${aiUserData.weton} · Wuku ${aiUserData.wuku}`;
+    }
   }
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -2610,8 +2616,7 @@ async function checkAuthAndInit() {
   window._currentUser = user;
 
   // Init AI panel data segera — supaya nama & weton sudah siap sebelum tab diklik
-  // (initAIPanel didefinisikan di bawah, dipanggil via setTimeout agar DOM sudah siap)
-  setTimeout(() => { if (typeof initAIPanel === 'function') initAIPanel(user); }, 100);
+  setTimeout(() => { if (typeof initAIPanel === 'function') initAIPanel(user); }, 600);
 
   // Auto-fill all date pickers with user's saved birth date
   autoFillBirthDate(user.profile?.birth_date);
@@ -2635,8 +2640,14 @@ let aiSedangKirim  = false;
 
 /* ── Build system prompt dari data user ── */
 function buatSystemPromptAI(userData) {
-  const { nama, weton, wuku, neptu, elemenWuku, elemenPasaran } = userData;
-  return `Kamu adalah Ki Primbon — konsultan primbon Jawa yang bijak, hangat, dan mendalam. Kamu berbicara dalam Bahasa Indonesia yang natural, tidak kaku, dan penuh kasih.
+  const { nama, weton, neptu, wuku, elemenWuku, elemenPasaran } = userData;
+  return `Kamu adalah Ki Primbon — konsultan primbon Jawa yang bijak, hangat, dan modern. 
+
+ATURAN BAHASA (WAJIB DIIKUTI):
+- Gunakan Bahasa Indonesia yang natural, santai, dan mudah dipahami
+- BOLEH sesekali menyisipkan 1-2 kata Jawa saja (misalnya: "nrimo", "laku"), lalu langsung jelaskan artinya dalam kurung
+- JANGAN menulis kalimat panjang dalam Bahasa Jawa — pengguna tidak mengerti
+- Sapa pengguna dengan nama mereka: ${nama}
 
 DATA PENGGUNA:
 - Nama: ${nama}
@@ -2647,15 +2658,12 @@ DATA PENGGUNA:
 - Elemen Pasaran: ${elemenPasaran}
 
 CARA MENJAWAB:
-- Selalu gunakan data weton dan wuku di atas sebagai dasar analisis
-- Jawab dengan hangat, personal, dan menyebut nama pengguna sesekali
-- Gabungkan primbon Jawa dengan perspektif praktis kehidupan modern
-- Panjang jawaban: cukup 3-5 paragraf, tidak perlu terlalu panjang
-- Gunakan bahasa Jawa sesekali (italic) untuk memperkuat nuansa primbon
-- Akhiri dengan satu kalimat nasihat atau dorongan yang personal
-- JANGAN membuat angka-angka atau tabel yang rumit
-- JANGAN mengklaim bisa meramal masa depan secara pasti — gunakan kata "cenderung", "berpotensi", "dalam pandangan primbon"
-- Jika pertanyaan di luar konteks primbon/kehidupan, arahkan kembali dengan lembut`;
+- Selalu gunakan data weton dan wuku di atas sebagai dasar analisis yang spesifik
+- Sebut nama ${nama} sesekali agar terasa personal
+- Panjang jawaban: 3-4 paragraf, tidak perlu panjang-panjang
+- Akhiri dengan satu kalimat nasihat yang memotivasi
+- Gunakan kata "cenderung", "dalam pandangan primbon", "primbon menyebut" — jangan klaim pasti
+- Jika pertanyaan di luar primbon, arahkan kembali dengan lembut`;
 }
 
 /* ── Init AI saat panel dibuka ── */
@@ -2664,22 +2672,26 @@ function initAIPanel(user) {
 
   const nama = (user.profile.full_name || user.email.split('@')[0]).split(' ')[0];
   let weton = 'belum diset', neptu = 0, wukuNama = 'belum dihitung';
-  let elemenWuku = 'Bumi', elemenPasaran = 'Bumi';
+  let elemenWuku = 'B', elemenPasaran = 'B';
 
   if (user.profile.birth_date) {
-    const p = user.profile.birth_date.split('-');
-    const w = getWeton(parseInt(p[0]), parseInt(p[1])-1, parseInt(p[2]));
-    weton   = w.label;
-    neptu   = w.total;
-    elemenPasaran = ELEMEN_PASARAN[w.pas.n] || 'B';
+    try {
+      const p = user.profile.birth_date.split('-');
+      const y = parseInt(p[0]), m = parseInt(p[1])-1, d = parseInt(p[2]);
+      const w = getWeton(y, m, d);
+      weton        = w.label;
+      neptu        = w.total;
+      elemenPasaran = ELEMEN_PASARAN[w.pas.n] || 'B';
 
-    const ref = new Date(2001,0,7);
-    const tgl = new Date(parseInt(p[0]), parseInt(p[1])-1, parseInt(p[2]));
-    const idx = Math.floor((((Math.floor((tgl-ref)/86400000))%210)+210)%210/7);
-    if (WUKU_DATA[idx]) {
-      wukuNama = WUKU_DATA[idx].nama;
-      elemenWuku = ELEMEN_WUKU[idx] || 'B';
-    }
+      const ref     = new Date(2001,0,7);
+      const tgl     = new Date(y, m, d);
+      const selisih = Math.floor((tgl - ref) / 86400000);
+      const idx     = Math.floor(((selisih % 210) + 210) % 210 / 7);
+      if (WUKU_DATA && WUKU_DATA[idx]) {
+        wukuNama   = WUKU_DATA[idx].nama;
+        elemenWuku = ELEMEN_WUKU[idx] || 'B';
+      }
+    } catch(e) { console.warn('initAIPanel error:', e); }
   }
 
   aiUserData = {
@@ -2687,19 +2699,19 @@ function initAIPanel(user) {
     weton,
     neptu,
     wuku: wukuNama,
-    elemenWuku: NAMA_ELEMEN[elemenWuku] || elemenWuku,
+    elemenWuku:    NAMA_ELEMEN[elemenWuku]    || elemenWuku,
     elemenPasaran: NAMA_ELEMEN[elemenPasaran] || elemenPasaran
   };
 
-  // Update chip info
+  // Update chip info di panel AI
   const chip = document.getElementById('ai-weton-chip');
   if (chip) chip.textContent = `🌀 ${weton} · Wuku ${wukuNama}`;
 
-  // Cek kuota dari localStorage
-  cekKuotaAI();
-
-  // Reset history dengan system prompt
+  // Reset history supaya system prompt terbaru dipakai
   aiChatHistory = [];
+
+  // Cek kuota
+  cekKuotaAI();
 }
 
 /* ── Cek dan tampilkan kuota ── */
