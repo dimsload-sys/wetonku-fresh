@@ -2953,43 +2953,38 @@ function initAIPanel(user) {
 
   const nama = (user.profile?.full_name || user.email?.split('@')[0] || 'Kamu').split(' ')[0];
   let weton = 'belum diset', neptu = 0, wukuNama = 'belum dihitung';
-  let elWuku = 'B', elPasaran = 'B';
+  let elWukuNama = 'Bumi', elPasaranNama = 'Bumi';
+
+  // Tabel elemen inline — tidak bergantung variabel luar
+  const _elWuku    = ['B','An','B','B','An','B','Ai','B','B','A','A','Ak','An','A','Ak','B','Ai','A','Ai','A','Ak','Ak','Ak','Ai','A','B','Ak','B','B','Ak'];
+  const _elPasaran = {Legi:'Bumi',Pahing:'Api',Pon:'Angin',Wage:'Air',Kliwon:'Akasa'};
+  const _elNama    = {B:'Bumi',A:'Api',An:'Angin',Ai:'Air',Ak:'Akasa'};
 
   if (user.profile?.birth_date) {
     try {
-      const p  = user.profile.birth_date.split('-');
-      const y  = parseInt(p[0]), m = parseInt(p[1])-1, d = parseInt(p[2]);
-      const w  = getWeton(y, m, d);
-      weton    = w.label;
-      neptu    = w.total;
-      elPasaran = ELEMEN_PASARAN[w.pas.n] || 'B';
+      const p   = user.profile.birth_date.split('-');
+      const y   = parseInt(p[0]), m = parseInt(p[1])-1, d = parseInt(p[2]);
+      const w   = getWeton(y, m, d);
+      weton     = w.label;
+      neptu     = w.total;
+      elPasaranNama = _elPasaran[w.pas.n] || 'Bumi';
 
       const ref = new Date(2001,0,7);
       const idx = Math.floor(((Math.floor((new Date(y,m,d)-ref)/86400000)%210)+210)%210/7);
-      if (WUKU_DATA && WUKU_DATA[idx]) {
-        wukuNama = WUKU_DATA[idx].nama;
-        elWuku   = ELEMEN_WUKU[idx] || 'B';
+      if (typeof WUKU_DATA !== 'undefined' && WUKU_DATA[idx]) {
+        wukuNama   = WUKU_DATA[idx].nama;
+        elWukuNama = _elNama[_elWuku[idx]] || 'Bumi';
       }
-    } catch(e) { console.warn('initAIPanel:', e); }
+    } catch(e) { console.warn('initAIPanel error:', e); }
   }
 
-  aiUserData = {
-    nama,
-    weton,
-    neptu,
-    wuku: wukuNama,
-    elemenWuku:    NAMA_ELEMEN[elWuku]    || elWuku,
-    elemenPasaran: NAMA_ELEMEN[elPasaran] || elPasaran
-  };
+  aiUserData = { nama, weton, neptu, wuku: wukuNama, elemenWuku: elWukuNama, elemenPasaran: elPasaranNama };
 
-  // Update chip — langsung, tidak tunggu panel dibuka
+  // Update chip
   const chip = document.getElementById('ai-weton-chip');
   if (chip) chip.textContent = `🌀 ${weton} · Wuku ${wukuNama}`;
 
-  // Reset history supaya system prompt terbaru dipakai
   aiChatHistory = [];
-
-  // Cek kuota
   cekKuotaAI();
 }
 
