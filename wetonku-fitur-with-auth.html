@@ -417,6 +417,89 @@
   .panduan-row p { color: var(--ink); line-height: 1.6; margin: 0; }
   @media (max-width: 500px) { .nama-analysis-grid { grid-template-columns: 1fr; } }
 
+  /* ===== KONSULTASI AI ===== */
+  .ai-info-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+  .ai-info-chip {
+    background:var(--paper-2); border:1px solid var(--line);
+    border-radius:999px; padding:5px 13px;
+    font-size:12px; font-weight:600; color:var(--ink-soft);
+  }
+  .ai-quota-chip { color:var(--good); border-color:rgba(60,122,78,0.3); background:rgba(60,122,78,0.06); }
+  .ai-chat-wrap {
+    background:var(--white); border:1px solid var(--line);
+    border-radius:16px; overflow:hidden; margin-bottom:12px;
+  }
+  .ai-messages {
+    min-height:300px; max-height:500px; overflow-y:auto;
+    padding:18px 16px; display:flex; flex-direction:column; gap:14px;
+    scroll-behavior:smooth;
+  }
+  .ai-msg { display:flex; gap:10px; align-items:flex-start; }
+  .ai-msg.user { flex-direction:row-reverse; }
+  .ai-msg-avatar {
+    width:32px; height:32px; border-radius:50%; flex-shrink:0;
+    background:var(--accent-deep); color:#F4F2EC;
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:700;
+  }
+  .ai-msg.user .ai-msg-avatar { background:var(--accent-2); }
+  .ai-msg-bubble {
+    max-width:82%; padding:11px 14px; border-radius:14px;
+    font-size:13.5px; line-height:1.75; color:var(--ink);
+  }
+  .ai-msg.bot .ai-msg-bubble {
+    background:var(--paper-2); border:1px solid var(--line); border-top-left-radius:4px;
+  }
+  .ai-msg.user .ai-msg-bubble {
+    background:var(--accent-deep); color:#F4F2EC; border-top-right-radius:4px;
+  }
+  .ai-typing-dots { display:flex; gap:4px; align-items:center; padding:4px 0; }
+  .ai-typing-dots span {
+    width:7px; height:7px; border-radius:50%;
+    background:var(--ink-soft); opacity:.4;
+    animation:aiDot 1.2s infinite ease-in-out;
+  }
+  .ai-typing-dots span:nth-child(2){animation-delay:.2s}
+  .ai-typing-dots span:nth-child(3){animation-delay:.4s}
+  @keyframes aiDot{0%,80%,100%{transform:scale(1);opacity:.4}40%{transform:scale(1.3);opacity:1}}
+  .ai-suggestions {
+    display:flex; gap:7px; flex-wrap:wrap;
+    padding:10px 14px; border-top:1px solid var(--line); background:var(--paper-2);
+  }
+  .ai-chip {
+    background:var(--white); border:1px solid var(--line);
+    border-radius:999px; padding:5px 12px;
+    font-size:12px; color:var(--ink-soft); cursor:pointer; transition:all .15s;
+  }
+  .ai-chip:hover { border-color:var(--accent); color:var(--accent); }
+  .ai-input-row {
+    display:flex; gap:8px; align-items:flex-end;
+    padding:12px 14px; border-top:1px solid var(--line);
+  }
+  .ai-textarea {
+    flex:1; background:var(--paper-2); border:1px solid var(--line);
+    border-radius:10px; padding:10px 13px; font-size:14px;
+    color:var(--ink); resize:none; outline:none; font-family:inherit;
+    line-height:1.5; max-height:120px;
+  }
+  .ai-textarea:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(188,108,60,0.1); }
+  .ai-send-btn {
+    width:40px; height:40px; border-radius:10px; flex-shrink:0;
+    background:var(--accent-deep); color:#F4F2EC; border:none;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:all .15s;
+  }
+  .ai-send-btn:hover { opacity:.85; transform:translateY(-1px); }
+  .ai-send-btn:disabled { opacity:.4; cursor:not-allowed; transform:none; }
+  .ai-footer-note {
+    font-size:11px; color:rgba(0,0,0,0.3); padding:0 14px 10px;
+    text-align:center; line-height:1.5;
+  }
+  .ai-quota-warn {
+    background:rgba(188,108,60,0.08); border:1px solid rgba(188,108,60,0.25);
+    border-radius:12px; padding:14px 16px; font-size:13px; color:var(--accent);
+  }
+
   /* ===== SISTEM WUKU ===== */
   .wuku-intro-card {
     background: var(--white); border: 1px solid var(--line); border-radius: 14px;
@@ -1052,21 +1135,51 @@
       <div class="panel-head">
         <span class="panel-tier pro">● Paket Pamungkas</span>
         <h1>Konsultasi AI Personal</h1>
-        <p>Ruang tanya-jawab pribadi tentang wetonmu — karier, asmara, hingga keputusan hidup.</p>
+        <p>Tanya apapun tentang wetonmu — karier, asmara, rezeki, keputusan hidup — dijawab berdasarkan primbon Jawa dan data wetonmu.</p>
       </div>
-      <div class="card">
-        <div class="ai-placeholder">
-          <div class="ai-orb">✺</div>
-          <h3>Belum aktif pada pratinjau ini</h3>
-          <p>Fitur konsultasi AI akan menyala begitu kunci API (DeepSeek atau Claude) tersambung ke website. Semua tampilan dan logikanya sudah siap menunggu.</p>
-          <div class="ai-status"><span class="dot"></span> Menunggu koneksi API</div>
-          <div class="ai-mock">
-            <div class="ai-bubble user">Weton saya Selasa Kliwon. Apakah tahun ini cocok untuk pindah kerja?</div>
-            <div class="ai-bubble bot">Sebagai pemilik weton Selasa Kliwon dengan neptu 11, kamu punya intuisi yang kuat namun cenderung berhati-hati...</div>
-            <div class="ai-bubble user">Bidang apa yang paling cocok untukku?</div>
+
+      <!-- Info chip -->
+      <div class="ai-info-row">
+        <div class="ai-info-chip" id="ai-weton-chip">⏳ Memuat data wetonmu...</div>
+        <div class="ai-info-chip ai-quota-chip" id="ai-quota-chip">💬 80 pesan / 2 minggu</div>
+      </div>
+
+      <!-- Chat window -->
+      <div class="ai-chat-wrap">
+        <div class="ai-messages" id="ai-messages">
+          <div class="ai-msg bot">
+            <div class="ai-msg-avatar">✺</div>
+            <div class="ai-msg-bubble">
+              Halo! Saya Ki Primbon — pendamping AI-mu yang memahami weton dan primbon Jawa secara mendalam.<br><br>
+              Kamu bisa tanya apa saja: <strong>karier, asmara, keputusan besar, rezeki, hari baik,</strong> atau apapun yang ingin kamu dalami berdasarkan wetonmu.<br><br>
+              Apa yang ingin kamu tanyakan hari ini?
+            </div>
           </div>
-          <p class="note-line">Tampilan di atas hanyalah contoh — bukan jawaban sungguhan.</p>
         </div>
+
+        <!-- Suggestion chips -->
+        <div class="ai-suggestions" id="ai-suggestions">
+          <button class="ai-chip" onclick="pakaiSuggestion(this)">Apakah tahun ini baik untuk buka usaha?</button>
+          <button class="ai-chip" onclick="pakaiSuggestion(this)">Karier apa yang paling cocok untuk wetonku?</button>
+          <button class="ai-chip" onclick="pakaiSuggestion(this)">Bagaimana karakter asli wetonku?</button>
+          <button class="ai-chip" onclick="pakaiSuggestion(this)">Apa pantangan terbesar wetonku?</button>
+          <button class="ai-chip" onclick="pakaiSuggestion(this)">Kapan waktu terbaik untuk mengambil keputusan besar?</button>
+          <button class="ai-chip" onclick="pakaiSuggestion(this)">Apa kekuatan tersembunyi wetonku?</button>
+        </div>
+
+        <!-- Input -->
+        <div class="ai-input-row">
+          <textarea id="ai-input" class="ai-textarea" placeholder="Tulis pertanyaanmu di sini..." rows="2" onkeydown="aiEnterSend(event)"></textarea>
+          <button class="ai-send-btn" id="ai-send-btn" onclick="kirimPesanAI()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+        <div class="ai-footer-note">Ki Primbon menggunakan data weton & wuku pribadimu. Jawaban bersifat panduan primbon, bukan keputusan final.</div>
+      </div>
+
+      <!-- Quota warning -->
+      <div class="ai-quota-warn" id="ai-quota-warn" style="display:none">
+        <div>⚠️ Kamu sudah mencapai batas 80 pesan untuk periode ini. Batas akan direset otomatis dalam <span id="ai-reset-days">14</span> hari.</div>
       </div>
     </section>
 
@@ -1167,7 +1280,6 @@
 
 <script>
 /* ============== DATA WETON ============== */
-let userIsPamungkas = false; // diset saat auth check
 const HARI = {
   0:{n:'Minggu',neptu:5}, 1:{n:'Senin',neptu:4}, 2:{n:'Selasa',neptu:3},
   3:{n:'Rabu',neptu:7}, 4:{n:'Kamis',neptu:8}, 5:{n:'Jumat',neptu:6}, 6:{n:'Sabtu',neptu:9}
@@ -1454,254 +1566,157 @@ function hitungRezeki(){
 
 /* ============== 3. TAFSIR MIMPI ============== */
 const MIMPI = [
-/* ─── TIER BASIC: 80 entry — tersedia di Pendalaman ─────────────── */
-  {k:'ular',tier:'basic',t:'Ular dalam mimpi adalah salah satu simbol paling kaya dalam primbon Jawa. Bila ularnya jinak, melingkar tenang, atau kamu memegangnya — ini pertanda jodoh yang mendekat atau rezeki yang akan datang dari arah tak terduga. Bila ular menyerangmu, ada urusan atau orang yang perlu kamu hadapi dengan berani. Ular yang sangat besar melambangkan kekuatan tersembunyi dalam dirimu yang belum sepenuhnya dimanfaatkan. Dalam tradisi Jawa kuno, ular sering dikaitkan dengan "wahyu" — berkat yang sedang dalam perjalanan menujumu.',o:'Umumnya pertanda baik'},
-  {k:'gigi copot',tier:'basic',t:'Mimpi gigi tanggal atau copot memiliki tafsir yang cukup spesifik dalam primbon. Gigi bawah copot biasanya dikaitkan dengan kabar duka dari keluarga pihak ibu; gigi atas dengan pihak ayah. Semakin banyak gigi yang copot, semakin kuat pesannya. Ini bukan kutukan, melainkan sinyal untuk mempererat tali silaturahmi dengan keluarga dan memperbanyak doa untuk orang-orang tersayang.',o:'Pertanda waspada'},
-  {k:'terbang',tier:'basic',t:'Terbang dalam mimpi maknanya positif dalam primbon Jawa. Terbang tinggi dengan tenang melambangkan terangkatnya derajat dan terbukanya peluang baru. Bila terbang di atas rumahmu sendiri, ini pertanda kemakmuran keluarga yang bertumbuh. Terbang di atas kota melambangkan ambisi yang sedang menemukan jalannya. Bila dalam mimpi kamu takut jatuh — itu cerminan kekhawatiran terhadap kesuksesan yang belum kamu yakini layak kamu dapatkan.',o:'Pertanda baik'},
-  {k:'jatuh',tier:'basic',t:'Jatuh dari ketinggian adalah cerminan rasa tidak aman atau kekhawatiran akan kehilangan sesuatu — posisi, hubungan, atau kepercayaan diri. Pertanyaan pentingnya: dari mana kamu jatuh? Dari rumah sendiri berarti kekhawatiran soal keluarga; dari tempat tinggi di luar berarti soal status sosial atau pekerjaan. Mimpi ini adalah undangan untuk berpijak lebih kuat dan membangun fondasi yang lebih solid.',o:'Pertanda introspeksi'},
-  {k:'air',tier:'basic',t:'Air adalah simbol paling dinamis dalam primbon — maknanya bergantung kondisinya. Air jernih mengalir tenang: rezeki lancar dan kabar baik dari jauh. Air keruh: ada masalah yang mengaduk perasaan, perlu kejernihan. Berenang di air tenang: kamu sedang dalam kontrol penuh hidupmu. Tenggelam: beban terlalu berat — sinyal untuk meminta bantuan. Air terjun yang deras: perubahan besar yang tak terbendung sedang datang.',o:'Tergantung kondisi air'},
-  {k:'banjir',tier:'basic',t:'Banjir melambangkan emosi atau persoalan yang sudah terlalu lama dipendam hingga akhirnya meluap. Ini bukan pertanda bencana, tapi undangan untuk tidak menyimpan beban sendirian. Yang menarik dalam primbon: setelah banjir dalam mimpi, sering datang keberkahan — sama seperti banjir sungguhan yang meninggalkan tanah subur setelah surut. Hadapi yang sedang membanjirimu, lalu bersiap untuk panen.',o:'Ujian lalu berkah'},
-  {k:'dikejar',tier:'basic',t:'Dikejar adalah cermin dari sesuatu yang kamu hindari — tanggung jawab, percakapan sulit, keputusan tertunda, atau perasaan yang belum diproses. Semakin cepat pengejarnya, semakin mendesak urusan itu. Dikejar manusia berarti konflik interpersonal; dikejar binatang berarti naluri atau ketakutan primitif; dikejar bayangan berarti masalah internal. Primbon menyarankan satu hal: berhenti lari. Hadapi apa yang mengejarmu.',o:'Pertanda introspeksi'},
-  {k:'api',tier:'basic',t:'Api kecil yang terkendali melambangkan semangat dan motivasi yang menyala. Api besar yang berkobar indah pertanda perubahan transformatif ke arah yang lebih baik. Api yang membakar barang milikmu: kehilangan sesuatu material diikuti dengan kebebasan. Api yang tidak bisa dipadamkan: amarah atau tekanan yang sudah terlalu lama disimpan, butuh disalurkan dengan sehat.',o:'Tergantung besar api'},
-  {k:'kebakaran',tier:'basic',t:'Kebakaran dalam primbon Jawa sering ditafsirkan terbalik — semakin besar apinya, semakin besar potensi rezeki yang datang. Sesuatu yang lama ada dalam hidupmu sedang "dibakar" untuk memberi ruang bagi yang baru. Kebakaran rumah orang lain: kabar mengejutkan dari lingkungan sekitar. Kebakaran yang berhasil kamu padamkan: kamu akan berhasil mengatasi masalah besar dengan kemampuanmu sendiri.',o:'Pertanda baik'},
-  {k:'uang',tier:'basic',t:'Paradoks mimpi uang dalam primbon sudah dikenal luas: menemukan uang banyak justru sering pertanda pengeluaran tak terduga. Sebaliknya, memberikan atau kehilangan uang justru sering pertanda rezeki yang akan datang. Primbon percaya mimpi bekerja dalam logika terbalik untuk hal-hal material. Namun jika dalam mimpi kamu merasa senang saat memberi — itu pertanda sangat baik.',o:'Sering bermakna terbalik'},
-  {k:'emas',tier:'basic',t:'Emas dalam primbon adalah simbol kemuliaan, rezeki, dan anugerah. Menerima emas sebagai hadiah: akan datang anugerah yang tidak kamu duga. Menemukan emas: ada bakat atau peluang tersembunyi yang belum kamu sadari nilainya. Kehilangan emas: waspada terhadap kepercayaan yang diberikan padamu — jangan disia-siakan. Memakai perhiasan emas: derajatmu akan terangkat melalui kerja keras yang sudah kamu lakukan.',o:'Pertanda baik'},
-  {k:'menikah',tier:'basic',t:'Bagi yang belum menikah: pertanda jodoh sedang mendekat. Bagi yang sudah menikah: ini tanda babak baru dalam pernikahan, komitmen yang diperbaharui, atau tanggung jawab baru dalam keluarga — bukan pertanda perselingkuhan. Menikah dengan orang yang tidak dikenal: akan ada hubungan penting baru yang masuk dalam hidupmu.',o:'Pertanda perubahan'},
-  {k:'hamil',tier:'basic',t:'Mimpi hamil dalam primbon adalah salah satu yang paling positif — berlaku untuk laki-laki maupun perempuan. Hamil melambangkan sesuatu yang sedang "dikandung": rencana besar, ide yang belum dilahirkan, atau harapan yang bertumbuh. Semakin besar kandungannya, semakin matang rencana itu dan semakin dekat waktunya untuk dieksekusi.',o:'Pertanda baik'},
-  {k:'bayi',tier:'basic',t:'Bayi yang sehat, tertawa, dalam gendonganmu: kebahagiaan baru sedang tumbuh — hubungan baru, usaha baru, atau fase kehidupan penuh harapan. Bayi yang menangis: ada sesuatu dalam hidupmu yang masih "bayi" dan butuh lebih banyak perhatian. Menemukan bayi: akan ada tanggung jawab baru yang datang — dan kamu lebih siap dari yang kamu kira.',o:'Pertanda baik'},
-  {k:'meninggal',tier:'basic',t:'Mimpi tentang kematian jarang bermakna harfiah. Kematian diri sendiri: transformasi besar — kamu sedang meninggalkan versi lama dirimu. Kematian orang yang masih hidup: perubahan besar dalam hubunganmu dengan mereka. Kematian orang yang sudah meninggal: biasanya kunjungan spiritual yang membawa pesan atau ketenangan.',o:'Pertanda perubahan'},
-  {k:'rambut',tier:'basic',t:'Rambut rontok berlebihan: kekhawatiran soal sesuatu yang kamu anggap identitasmu — jabatan, hubungan, atau reputasi. Rambut tumbuh panjang dan lebat: bertambahnya rezeki dan energi positif. Rambut dipotong paksa: ada situasi di luar kontrolmu yang akan mengubah sesuatu. Rambut berwarna berbeda: kamu sedang dalam fase perubahan identitas.',o:'Tergantung kondisi'},
-  {k:'rumah',tier:'basic',t:'Rumah dalam mimpi adalah representasi dirimu sendiri — jiwa, hidup, keluarga. Rumah baru yang indah: pertanda kemakmuran dan babak baru yang menyenangkan. Rumah lama yang runtuh: ada fondasi dalam hidupmu yang perlu diperbaiki. Rumah yang sangat besar: ambisi yang sedang membesar. Menemukan kamar tersembunyi: bakat atau kemampuan yang belum kamu sadari.',o:'Cerminan kondisi batin'},
-  {k:'hewan',tier:'basic',t:'Hewan jinak yang ramah adalah pertanda baik dan keselarasan dengan alam. Hewan liar yang mengancam: ada kekuatan atau emosi primitif yang belum dijinakkan dalam dirimu. Memelihara hewan: tanggung jawab baru yang akan datang. Hewan yang berbicara: pesan penting dari alam bawah sadar yang perlu kamu dengarkan.',o:'Tergantung jenis hewan'},
-  {k:'sekolah',tier:'basic',t:'Ujian yang tidak bisa kamu kerjakan: rasa tidak siap menghadapi tantangan nyata. Lulus ujian dengan nilai tinggi: kepercayaan dirimu akan tumbuh setelah melewati situasi sulit. Kembali ke sekolah lama: ada pelajaran dari masa lalu yang belum selesai kamu proses. Terlambat ke sekolah: kekhawatiran akan melewatkan peluang penting.',o:'Cerminan kecemasan'},
-  {k:'menangis',tier:'basic',t:'Menangis dalam mimpi sering membawa perasaan lega saat bangun — primbon mengkonfirmasi ini sebagai pertanda baik. Air mata adalah pelepasan emosi yang tertahan. Menangis karena bahagia: kebahagiaan nyata yang akan segera datang. Menangis karena sedih tapi terasa lega: penyembuhan dari luka yang sudah lama.',o:'Pertanda pelepasan'},
-  {k:'tertawa',tier:'basic',t:'Tertawa bersama orang-orang yang kamu cintai: kebahagiaan dan kebersamaan yang akan semakin kuat. Tertawa sendiri: kepuasan batin yang sedang tumbuh dari dalam. Tertawa yang tidak bisa berhenti: luapan kebahagiaan yang sudah lama kamu tahan. Catatan: tertawa mengejek orang lain dalam mimpi justru kurang baik — cermin sikap yang perlu dievaluasi.',o:'Pertanda baik'},
-  {k:'hutan',tier:'basic',t:'Hutan lebat yang gelap: kamu sedang dalam periode hidup penuh ketidakjelasan — tapi ingat, semua hutan punya ujung. Hutan yang indah dan terang: petualangan spiritual atau pengalaman transformatif sedang menunggumu. Tersesat dalam hutan: butuh waktu untuk menemukan kembali arah hidupmu, dan itu wajar.',o:'Perjalanan batin'},
-  {k:'gunung',tier:'basic',t:'Mendaki gunung dengan semangat: kamu sedang dalam perjalanan menuju tujuan besar yang layak diperjuangkan. Mencapai puncak: pencapaian besar yang akan datang. Turun dari gunung: fase baru setelah perjuangan panjang, saatnya menikmati hasil. Gunung meletus: perubahan dramatis yang tak bisa dihindari — gunung berapi justru membuat tanah paling subur.',o:'Pertanda pencapaian'},
-  {k:'laut',tier:'basic',t:'Laut yang tenang dan biru jernih: ketenangan batin, rezeki yang lapang, hubungan yang harmonis. Laut bergelombang: emosi yang sedang bergolak, situasi tidak stabil. Berenang di laut: kamu sedang menyelami kedalaman dirimu sendiri dengan berani. Tenggelam di laut: beban emosi terlalu berat — ini saatnya mencari bantuan.',o:'Cerminan kedalaman batin'},
-  {k:'hujan',tier:'basic',t:'Hujan dalam primbon Jawa hampir selalu bermakna positif — rahmat dan keberkahan yang turun dari atas. Hujan deras yang dingin namun tidak menyakiti: rezeki besar yang datang dengan tiba-tiba. Hujan rintik-rintik yang menenangkan: kedamaian dan ketenangan batin yang sedang kamu cari akan kamu temukan. Kehujanan tanpa payung dan merasa bahagia: pertanda sangat baik — berkah yang turun tanpa bisa ditahan.',o:'Pertanda berkah'},
-  {k:'matahari',tier:'basic',t:'Matahari terbit yang cerah: awal baru yang penuh harapan, peluang segar yang sedang membuka diri. Matahari terik yang menyengat: semangat yang menyala, tapi waspadai kelelahan berlebih. Matahari tenggelam: fase yang akan berakhir sebelum babak baru dimulai — bukan akhir, tapi transisi. Dua matahari sekaligus: dalam primbon, ini pertanda luar biasa — kemasyhuran atau posisi yang tidak biasa.',o:'Pertanda perubahan positif'},
-  {k:'bulan',tier:'basic',t:'Bulan purnama bercahaya indah: kejelasan pikiran, puncak dari sesuatu yang sedang kamu bangun, perasaan utuh. Bulan sabit: babak baru yang masih dalam pertumbuhan, jangan terburu mengharapkan hasil. Bulan yang tertutup awan: ada penghalang sementara yang akan berlalu — bersabar. Bulan jatuh ke tangan: dalam primbon, ini pertanda besar — bisa berupa jodoh yang luar biasa atau derajat yang terangkat.',o:'Pertanda kejelasan'},
-  {k:'bintang',tier:'basic',t:'Melihat bintang yang banyak dan indah: rezeki dan keberuntungan dari banyak arah. Bintang jatuh: dalam primbon bisa berarti permintaan yang akan dikabulkan — buatlah doa saat bintang jatuh dalam mimpi pun. Bintang yang kamu sentuh: pencapaian yang selama ini terasa mustahil akan menjadi nyata. Langit tanpa bintang: kegelisahan batin atau periode kesunyian sebelum ledakan kreativitas.',o:'Pertanda beruntung'},
-  {k:'harimau',tier:'basic',t:'Harimau jinak yang berjalan di sisimu: kekuatan besar yang sedang berpihak padamu, perlindungan yang tidak terlihat. Harimau yang menyerangmu: ada ancaman nyata dalam kehidupanmu yang sudah harus dihadapi, bukan dihindari. Menunggangi harimau: kamu sedang menguasai sesuatu yang selama ini menakutkanmu — ini pertanda kemenangan yang luar biasa.',o:'Pertanda kekuatan'},
-  {k:'gajah',tier:'basic',t:'Gajah dalam primbon Jawa adalah hewan yang sangat bertuah — simbol kebijaksanaan, kekuatan, dan rezeki. Gajah putih yang jinak: pertanda sangat istimewa, kemungkinan besar ada anugerah besar atau posisi terhormat yang akan kamu dapatkan. Gajah yang mengamuk: ada kekuatan besar yang sedang tidak terkendali dalam hidupmu — waspadai ego atau amarah.',o:'Pertanda kebijaksanaan'},
-  {k:'kuda',tier:'basic',t:'Kuda berlari bebas: energi, kebebasan, dan pencapaian yang sedang melaju kencang. Menunggangi kuda dengan percaya diri: kamu sedang mengendalikan takdirmu ke arah yang kamu inginkan. Kuda yang susah dikendalikan: ada aspek dalam hidupmu yang masih liar dan belum bisa kamu arahkan. Kuda mati: kehilangan energi atau motivasi yang perlu dipulihkan.',o:'Pertanda energi'},
-  {k:'burung',tier:'basic',t:'Burung yang terbang bebas di langit: kebebasan, peluang yang terbuka lebar, dan kabar baik yang akan datang. Burung yang hinggap di tanganmu: rezeki atau kesempatan langka yang datang langsung kepadamu — jangan dilepaskan. Burung yang mati: kehilangan sesuatu yang berharga, atau akhir dari suatu fase. Burung yang bernyanyi indah: kabar gembira sedang dalam perjalanan.',o:'Pertanda kebebasan'},
-  {k:'ikan',tier:'basic',t:'Ikan yang banyak dan sehat berenang: rezeki yang berlimpah dan mengalir deras. Memancing dan mendapat ikan besar: akan ada pencapaian atau pendapatan besar yang datang dari usaha yang sudah lama dilakukan. Ikan yang mati atau air yang keruh: ada sesuatu dalam bisnismu atau keuanganmu yang perlu segera dibenahi.',o:'Pertanda rezeki'},
-  {k:'kucing',tier:'basic',t:'Kucing putih yang jinak: keberuntungan dan perlindungan spiritual yang sedang mengiringimu. Kucing hitam yang mengancam: dalam primbon, sinyal waspada terhadap energi negatif di sekitar — bukan kutukan, tapi sinyal. Kucing yang mengeong terus-menerus: ada sesuatu yang perlu kamu perhatikan tapi selama ini diabaikan. Kucing menggosok-gosokkan tubuh: afeksi dan kasih sayang yang sedang mengalir padamu.',o:'Tergantung warna dan perilaku'},
-  {k:'anjing',tier:'basic',t:'Anjing yang setia mengikutimu: loyalitas yang tulus — dari sahabat, pasangan, atau rekan kerja yang sedang bersamamu. Anjing yang menggonggong dan menyerang: ada pengkhianatan atau ancaman yang datang dari arah yang tidak kamu duga. Anjing yang bermain riang: persahabatan yang menyenangkan dan lingkungan yang harmonis.',o:'Pertanda kesetiaan'},
-  {k:'nasi',tier:'basic',t:'Nasi dalam primbon adalah simbol rezeki pokok dan keberkahan hidup. Nasi yang melimpah di meja: kecukupan dan ketenangan finansial yang sedang dalam perjalanan. Memasak nasi: kamu sedang mempersiapkan sesuatu yang akan memberi makan banyak orang — dalam arti literal maupun kiasan. Nasi basi atau busuk: ada yang perlu segera diperbaiki sebelum kesempatan berlalu.',o:'Pertanda rezeki'},
-  {k:'cincin',tier:'basic',t:'Menerima cincin: akan ada komitmen baru yang bermakna — pekerjaan, hubungan, atau tanggung jawab. Kehilangan cincin: ada ikatan atau komitmen yang sedang diuji. Cincin yang patah: perlu evaluasi serius terhadap suatu hubungan atau perjanjian. Menemukan cincin: peluang komitmen berharga sedang menunggumu.',o:'Pertanda komitmen'},
-  {k:'darah',tier:'basic',t:'Darah dalam primbon tidak selalu bermakna buruk — konteksnya sangat penting. Darah mengalir dari lukamu sendiri: pengorbanan yang sedang atau akan kamu lakukan untuk sesuatu yang berharga. Melihat banyak darah orang lain: ada kejadian atau berita yang akan mengejutkanmu. Darah yang mengalir tapi tidak menyakitimu: rezeki atau anugerah yang datang melalui proses yang tidak mudah.',o:'Tergantung konteks'},
-  {k:'pohon',tier:'basic',t:'Pohon besar yang rindang dan kokoh: fondasi hidup yang kuat, keluarga yang solid, dan perlindungan yang nyata. Pohon yang tumbang: kehilangan sesuatu yang selama ini menjadi sandaran — perlu bersiap mandiri. Menanam pohon: investasi jangka panjang yang hasilnya akan kamu nikmati jauh di masa depan. Pohon berbuah lebat: kerja keras yang akan segera menghasilkan sesuatu yang bisa dinikmati bersama.',o:'Pertanda fondasi'},
-  {k:'bunga',tier:'basic',t:'Bunga yang mekar indah: keindahan, cinta, dan momen kebahagiaan yang sedang mekar dalam hidupmu. Menerima bunga: kasih sayang dan perhatian yang sedang datang kepadamu. Bunga yang layu: sesuatu yang indah sedang berangsur berakhir — bukan kehilangan, tapi proses alami yang memberi ruang bagi yang baru. Menanam bunga: kamu sedang menabur benih kebaikan yang akan berbunga pada waktunya.',o:'Pertanda keindahan'},
-  {k:'pasar',tier:'basic',t:'Pasar yang ramai dan penuh: kehidupan sosial yang aktif, banyak peluang yang sedang beredar — kamu hanya perlu tahu mana yang ingin kamu ambil. Pasar yang sepi dan gelap: periode penurunan atau kelesuan yang sementara — saatnya evaluasi strategi. Berbelanja di pasar dengan senang hati: pertanda kamu akan mendapatkan apa yang kamu cari.',o:'Pertanda sosial'},
-  {k:'masjid',tier:'basic',t:'Memasuki masjid dengan tenang dan khusyuk: keberkahan spiritual yang sedang mengalir, hati yang sedang mendekat kepada yang Maha Kuasa. Masjid yang megah dan indah: derajat spiritual dan sosial yang akan terangkat. Shalat di masjid dengan khusyuk: doa-doamu sedang dalam proses dikabulkan — teruslah berikhtiar.',o:'Pertanda spiritual'},
-  {k:'kuburan',tier:'basic',t:'Kuburan dalam primbon Jawa bukan pertanda kematian — ini justru tempat yang sering bermakna dalam dan spiritual. Berziarah ke kuburan dengan tenang: hubungan yang baik dengan leluhur, memori yang dijaga dengan hormat. Tidur di kuburan dalam mimpi: dalam primbon Jawa ini bisa berarti akan datang ilmu, wangsit, atau kebijaksanaan dari dimensi yang lebih tinggi.',o:'Pertanda spiritual'},
-  {k:'sungai',tier:'basic',t:'Sungai yang jernih mengalir deras: perjalanan hidup yang sedang lancar menuju tujuan, energi yang positif. Sungai yang keruh dan berbahaya: hati-hati terhadap arus situasi yang bisa membawamu ke tempat yang tidak kamu inginkan. Menyeberangi sungai dengan selamat: kamu akan berhasil melewati tantangan yang sedang dihadapi. Tenggelam di sungai: minta tolong sebelum situasinya semakin dalam.',o:'Pertanda perjalanan'},
-  {k:'taman',tier:'basic',t:'Taman yang indah, hijau, dan terawat: kedamaian, keseimbangan hidup, dan keindahan yang sedang hadir dalam hidupmu. Taman yang terbengkalai dan penuh semak: ada aspek hidupmu yang sudah lama tidak dirawat dan perlu perhatian. Bermain di taman dengan bahagia: kegembiraan tulus dan momen sederhana yang berharga.',o:'Pertanda kedamaian'},
-  {k:'berlari',tier:'basic',t:'Berlari dengan cepat dan ringan: ambisi yang sedang bergerak menuju tujuannya, energi dan semangat yang meluap. Berlari tapi kaki terasa berat: ada hambatan internal — bisa berupa rasa takut, keraguan, atau kelelahan — yang perlu diatasi. Berlari tanpa tujuan: berhenti sejenak dan tanya dirimu: ke mana sebenarnya kamu berlari?',o:'Cerminan ambisi'},
-  {k:'berenang',tier:'basic',t:'Berenang dengan lancar di air jernih: kamu sedang navigasi hidup dengan mahir dan percaya diri. Berenang melawan arus tapi berhasil: tekad kuat yang sedang menghadapi tantangan dan menang. Tenggelam saat berenang: beban yang terlalu berat untuk ditanggung sendirian — minta bantuan. Berenang di laut luas sendirian: kemandirian dan keberanian yang sedang diuji.',o:'Pertanda navigasi hidup'},
-  {k:'bertengkar',tier:'basic',t:'Bertengkar dengan orang yang dikenal: ada ketegangan atau konflik yang belum terselesaikan dengan orang tersebut — ini sinyal untuk menghadapinya dengan kepala dingin. Bertengkar dengan orang asing: konflik internal, dua sisi dalam dirimu yang sedang beradu. Bertengkar tapi kemudian berdamai dalam mimpi: pertanda hubungan yang sedang membaik setelah melalui gesekan.',o:'Pertanda konflik yang perlu diselesaikan'},
-  {k:'leluhur',tier:'basic',t:'Bertemu leluhur atau orang yang sudah meninggal dalam mimpi adalah salah satu yang paling bermakna dalam primbon Jawa. Jika leluhur tersenyum dan berbicara lembut: pertanda perlindungan dan restu dari alam sana. Jika leluhur terlihat khawatir atau memberikan pesan: dengarkan baik-baik — ada sesuatu yang perlu kamu lakukan atau jaga. Menerima sesuatu dari tangan leluhur: berkah yang sedang diteruskan.',o:'Pertanda spiritual bermakna'},
-  {k:'tangga',tier:'basic',t:'Menaiki tangga dengan mudah: kemajuan, kenaikan derajat, dan kesuksesan yang sedang kamu capai setahap demi setahap. Tangga yang rapuh atau patah: hati-hati dengan cara kamu mencapai tujuan — pastikan jalannya kokoh dan jujur. Turun dari tangga: mundur sementara untuk persiapan yang lebih matang — bukan kekalahan.',o:'Pertanda kemajuan'},
-  {k:'kunci',tier:'basic',t:'Menemukan kunci: akan ada akses atau peluang yang selama ini tersembunyi yang tiba-tiba terbuka. Kehilangan kunci: ada sesuatu yang terkunci untukmu sementara — bersabar dan terus mencari jalannya. Menerima kunci dari seseorang: kepercayaan besar yang sedang diberikan kepadamu — emban dengan sungguh-sungguh.',o:'Pertanda akses dan kepercayaan'},
-  {k:'pintu',tier:'basic',t:'Pintu yang terbuka lebar: peluang yang sedang terbuka, selamat datang di babak baru. Pintu yang terkunci dan tidak bisa dibuka: ada halangan atau penolakan yang harus kamu hadapi dengan cara lain. Pintu yang tertutup tapi tidak terkunci: peluang itu ada, tapi kamu perlu berani untuk mendorongnya. Banyak pintu dan bingung memilih: kamu sedang di persimpangan keputusan.',o:'Pertanda peluang'},
-  {k:'cermin',tier:'basic',t:'Melihat dirimu sendiri di cermin dengan jelas: kesadaran diri yang sedang meningkat, kejujuran terhadap diri sendiri. Cermin yang retak: citra diri yang sedang terganggu, mungkin ada kritik dari dalam atau luar yang terlalu keras. Cermin yang tidak memantulkan gambarmu: identitas yang sedang dipertanyakan — siapa kamu sebenarnya?',o:'Cerminan diri'},
-  {k:'pisau',tier:'basic',t:'Memegang pisau dengan tenang untuk memotong sesuatu: keputusan tegas yang perlu diambil — sesuatu harus "dipotong" dari hidupmu. Pisau yang diancamkan ke arahmu: ada ancaman atau situasi yang membuatmu merasa tidak aman. Pisau yang hilang: kehilangan ketegasan atau kemampuan untuk membuat keputusan sulit.',o:'Pertanda keputusan'},
-  {k:'baju',tier:'basic',t:'Baju baru yang indah: penampilan baru, identitas baru, kepercayaan diri yang meningkat. Baju yang robek atau kotor: reputasi atau citra yang sedang terganggu — perlu diperhatikan. Berganti baju: transformasi, perubahan peran atau identitas yang sedang terjadi. Tidak punya baju dalam mimpi: kerentanan dan ketakutan akan penilaian orang lain.',o:'Cerminan identitas'},
-  {k:'sepatu',tier:'basic',t:'Sepatu baru yang nyaman: siap melangkah ke fase baru dengan percaya diri. Sepatu yang hilang: kehilangan arah atau tujuan — bingung harus melangkah ke mana. Memakai sepatu orang lain: mencoba memahami perspektif orang lain, atau memasuki peran yang bukan milikmu. Sepatu yang rusak: kelelahan dalam perjalanan, butuh istirahat.',o:'Pertanda langkah hidup'},
-  {k:'jam',tier:'basic',t:'Jam yang berhenti: waktu yang terasa stagnan, ada yang perlu kamu mulai atau selesaikan sebelum terlambat. Jam yang berputar terbalik: nostalgia atau keinginan untuk mengubah sesuatu di masa lalu — lepaskan dan fokus ke depan. Jam yang berputar sangat cepat: kekhawatiran bahwa waktu terus berlalu tanpa pencapaian yang berarti.',o:'Pertanda waktu'},
-  {k:'lampu',tier:'basic',t:'Lampu yang menyala terang: kejelasan pikiran, pencerahan, dan pemahaman yang sedang datang. Lampu yang padam tiba-tiba: kehilangan arah, kebingungan, atau situasi yang menjadi gelap secara tiba-tiba. Menyalakan lampu di tempat yang gelap: kamu adalah pembawa cahaya di situasi yang sulit — orang-orang membutuhkanmu.',o:'Pertanda cahaya dan kejelasan'},
-  {k:'mobil',tier:'basic',t:'Mengendarai mobil dengan lancar: kehidupan yang berjalan sesuai rencana, kendali yang baik. Mobil yang mogok: ada hambatan yang membuat perjalananmu terhenti sementara. Rem yang tidak berfungsi: perasaan kehilangan kontrol atas situasi penting. Ditabrak: ada kejadian tidak terduga yang akan mengguncang hidupmu — bersiaplah.',o:'Cerminan kendali hidup'},
-  {k:'pesawat',tier:'basic',t:'Naik pesawat dengan tenang: ambisi besar dan perjalanan menuju tujuan yang tinggi. Pesawat yang akan jatuh: kekhawatiran terhadap sesuatu yang berjalan terlalu cepat atau terlalu tinggi. Melihat pesawat dari bawah: ada peluang besar yang kamu lihat tapi belum bisa kamu raih — teruslah mempersiapkan diri.',o:'Pertanda ambisi tinggi'},
-  {k:'kapal',tier:'basic',t:'Berlayar di kapal di laut tenang: perjalanan hidup yang sedang stabil dan terarah. Kapal dalam badai tapi kamu tenang: ketabahan luar biasa dalam menghadapi cobaan berat. Kapal yang tenggelam: situasi yang terasa di luar kendali — jangan panik, carilah daratan terdekat.',o:'Pertanda perjalanan'},
-  {k:'kereta',tier:'basic',t:'Naik kereta yang melaju: kamu sedang dalam jalur yang benar, perjalananmu terstruktur dan ada tujuan yang jelas. Ketinggalan kereta: kekhawatiran melewatkan peluang penting — ini sinyal untuk lebih sigap. Kereta yang keluar jalur: ada sesuatu yang tidak berjalan sesuai rencana dan perlu segera dikoreksi.',o:'Pertanda arah hidup'},
-  {k:'jembatan',tier:'basic',t:'Menyeberangi jembatan dengan lancar: perubahan besar dalam hidup yang akan berjalan mulus. Jembatan yang goyah atau hampir runtuh: transisi yang sedang kamu hadapi membutuhkan lebih banyak persiapan. Berdiri di tengah jembatan dan ragu-ragu: kamu sedang di persimpangan keputusan penting.',o:'Pertanda transisi'},
-  {k:'perjalanan',tier:'basic',t:'Perjalanan yang menyenangkan dan lancar: kehidupan yang sedang berjalan baik, eksplorasi hal-hal baru. Tersesat dalam perjalanan: butuh panduan atau mentor untuk menemukan kembali arah. Perjalanan yang tidak pernah sampai tujuan: proses yang panjang — nikmati perjalanannya, bukan hanya tujuannya.',o:'Pertanda eksplorasi'},
-  {k:'hadiah',tier:'basic',t:'Menerima hadiah yang menyenangkan: rezeki atau apresiasi yang tak terduga sedang dalam perjalanan. Memberikan hadiah kepada orang lain: kemurahan hati yang akan kembali berlipat ganda. Menolak hadiah: ada sesuatu yang kamu tolak yang seharusnya kamu terima — periksa apakah ada peluang yang kamu hindari.',o:'Pertanda rezeki'},
-  {k:'mencuri',tier:'basic',t:'Mimpi mencuri bukan berarti kamu akan mencuri. Ini cerminan keinginan yang tidak terpenuhi atau perasaan bahwa kamu tidak mendapatkan apa yang menjadi hakmu. Evaluasi: apakah ada sesuatu yang ingin kamu miliki tapi kamu rasa tidak bisa kamu dapatkan dengan cara yang benar? Cari jalan yang halal.',o:'Pertanda evaluasi'},
-  {k:'dicuri',tier:'basic',t:'Mimpi dicuri melambangkan kekhawatiran kehilangan sesuatu yang berharga — bisa berupa materi, kepercayaan, posisi, atau hubungan. Ini sinyal untuk lebih berhati-hati dan menjaga apa yang kamu miliki dengan lebih sungguh-sungguh.',o:'Pertanda waspada'},
-  {k:'takut',tier:'basic',t:'Mimpi ketakutan yang intens adalah cerminan kecemasan dalam kehidupan nyata yang belum terselesaikan. Tapi justru menghadapi rasa takut dalam mimpi — entah dengan berlari atau berdiri — memberikan petunjuk tentang cara kamu menghadapi masalah nyata. Primbon menyarankan: hadapi ketakutan setelah bangun, mimpi ini sedang mempersiapkanmu.',o:'Cerminan kecemasan'},
-  {k:'bahagia',tier:'basic',t:'Mimpi yang diselimuti kebahagiaan tulus — tanpa alasan yang jelas pun — adalah salah satu pertanda terbaik dalam primbon. Ini bukan harapan kosong; ini energi positif yang sedang membangun ruang untuk kebahagiaan nyata yang akan segera datang. Syukuri perasaan ini saat bangun.',o:'Pertanda sangat baik'},
-  {k:'sakit',tier:'basic',t:'Mimpi sakit bukan berarti kamu akan sakit. Ini bisa berarti tubuhmu sedang memberikan sinyal bahwa ada sesuatu yang perlu diperhatikan — bisa berupa gaya hidup, pola makan, atau beban pikiran. Perhatikan bagian tubuh mana yang sakit dalam mimpi — dalam primbon tiap bagian tubuh melambangkan aspek kehidupan yang berbeda.',o:'Sinyal perhatian'},
-  {k:'sembuh',tier:'basic',t:'Mimpi sembuh dari sakit adalah salah satu pertanda paling indah — ini adalah simbol resolusi, pemulihan, dan keseimbangan yang kembali. Sesuatu yang selama ini rusak, sakit, atau tidak beres sedang dalam proses penyembuhan — bisa berupa hubungan, kondisi finansial, atau kondisi mental.',o:'Pertanda pemulihan'},
-  {k:'marah',tier:'basic',t:'Marah dalam mimpi adalah pelepasan emosi yang tertahan dalam kehidupan nyata. Jika kamu sangat jarang marah dalam kehidupan nyata tapi sering marah dalam mimpi — itu sinyal bahwa ada amarah yang perlu disalurkan dengan sehat. Marah kepada seseorang spesifik: ada urusan yang belum selesai dengan orang itu.',o:'Pertanda pelepasan emosi'},
-  {k:'wisuda',tier:'basic',t:'Mimpi wisuda melambangkan pencapaian, pengakuan, dan babak baru setelah kerja keras panjang. Ini bukan hanya tentang pendidikan — bisa juga melambangkan selesainya sebuah fase dalam hidupmu dan kesiapan untuk fase berikutnya yang lebih besar.',o:'Pertanda pencapaian'},
-  {k:'pesta',tier:'basic',t:'Pesta yang meriah bersama orang-orang yang dicintai: kegembiraan sosial dan momen perayaan yang akan datang. Ada kabar gembira yang akan segera dibagikan. Pesta yang sepi atau canggung: kekhawatiran tentang penerimaan sosial — kamu lebih diterima dari yang kamu kira.',o:'Pertanda kegembiraan'},
-  {k:'kantor',tier:'basic',t:'Mimpi di kantor seringkali berkaitan dengan tekanan pekerjaan. Kantor yang nyaman dan produktif: keseimbangan dan kepuasan kerja. Kantor yang kacau dan penuh tekanan: kelelahan atau konflik yang perlu diselesaikan. Dimarahi atasan: kekhawatiran terhadap penilaian profesionalmu.',o:'Cerminan tekanan kerja'},
-  {k:'sawah',tier:'basic',t:'Sawah yang hijau dan subur: kemakmuran, kerja keras yang sedang berbuah, dan kehidupan yang mengalir sesuai iramanya. Sawah yang kering dan merekah: periode kekeringan rezeki yang sementara — bertahanlah dan terus bekerja. Panen padi di sawah: hasil dari kerja keras yang panjang akhirnya tiba — rayakan dengan syukur.',o:'Pertanda kemakmuran'},
-  {k:'angin',tier:'basic',t:'Angin sepoi-sepoi yang menyejukkan: ketenangan, kedamaian, dan hal-hal kecil yang menyenangkan yang sedang kamu lewatkan. Angin kencang yang menggoyang: perubahan besar yang tidak bisa dihindari. Badai angin yang menghancurkan: ujian besar yang datang — tapi ingat, pohon yang bertahan badai menjadi paling kuat.',o:'Pertanda perubahan'},
-  {k:'petir',tier:'basic',t:'Petir yang menyambar jauh: berita mengejutkan yang datang dari tempat yang tidak kamu duga. Petir yang menyambar dekat tapi tidak mengenaiku: bahaya yang hampir mengenaimu tapi berlalu — pertanda perlindungan. Petir yang menyambar dan memberi cahaya: pencerahan mendadak atau momen "aha" yang akan mengubah cara pandangmu.',o:'Pertanda kejutan'},
-  {k:'pelangi',tier:'basic',t:'Pelangi setelah hujan dalam mimpi adalah salah satu pertanda paling indah dalam primbon Jawa. Ini adalah simbol harapan setelah ujian, keindahan setelah kesulitan, dan janji bahwa yang terburuk sudah berlalu. Semakin lengkap dan cerah pelanginya, semakin besar keberkahan yang sedang menunggumu.',o:'Pertanda harapan dan berkah'},
-
-/* ─── TIER PRO: 120+ entry — khusus Pamungkas ───────────────────── */
-  {k:'singa',tier:'pro',t:'Singa dalam primbon Jawa adalah simbol raja — kekuasaan, wibawa, dan kepemimpinan yang sejati. Singa yang berjalan tenang di sisimu: kekuatan besar sedang berpihak padamu, ada perlindungan dari sosok berpengaruh. Singa yang mengaum: waktunya untuk bersuara dan menunjukkan posisimu — jangan diam lagi. Menunggangi singa: kamu sedang menguasai kekuatan yang selama ini kamu takuti.',o:'Pertanda kepemimpinan'},
-  {k:'buaya',tier:'pro',t:'Buaya dalam primbon adalah simbol bahaya tersembunyi yang berkamuflase. Buaya di air yang tenang: ada ancaman atau orang berbahaya di sekitarmu yang belum nampak — waspada terhadap yang tampak diam. Buaya yang kamu jinakkan: kamu berhasil menghadapi dan menguasai situasi yang sangat mengancam. Buaya yang mengejarmu di darat: bahaya sedang di luar habitatnya, lebih mudah diatasi dari yang kamu kira.',o:'Pertanda waspada'},
-  {k:'kera',tier:'pro',t:'Kera atau monyet dalam primpi adalah simbol kecerdikan, kelincahan, tapi juga kenakalan. Kera yang bermain-main: lingkungan yang dinamis dan tidak terduga. Kera yang mencuri: ada orang di sekitarmu yang mengambil keuntungan dari kelengahanmu. Kera yang berbicara: pesan penting yang dibungkus dalam hal yang terlihat sepele — perhatikan detail kecil.',o:'Pertanda kewaspadaan'},
-  {k:'sapi',tier:'pro',t:'Sapi dalam primbon Jawa sangat berkaitan dengan rezeki dan kemakmuran. Sapi gemuk yang sehat: rezeki yang berlimpah dan kehidupan yang makmur sedang dalam perjalanan. Sapi kurus: periode penghematan atau kekurangan yang perlu diantisipasi. Sapi yang memberikan susu: berkat yang mengalir dari usaha atau hubungan tertentu dalam hidupmu.',o:'Pertanda rezeki'},
-  {k:'kambing',tier:'pro',t:'Kambing dalam primbon melambangkan kesederhanaan, ketekunan, dan rezeki yang halal. Kambing hitam: beban yang sedang ditanggung oleh seseorang dalam keluarga — lihat siapa yang butuh dukunganmu. Kawanan kambing yang banyak: kemakmuran yang datang dari cara hidup yang sederhana dan konsisten. Kambing yang naik gunung: tekad untuk mencapai tujuan meski medan sulit.',o:'Pertanda kesederhanaan dan rezeki'},
-  {k:'ayam',tier:'pro',t:'Ayam jantan yang berkokok: pertanda hari baru, kebangkitan, dan awal yang segar. Ayam bertelur banyak: produktivitas yang tinggi dan hasil yang akan mengejutkan. Ayam yang disembelih: pengorbanan yang diperlukan untuk sesuatu yang lebih besar. Anak ayam yang banyak: kesuburan, ide-ide baru, atau keturunan yang akan membawa kebahagiaan.',o:'Pertanda kebangkitan'},
-  {k:'bebek',tier:'pro',t:'Bebek yang berenang tenang di air: kemampuan menavigasi situasi emosional dengan tenang tanpa terpengaruh. Bebek yang berjalan di darat dengan kikuk: ada situasi di mana kamu merasa tidak pada tempatmu — tapi ingat, bebek justru sempurna saat di air. Banyak bebek: keramaian sosial dan kegembiraan bersama.',o:'Pertanda adaptasi'},
-  {k:'elang',tier:'pro',t:'Elang yang terbang tinggi melayang: visi yang luas, kemampuan melihat gambaran besar, dan posisi yang tinggi. Elang yang menukik menangkap mangsa: ketepatan, momen yang tepat, dan eksekusi yang sempurna dari rencana yang sudah lama dipersiapkan. Elang yang hinggap di tanganmu: kekuatan luar biasa yang sedang dipercayakan kepadamu.',o:'Pertanda visi dan kekuatan'},
-  {k:'merpati',tier:'pro',t:'Merpati putih yang terbang: kedamaian, ketenangan, dan kabar baik yang datang dari jauh. Sepasang merpati bersama: kesetiaan dalam cinta dan hubungan yang harmonis. Merpati yang datang membawa sesuatu: dalam tradisi Jawa kuno, ini pertanda pesan penting — dari orang yang jauh atau dari dimensi yang lebih tinggi.',o:'Pertanda kedamaian'},
-  {k:'merak',tier:'pro',t:'Merak yang membentangkan ekornya yang indah: kebanggaan yang wajar, saat untuk menunjukkan kemampuan terbaikmu tanpa ragu. Merak yang berjalan anggun: karisma dan pesona yang sedang kamu pancarkan tanpa sadar. Bulu merak yang berjatuhan: waspadai kesombongan — kecantikan yang terlalu dibanggakan bisa menjadi kejatuhan.',o:'Pertanda karisma'},
-  {k:'gagak',tier:'pro',t:'Gagak dalam primbon adalah pertanda perubahan — bukan selalu buruk, tapi perubahan yang signifikan. Gagak hitam yang bersuara: ada kabar yang mengejutkan atau informasi penting yang akan kamu dengar. Banyak gagak: transformasi besar dalam kehidupanmu sedang mendekat. Gagak putih: perubahan yang membawa kebaikan, hal yang tidak biasa yang menjadi berkah.',o:'Pertanda perubahan'},
-  {k:'kura-kura',tier:'pro',t:'Kura-kura adalah simbol kesabaran, umur panjang, dan kebijaksanaan yang datang dari pengalaman. Kura-kura yang berjalan lambat tapi pasti: strategi jangka panjang yang akan menang — jangan tergoda untuk terburu-buru. Kura-kura yang menarik kepalanya masuk: introspeksi yang diperlukan sebelum melangkah. Kura-kura yang besar: kebijaksanaan tua yang sedang muncul dalam dirimu.',o:'Pertanda kesabaran'},
-  {k:'lebah',tier:'pro',t:'Lebah yang bekerja giat di sarangnya: produktivitas, kerja tim, dan hasil yang manis dari kerja keras bersama. Lebah yang menyengatmu: ada situasi atau orang yang akan menyakitimu karena kamu mengganggu zona nyaman mereka. Sarang lebah yang penuh madu: hasil yang berlimpah dari investasi waktu dan tenaga yang panjang.',o:'Pertanda produktivitas'},
-  {k:'kupu-kupu',tier:'pro',t:'Kupu-kupu adalah simbol transformasi paling kuat dalam primbon. Kupu-kupu berwarna cerah yang hinggap padamu: keberuntungan dan momen indah yang datang tanpa diminta. Banyak kupu-kupu beterbangan: masa transisi yang indah sedang kamu jalani. Kepompong yang pecah dan keluar kupu-kupu: kamu atau seseorang dekatmu sedang dalam proses transformasi besar.',o:'Pertanda transformasi'},
-  {k:'semut',tier:'pro',t:'Semut yang berbaris rapi dan bekerja keras: kerjasama, ketekunan, dan hasil yang besar dari usaha yang konsisten dan terorganisir. Semut yang menyerang: masalah kecil yang jika diabaikan akan menjadi besar. Sarang semut yang besar: komunitas atau jaringan yang kuat sedang kamu bangun.',o:'Pertanda ketekunan'},
-  {k:'laba-laba',tier:'pro',t:'Laba-laba yang merajut jaringnya: rencana yang sedang disusun dengan sabar dan terstruktur — setiap langkah saling terhubung. Terjebak dalam jaring laba-laba: situasi yang sulit dilepaskan — butuh pertolongan dari luar. Laba-laba besar yang jinak: pertanda baik dalam beberapa tradisi Jawa — rezeki dari jaringan dan koneksi yang kamu bangun.',o:'Pertanda perencanaan'},
-  {k:'tikus',tier:'pro',t:'Tikus yang berlarian: keresahan, aktivitas yang tidak terlihat di balik layar, atau hal-hal kecil yang menggerogoti tanpa disadari. Tikus yang memakan barang milikmu: ada pengeluaran tersembunyi atau kebocoran yang perlu segera diatasi. Banyak tikus: masalah kecil yang menumpuk — selesaikan satu persatu sebelum semakin besar.',o:'Pertanda waspada'},
-  {k:'katak',tier:'pro',t:'Katak yang melompat-lompat: pergerakan yang tidak linear tapi efektif, lompatan besar yang tiba-tiba. Katak yang bersuara ramai: banyak "suara" di sekitarmu yang perlu dipilah mana yang bermakna. Katak hijau yang indah: dalam primbon, simbol rezeki yang datang dari tempat yang lembab dan tidak terduga.',o:'Pertanda lompatan'},
-  {k:'kadal',tier:'pro',t:'Kadal yang berjemur: momen ketenangan sebelum aksi, mengumpulkan energi. Kadal yang memutus ekornya sendiri: kemampuan untuk melepaskan sesuatu demi keselamatan — pengorbanan yang bijak. Banyak kadal: fleksibilitas dan kemampuan adaptasi yang akan kamu butuhkan dalam situasi mendatang.',o:'Pertanda adaptasi'},
-  {k:'lumba-lumba',tier:'pro',t:'Lumba-lumba adalah salah satu simbol paling positif dalam mimpi — kecerdasan, kegembiraan, dan navigasi yang sempurna. Bermain dengan lumba-lumba: kebahagiaan yang tulus, hubungan yang sehat dan menyenangkan. Lumba-lumba yang membimbingmu: ada panduan atau mentor yang akan datang membantumu menemukan jalan.',o:'Pertanda kegembiraan'},
-  {k:'mantan',tier:'pro',t:'Mimpi tentang mantan bukan selalu berarti kamu masih mencintainya atau akan kembali. Sering kali ini adalah simbol sesuatu yang diwakilinya — masa muda, kebebasan, atau kualitas tertentu yang kamu rindukan. Pertanyaan pentingnya: apa yang mantan itu wakili dalam hidupmu? Itu yang sebenarnya sedang kamu rindukan.',o:'Cerminan nostalgia'},
-  {k:'orang tua',tier:'pro',t:'Bertemu orang tua dalam mimpi — baik yang masih hidup maupun yang sudah meninggal — selalu bermakna dalam. Orang tua yang tersenyum: restu, dukungan, dan cinta yang mengalir kepadamu. Orang tua yang sedih atau marah: ada sesuatu yang perlu kamu perbaiki dalam hubungan atau kewajiban keluarga. Pelukan orang tua: perlindungan dan ketenangan yang kamu butuhkan.',o:'Pertanda restu keluarga'},
-  {k:'anak',tier:'pro',t:'Bermimpi tentang anak — baik anak sendiri maupun anak yang tidak dikenal — melambangkan potensi, kreativitas, dan sesuatu yang sedang kamu pelihara. Anak yang bahagia dan sehat: potensi yang sedang bertumbuh dengan baik. Anak yang menangis atau dalam bahaya: ada tanggung jawab atau proyek yang sedang membutuhkan perhatianmu lebih besar.',o:'Pertanda tanggung jawab'},
-  {k:'saudara',tier:'pro',t:'Mimpi tentang saudara kandung sering mencerminkan dinamika hubungan yang sedang kamu rasakan. Saudara yang bahagia dan akur: harmoni keluarga yang sedang baik atau yang sedang kamu rindukan. Saudara yang berkonflik denganmu: ada ketegangan yang belum terselesaikan — saatnya bicara.',o:'Cerminan hubungan keluarga'},
-  {k:'teman lama',tier:'pro',t:'Bertemu teman lama yang sudah lama tidak berhubungan dalam mimpi: ada aspek darimu yang sudah lama tidak kamu ekspresikan — kualitas yang dulu kamu miliki bersama mereka. Bisa juga sinyal untuk menghubungi kembali orang tersebut — mungkin saat ini adalah waktu yang tepat.',o:'Pertanda rekoneksi'},
-  {k:'orang asing',tier:'pro',t:'Orang asing dalam mimpi sering kali mewakili aspek dari dirimu yang belum kamu kenali. Orang asing yang ramah dan membantu: bagian dari dirimu yang sedang tumbuh dan siap muncul ke permukaan. Orang asing yang mengancam: ketakutan terhadap hal-hal yang tidak kamu ketahui atau tidak kamu kontrol.',o:'Cerminan diri yang belum dikenali'},
-  {k:'musuh',tier:'pro',t:'Mimpi tentang musuh atau seseorang yang kamu tidak suka bukan berarti perlu bereaksi secara nyata. Justru musuh dalam mimpi sering mewakili kualitas dalam dirimu yang kamu tolak. Evaluasi: apa yang paling kamu tidak suka dari "musuh" itu? Kemungkinan itu adalah bagian dari dirimu yang belum kamu terima.',o:'Cerminan proyeksi diri'},
-  {k:'guru',tier:'pro',t:'Bertemu guru dalam mimpi — baik guru nyata maupun sosok bijak yang tidak dikenal — adalah pertanda bahwa kamu sedang dalam fase belajar yang penting. Guru yang memberikan pelajaran: perhatikan pesan yang disampaikan, bahkan jika tidak terasa nyata — bisa jadi adalah wawasan yang perlu kamu renungkan.',o:'Pertanda pembelajaran'},
-  {k:'dokter',tier:'pro',t:'Dokter dalam mimpi melambangkan penyembuhan, perbaikan, dan pertolongan profesional. Dikunjungi dokter atau mengunjungi dokter: ada sesuatu dalam hidupmu yang butuh "diobati" — bisa berupa hubungan, kebiasaan, atau kondisi mental. Dokter yang memberikan kabar baik: pemulihan yang sedang berjalan dengan baik.',o:'Pertanda penyembuhan'},
-  {k:'berpelukan',tier:'pro',t:'Berpelukan dengan seseorang dalam mimpi adalah salah satu pengalaman paling menghangatkan. Memeluk orang yang kamu cintai: kerinduan yang dalam, kebutuhan akan kedekatan, atau hubungan yang sedang membaik. Dipeluk oleh orang yang sudah meninggal: mereka datang untuk memberikan ketenangan dan pesan bahwa mereka baik-baik saja.',o:'Pertanda kasih sayang'},
-  {k:'berciuman',tier:'pro',t:'Berciuman dalam mimpi melambangkan koneksi, keinginan untuk lebih dekat, atau persatuan dua hal yang berbeda. Berciuman dengan pasangan: keintiman dan kedalaman hubungan yang sedang kamu rindukan atau syukuri. Berciuman dengan orang yang tidak dikenal: aspek dari dirimu yang sedang kamu integrasikan.',o:'Pertanda koneksi'},
-  {k:'berpisah',tier:'pro',t:'Mimpi berpisah — baik dengan orang, tempat, atau benda — melambangkan penutupan sebuah babak. Berpisah dengan seseorang dengan air mata: proses pelepasan yang perlu terjadi — meski menyakitkan, ini adalah langkah menuju kebebasan. Perpisahan yang tenang dan damai: kesiapan untuk melepaskan sesuatu dengan ikhlas.',o:'Pertanda penutupan babak'},
-  {k:'bertemu kembali',tier:'pro',t:'Bertemu kembali dengan seseorang setelah lama berpisah dalam mimpi adalah simbol rekonsiliasi, pengampunan, atau kerinduan yang perlu diakui. Bisa juga pertanda bahwa orang tersebut akan kembali ke kehidupanmu — atau bahwa kamu siap untuk memaafkan.',o:'Pertanda rekonsiliasi'},
-  {k:'menyanyi',tier:'pro',t:'Menyanyi dengan suara yang indah dan penuh perasaan: ekspresi diri yang sedang mencari jalannya keluar — kamu butuh lebih banyak ruang untuk mengekspresikan dirimu. Menyanyi bersama orang banyak: kebersamaan dan harmoni sosial yang indah. Suara yang keluar tidak sesuai yang diharapkan: ketakutan akan penilaian ketika mencoba mengekspresikan diri.',o:'Pertanda ekspresi diri'},
-  {k:'menari',tier:'pro',t:'Menari dengan bebas dan indah: kegembiraan yang tulus, kebebasan, dan momen ketika kamu benar-benar hadir. Menari bersama seseorang dengan harmonis: sinkronisasi dan kerjasama yang indah dalam suatu hubungan. Tidak bisa menari saat seharusnya: perasaan tidak sesuai atau tidak bisa mengikuti ritme situasi.',o:'Pertanda kegembiraan dan kebebasan'},
-  {k:'bertarung',tier:'pro',t:'Bertarung dalam mimpi mencerminkan konflik yang sedang kamu hadapi. Bertarung dan menang: kamu akan berhasil mengatasi tantangan yang sedang dihadapi. Bertarung dan kalah: perlu strategi baru — cara yang sekarang tidak cukup efektif. Bertarung dengan seseorang yang kamu kenal: konflik internal antara dua nilai atau keinginan yang bertentangan.',o:'Pertanda konflik dan ketegasan'},
-  {k:'berdoa',tier:'pro',t:'Berdoa dalam mimpi — dalam posisi apapun dan kepada siapapun — adalah salah satu pengalaman paling bermakna secara spiritual. Ini pertanda bahwa ada koneksi spiritual yang sedang aktif, doa-doamu sedang didengar, dan bagian terdalammu sedang terhubung dengan sesuatu yang lebih besar dari dirimu sendiri.',o:'Pertanda spiritual tinggi'},
-  {k:'memanjat',tier:'pro',t:'Memanjat pohon, tebing, atau dinding dengan berhasil: ambisi yang sedang bergerak ke atas, kemajuan yang nyata meski melelahkan. Memanjat tapi terus merosot: ada hambatan berulang yang perlu diselesaikan dari akarnya. Mencapai puncak setelah memanjat: pencapaian yang sangat memuaskan setelah perjuangan panjang.',o:'Pertanda perjuangan dan pencapaian'},
-  {k:'tenggelam',tier:'pro',t:'Tenggelam dalam mimpi bukan pertanda mati — ini adalah simbol untuk terlalu dalam terbenam dalam sesuatu. Tenggelam dan tidak bisa naik: beban emosi, tanggung jawab, atau situasi yang terasa terlalu besar. Tenggelam tapi kemudian bisa bernapas dalam air: kamu menemukan cara baru untuk bertahan dalam situasi yang awalnya terasa mustahil.',o:'Pertanda beban yang berlebih'},
-  {k:'memasak',tier:'pro',t:'Memasak dalam mimpi melambangkan kreativitas, persiapan, dan memberi makan (dalam arti literal maupun kiasan). Memasak makanan yang lezat: hasil karya yang sedang kamu persiapkan akan memuaskan banyak orang. Memasak tapi masakan gosong: rencana yang perlu lebih diperhatikan sebelum dieksekusi.',o:'Pertanda kreativitas dan persiapan'},
-  {k:'membaca',tier:'pro',t:'Membaca buku atau teks dengan asyik: ilmu dan kebijaksanaan baru sedang dalam perjalanan menujumu. Teks yang tidak bisa dibaca atau kabur: ada informasi penting yang belum bisa kamu akses — saatnya mencari sumber pengetahuan baru. Membaca dan tidak mengerti isinya: situasi yang membutuhkan pemahaman lebih dalam.',o:'Pertanda ilmu'},
-  {k:'menulis',tier:'pro',t:'Menulis dengan lancar: ekspresi diri yang mengalir, ide-ide yang sedang mau dikeluarkan. Menulis tapi tinta habis atau pena rusak: ada halangan dalam mengekspresikan diri atau mengkomunikasikan sesuatu yang penting. Menulis surat untuk seseorang: ada pesan yang perlu kamu sampaikan dalam kehidupan nyata.',o:'Pertanda komunikasi'},
-  {k:'bermain',tier:'pro',t:'Bermain dengan riang dalam mimpi adalah pengingat untuk tidak terlalu serius. Ini pertanda bahwa jiwamu butuh lebih banyak kesenangan, spontanitas, dan kebebasan dari tekanan. Bermain dengan anak-anak: terhubung kembali dengan kepolosan dan kreativitas yang mungkin sudah lama terkubur.',o:'Pertanda perlu keseimbangan'},
-  {k:'rumah sakit',tier:'pro',t:'Berada di rumah sakit dalam mimpi bukan berarti kamu akan sakit. Ini simbol penyembuhan — ada aspek hidupmu yang sedang "dirawat". Dikunjungi di rumah sakit: ada perhatian dan kepedulian yang sedang mengalir kepadamu. Menjadi dokter atau perawat: kamu sedang dalam posisi menyembuhkan orang lain.',o:'Pertanda penyembuhan'},
-  {k:'penjara',tier:'pro',t:'Berada dalam penjara: perasaan terkekang, terbatas, atau terjebak dalam situasi yang terasa tidak bisa dihindari. Melarikan diri dari penjara: keinginan kuat untuk bebas dari situasi yang membatasi. Melihat orang lain dalam penjara: empati terhadap seseorang yang sedang dalam situasi sulit.',o:'Pertanda kebebasan yang dirindukan'},
-  {k:'istana',tier:'pro',t:'Istana yang megah dan indah: ambisi besar, impian tentang kehidupan yang lebih tinggi derajatnya. Tinggal di dalam istana: posisi atau kehidupan yang kamu impikan sedang mendekat lebih dari yang kamu kira. Istana yang runtuh atau terlantar: impian yang perlu diperbarui atau dibangun kembali dengan cara yang lebih realistis.',o:'Pertanda ambisi besar'},
-  {k:'pantai',tier:'pro',t:'Pantai yang indah dengan ombak tenang: keseimbangan antara dunia sadar (darat) dan bawah sadar (laut), momen kedamaian. Duduk di pantai sendirian: refleksi yang mendalam dan waktu untuk dirimu sendiri. Ombak besar yang mengancam: emosi yang sedang bergolak dan butuh diakui.',o:'Pertanda keseimbangan'},
-  {k:'gurun',tier:'pro',t:'Gurun yang gersang dan panas: periode kekeringan — bisa berupa kreativitas, rezeki, atau hubungan yang sedang terasa hampa. Namun gurun juga simbol ketahanan dan menemukan sumber di dalam diri. Menemukan oasis di gurun: solusi atau harapan yang muncul di tengah kondisi paling sulit.',o:'Pertanda ketahanan'},
-  {k:'desa',tier:'pro',t:'Desa yang tenang dan hijau: kerinduan akan kesederhanaan, akar, dan komunitas yang hangat. Kembali ke desa asal: ada sesuatu dari masa lalumu — nilai, kebiasaan, atau hubungan — yang perlu kamu sambungkan kembali. Desa yang ramai dan bahagia: komunitas yang solid dan saling mendukung.',o:'Pertanda akar dan asal'},
-  {k:'kota',tier:'pro',t:'Kota yang ramai dan sibuk: ambisi, peluang, dan tekanan yang sedang kamu rasakan. Tersesat di kota besar: kewalahan oleh pilihan dan kompleksitas hidup. Kota yang indah dari atas ketinggian: gambaran besar yang sedang kamu lihat dengan jelas.',o:'Pertanda ambisi'},
-  {k:'gereja',tier:'pro',t:'Masuk ke dalam gereja atau tempat ibadah apapun dalam mimpi memiliki makna spiritual yang kuat. Ini pertanda koneksi dengan hal yang lebih tinggi dari dirimu, pencarian makna, dan momen ketenangan batin yang kamu butuhkan. Berdoa di gereja dengan khusyuk: doa dan harapanmu sedang didengar.',o:'Pertanda spiritual'},
-  {k:'mahkota',tier:'pro',t:'Mahkota dalam primbon adalah simbol kehormatan, derajat, dan pengakuan. Memakai mahkota: akan datang posisi terhormat atau pengakuan besar atas kemampuanmu. Mahkota yang jatuh dari kepalamu: waspada terhadap sesuatu yang bisa merusak reputasimu. Memberi mahkota kepada orang lain: kamu sedang memberikan penghormatan besar.',o:'Pertanda kehormatan'},
-  {k:'pedang',tier:'pro',t:'Pedang dalam primbon adalah simbol keberanian, ketegasan, dan kebenaran yang tajam. Memegang pedang dengan mantap: kamu siap untuk membela diri, kebenaran, atau orang yang kamu lindungi. Pedang yang tumpul: kemampuan atau ketegasanmu yang sedang berkurang — perlu diasah kembali. Menerima pedang dari seseorang: amanah kepemimpinan yang sedang diberikan.',o:'Pertanda ketegasan'},
-  {k:'buku',tier:'pro',t:'Membuka buku yang berisi kebijaksanaan: ilmu baru yang sedang menunggumu. Buku yang kosong: peluang untuk menulis babak hidupmu sendiri — halamannya masih bersih. Buku yang terbakar: kehilangan pengetahuan atau pengalaman yang berharga, atau transformasi dari cara lama berpikir.',o:'Pertanda pengetahuan'},
-  {k:'buah',tier:'pro',t:'Buah yang matang dan manis: hasil dari kerja keras yang sudah waktunya dinikmati — jangan tunda lagi. Buah yang masih hijau dan belum matang: rencana yang perlu waktu lebih — sabar. Buah yang busuk: peluang yang sudah terlambat diambil atau hubungan yang perlu segera diperbaiki.',o:'Pertanda hasil'},
-  {k:'kehilangan',tier:'pro',t:'Mimpi kehilangan sesuatu — benda, orang, atau kondisi — mencerminkan ketakutan akan kehilangan tersebut dalam kehidupan nyata. Namun dalam primbon, kehilangan dalam mimpi sering bermakna sebaliknya: sesuatu yang kamu khawatirkan hilang justru akan tetap ada, atau kamu akan mendapatkan sesuatu yang lebih baik sebagai gantinya.',o:'Pertanda kecemasan yang akan berlalu'},
-  {k:'menemukan',tier:'pro',t:'Menemukan sesuatu yang berharga — benda, jalan, atau orang — dalam mimpi adalah pertanda baik yang nyata. Ini simbol penemuan, wawasan baru, atau peluang yang sedang menunggumu. Semakin berharga yang ditemukan, semakin besar maknanya.',o:'Pertanda penemuan'},
-  {k:'memberi',tier:'pro',t:'Memberi kepada orang lain dalam mimpi — makanan, uang, atau apapun — adalah pertanda kemurahan hati yang akan dibalas berlipat ganda. Dalam primbon, memberi dalam mimpi justru pertanda rezeki yang akan datang. Semakin kamu memberi dalam mimpi, semakin besar berkah yang sedang dipersiapkan.',o:'Pertanda kemurahan hati'},
-  {k:'menerima',tier:'pro',t:'Menerima sesuatu dengan tangan terbuka: ada berkah, kabar, atau peluang yang sedang dalam perjalanan kepadamu. Menerima tapi merasa ragu: mungkin ada hadiah atau kesempatan yang datang yang kamu belum yakin layak menerimanya — kamu lebih layak dari yang kamu kira.',o:'Pertanda berkah yang datang'},
-  {k:'menunggu',tier:'pro',t:'Menunggu dalam mimpi — menunggu seseorang, sesuatu, atau momen — mencerminkan proses dan kesabaran yang sedang kamu jalani. Menunggu dengan tenang: kepercayaan bahwa waktunya akan tiba. Menunggu dengan gelisah: kecemasan terhadap ketidakpastian yang butuh diatasi.',o:'Cerminan kesabaran'},
-  {k:'terlambat',tier:'pro',t:'Mimpi terlambat — ke acara, pekerjaan, atau pertemuan penting — adalah cerminan kekhawatiran akan melewatkan sesuatu penting. Namun primbon berkata: mimpi terlambat justru sering pertanda bahwa kamu tidak akan terlambat — kesadaranmu sedang mempersiapkan diri untuk lebih tepat waktu.',o:'Cerminan kecemasan waktu'},
-  {k:'gagal',tier:'pro',t:'Mimpi gagal dalam suatu hal — ujian, pekerjaan, atau usaha — adalah sinyal bagi alam bawah sadar untuk mempersiapkan strategi yang lebih baik. Bukan pertanda kamu akan benar-benar gagal, melainkan dorongan untuk lebih serius mempersiapkan diri.',o:'Pertanda persiapan lebih serius'},
-  {k:'berhasil',tier:'pro',t:'Mimpi berhasil mencapai sesuatu yang penting adalah salah satu pertanda terbaik — ini bukan sekadar harapan, ini visualisasi yang memperkuat kemungkinan itu terjadi dalam kenyataan. Biarkan perasaan berhasil dalam mimpi itu menjadi bahan bakar untuk aksimu hari ini.',o:'Pertanda sangat baik'},
-  {k:'dikhianati',tier:'pro',t:'Mimpi dikhianati oleh seseorang mencerminkan ketakutan atau ketidakpercayaan yang sudah ada dalam dirimu. Bisa juga sinyal nyata bahwa ada yang perlu kamu waspadai. Pertanyaannya: apakah kamu memiliki bukti nyata ketidakjujuran ini, atau ini hanya kecemasan yang perlu dikelola?',o:'Pertanda waspada'},
-  {k:'memaafkan',tier:'pro',t:'Mimpi yang di dalamnya kamu memaafkan seseorang — atau seseorang memaafkanmu — adalah salah satu mimpi paling menyembuhkan. Ini pertanda bahwa proses penyembuhan batin sedang berjalan, dan bagian terdalammu sudah siap untuk melepaskan beban luka yang selama ini dibawa.',o:'Pertanda penyembuhan batin'},
-  {k:'hantu',tier:'pro',t:'Hantu dalam primbon Jawa tidak selalu bermakna menakutkan. Hantu yang mengganggu: ada sesuatu dari masa lalu — kenangan, trauma, atau hubungan yang belum selesai — yang masih menghantui hidupmu. Hantu yang diam dan tidak mengancam: kehadiran energi atau memori yang masih perlu dihormati sebelum bisa dilepaskan.',o:'Pertanda masa lalu yang belum tuntas'},
-  {k:'malaikat',tier:'pro',t:'Bertemu malaikat dalam mimpi adalah pengalaman yang sangat bermakna secara spiritual — pertanda perlindungan, bimbingan, dan kasih dari yang Maha Tinggi. Menerima pesan dari malaikat: perhatikan setiap kata yang terucap dalam mimpi itu, sekecil apapun — bisa jadi petunjuk yang berharga.',o:'Pertanda perlindungan spiritual'},
-  {k:'mimpi dalam mimpi',tier:'pro',t:'Mengalami mimpi dalam mimpi — menyadari bahwa kamu bermimpi, lalu "terbangun" ke dalam mimpi lain — adalah pengalaman langka yang dalam primbon Jawa dianggap sebagai tanda kepekaan batin yang tinggi. Ini pertanda bahwa intuisimu sedang sangat aktif dan lapisan kesadaranmu lebih dalam dari rata-rata orang.',o:'Pertanda kepekaan batin tinggi'},
-  {k:'menjadi hewan',tier:'pro',t:'Berubah menjadi hewan dalam mimpi adalah simbol kuat dari sisi naluriah yang sedang aktif. Menjadi burung: keinginan akan kebebasan. Menjadi harimau: kekuatan dan keberanian yang sedang muncul. Menjadi ular: transformasi dan kebijaksanaan tersembunyi. Perhatikan hewan apa yang kamu jadi — itu mencerminkan kualitas yang sedang tumbuh dalam dirimu.',o:'Pertanda naluri yang aktif'},
-  {k:'melihat cahaya',tier:'pro',t:'Melihat cahaya yang terang — entah dari langit, dari ujung terowongan, atau cahaya yang memancar dari dalam dirimu — adalah salah satu pengalaman paling bermakna dalam mimpi. Ini pertanda pencerahan, harapan yang kuat, dan sesuatu yang baik sedang mendekat dari arah yang mungkin belum kamu lihat.',o:'Pertanda pencerahan'},
-  {k:'suara tanpa rupa',tier:'pro',t:'Mendengar suara yang jelas tapi tidak ada sosoknya dalam mimpi adalah pengalaman yang perlu diperhatikan dengan serius. Dalam primbon Jawa, ini sering dianggap sebagai pesan dari dimensi yang lebih tinggi atau dari alam bawah sadar yang paling dalam. Coba ingat apa yang dikatakan — itu adalah pesanmu.',o:'Pertanda pesan spiritual'},
-  {k:'tanah longsor',tier:'pro',t:'Tanah longsor dalam mimpi melambangkan fondasi yang tidak stabil. Ada sesuatu yang selama ini kamu anggap solid dan aman ternyata bisa bergerak kapan saja. Ini sinyal untuk memeriksa kembali fondasi hidupmu — baik berupa finansial, hubungan, atau keyakinan.',o:'Pertanda evaluasi fondasi'},
-  {k:'gempa',tier:'pro',t:'Gempa bumi dalam mimpi adalah simbol guncangan yang akan datang atau sedang terjadi. Tapi dalam primbon, gempa juga bisa berarti ada perubahan besar yang sedang membangun ulang dari bawah — destruktif di permukaan, tapi membuka lapisan baru yang lebih dalam.',o:'Pertanda guncangan besar'},
-  {k:'salju',tier:'pro',t:'Salju dalam primbon Jawa — meski jarang dialami — melambangkan ketenangan, keheningan, dan periode istirahat yang bersih. Ladang bersalju yang putih: keheningan yang memberi ruang untuk refleksi mendalam. Salju yang mencair: thawing, pencairan hambatan yang selama ini membeku.',o:'Pertanda ketenangan'},
-  {k:'kabut',tier:'pro',t:'Kabut dalam mimpi melambangkan ketidakjelasan — situasi yang belum bisa kamu lihat dengan jernih. Berjalan dalam kabut: kamu sedang dalam periode ketidakpastian, tapi bukan bahaya — kabut selalu berlalu. Kabut yang perlahan menghilang: kejelasan sedang datang, sedikit demi sedikit.',o:'Pertanda ketidakpastian sementara'},
-  {k:'badai',tier:'pro',t:'Badai yang menerjang dalam mimpi melambangkan ujian besar yang sedang mendekat atau sedang dihadapi. Bertahan dalam badai tanpa bergerak: keteguhan yang luar biasa. Badai yang berlalu dan langit menjadi cerah: setelah ujian ini, akan ada ketenangan dan kemakmuran yang lebih besar.',o:'Pertanda ujian besar'},
-  {k:'gerhana',tier:'pro',t:'Gerhana matahari atau bulan dalam mimpi adalah simbol perubahan besar yang sementara menggelapkan sesuatu yang biasanya terang. Ini pertanda bahwa ada masa gelap yang akan segera berlalu — dan setelahnya, cahaya yang kembali akan terasa lebih indah dari sebelumnya.',o:'Pertanda perubahan besar'},
-  {k:'perang',tier:'pro',t:'Perang dalam mimpi melambangkan konflik internal atau eksternal yang sedang memuncak. Berada di tengah perang: berbagai tekanan dan tuntutan yang saling bertentangan dalam hidupmu. Mengakhiri perang: mencapai resolusi setelah konflik panjang yang melelahkan.',o:'Pertanda konflik besar'},
-  {k:'kebun',tier:'pro',t:'Kebun yang kamu rawat sendiri melambangkan proyek, hubungan, atau impian yang kamu pelihara dengan penuh cinta. Kebun yang subur: hasil yang sedang tumbuh dari perawatan yang konsisten. Kebun yang penuh gulma: ada hal dalam hidupmu yang perlu dibersihkan sebelum yang baik bisa tumbuh.',o:'Pertanda pertumbuhan'},
-  {k:'dermaga',tier:'pro',t:'Berdiri di dermaga dalam mimpi adalah posisi transisi — antara yang dikenal (darat) dan yang belum diketahui (laut). Kapal yang sedang berlabuh: siap memulai perjalanan baru. Menunggu kapal di dermaga: ada sesuatu yang sedang dalam perjalanan menujumu — bersabarlah.',o:'Pertanda persiapan'},
-  {k:'terowongan',tier:'pro',t:'Masuk ke dalam terowongan: berani menghadapi ketidaktahuan demi mencapai sisi lain. Terowongan yang gelap tapi ada cahaya di ujungnya: klasik — harapan di ujung kesulitan. Terowongan yang tidak ada ujungnya: periode yang terasa tidak ada habisnya — tapi semua terowongan pasti punya ujung.',o:'Pertanda melewati tantangan'},
-  {k:'sumur',tier:'pro',t:'Sumur dalam primbon adalah simbol sumber daya tersembunyi, kedalaman batin, dan potensi yang belum digali. Menimba air dari sumur: mengambil dari sumber dalam dirimu. Sumur yang kering: sumber daya atau inspirasi yang perlu diisi ulang. Sumur yang dalam dan penuh: potensi luar biasa yang belum sepenuhnya dimanfaatkan.',o:'Pertanda potensi tersembunyi'},
-  {k:'air terjun',tier:'pro',t:'Air terjun yang deras dan indah: kekuatan alami yang luar biasa, perubahan yang tidak bisa ditahan tapi sangat indah jika dinikmati. Berdiri di bawah air terjun dan merasa segar: pemurnian, penyegaran, dan energi baru yang mengalir. Air terjun yang mengering: periode kesunyian sebelum energi kembali mengalir.',o:'Pertanda pemurnian'},
-  {k:'danau',tier:'pro',t:'Danau yang tenang mencerminkan kedalaman batin yang damai dan refleksi yang jernih. Danau yang beriak karena angin: ada pengaruh eksternal yang mengganggu ketenanganmu. Berenang di danau yang jernih: eksplorasi diri yang menyenangkan dan aman.',o:'Pertanda refleksi diri'},
-  {k:'jurang',tier:'pro',t:'Berdiri di tepi jurang: kamu berada di batas sesuatu yang besar — keberanian untuk melompat atau mundur adalah pilihanmu. Jatuh ke jurang dan tidak mati: ujian besar yang ternyata tidak semenakutkan yang dibayangkan. Menyeberangi jurang dengan jembatan: solusi yang tidak kamu sangka tersedia.',o:'Pertanda di tepi keputusan besar'},
-  {k:'goa',tier:'pro',t:'Masuk ke dalam goa: berani mengeksplorasi sisi gelap atau tersembunyi dari dirimu. Goa yang berisi harta karun: ada hal berharga tersembunyi dalam dirimu yang belum kamu temukan. Terjebak dalam goa: perasaan terisolasi atau terperangkap dalam situasi tanpa jalan keluar yang terlihat.',o:'Pertanda eksplorasi diri'},
-  {k:'dompet',tier:'pro',t:'Dompet yang penuh: kecukupan dan keamanan finansial. Dompet yang hilang atau kosong: kekhawatiran finansial yang perlu ditangani. Menemukan dompet milik orang lain: akan ada kesempatan menjadi kepercayaan seseorang dalam urusan penting.',o:'Pertanda finansial'},
-  {k:'surat',tier:'pro',t:'Menerima surat dalam mimpi: akan ada kabar penting yang datang — bersiaplah merespons dengan bijak. Menulis surat tapi tidak dikirim: ada sesuatu yang ingin kamu ungkapkan tapi belum berani. Surat yang tidak bisa dibaca: informasi yang belum bisa kamu akses saat ini.',o:'Pertanda kabar penting'},
-  {k:'foto',tier:'pro',t:'Melihat foto dirimu sendiri: refleksi tentang bagaimana kamu melihat dirimu. Foto yang buram atau rusak: memori atau identitas yang sedang dipertanyakan. Foto yang indah dan jernih: kebanggaan dan penghargaan terhadap dirimu sendiri yang sedang tumbuh.',o:'Cerminan citra diri'},
-  {k:'panen',tier:'pro',t:'Mimpi panen adalah salah satu pertanda paling meriah dalam primbon Jawa. Ini adalah simbol nyata bahwa kerja kerasmu akan berbuah. Panen yang berlimpah: rezeki besar yang sedang datang dari usaha yang sudah lama ditanam. Panen yang sedikit: hasil yang ada cukup untuk bersyukur, dan pembelajaran untuk menanam lebih banyak.',o:'Pertanda hasil berlimpah'},
-  {k:'api unggun',tier:'pro',t:'Duduk di sekitar api unggun bersama orang-orang yang dicintai: kehangatan, kebersamaan, dan cerita yang mempererat. Api unggun yang kamu nyalakan sendirian: kemandirian, kemampuan menciptakan kehangatan bahkan saat sendirian. Api unggun yang padam sebelum waktunya: sesuatu yang indah berakhir lebih awal dari yang diharapkan.',o:'Pertanda kehangatan'},
-  {k:'gelap',tier:'pro',t:'Kegelapan total dalam mimpi bukan selalu buruk — ini adalah ruang kosong, awal sebelum penciptaan. Berjalan dalam gelap tapi tidak takut: kepercayaan pada intuisimu meski tidak ada kepastian. Cahaya yang tiba-tiba muncul di kegelapan: momen pencerahan yang akan datang tiba-tiba dan mengubah segalanya.',o:'Pertanda sebelum pencerahan'},
-  {k:'anak yatim',tier:'pro',t:'Bermimpi tentang anak yatim atau anak yang ditinggalkan melambangkan bagian dari dirimu yang merasa tidak diperhatikan atau diabaikan. Merawat anak yatim dalam mimpi: kemurahan hati yang akan mendatangkan berkah berlipat. Ini juga bisa jadi dorongan untuk lebih memperhatikan seseorang yang membutuhkan dalam kehidupan nyata.',o:'Pertanda empati dan tanggung jawab'},
-  {k:'menjadi raja',tier:'pro',t:'Bermimpi menjadi raja atau pemimpin besar adalah simbol potensi kepemimpinan yang sedang menunggu untuk diaktualisasikan. Bukan tentang kekuasaan, tapi tentang tanggung jawab dan pelayanan. Dalam primbon, mimpi ini sering datang kepada orang yang sedang dalam ambang perubahan besar dalam posisi atau pengaruhnya.',o:'Pertanda kepemimpinan'},
-  {k:'menjual',tier:'pro',t:'Menjual barang dengan harga bagus: nilai yang kamu tawarkan sedang diakui dan dihargai. Menjual tapi tidak ada pembeli: mungkin ada cara menyampaikan nilai dirimu yang perlu diperbaiki. Menjual sesuatu yang kamu sayangi terpaksa: pengorbanan yang terasa berat tapi mungkin diperlukan untuk sesuatu yang lebih besar.',o:'Pertanda nilai dan penghargaan'},
-  {k:'membeli',tier:'pro',t:'Membeli sesuatu dengan antusias: kesiapan untuk berinvestasi — dalam diri, hubungan, atau usaha. Membeli tapi tidak ada uang: keinginan yang belum bisa terpenuhi — perlu perencanaan lebih matang. Membeli sesuatu yang ternyata rusak: hati-hati dalam keputusan pembelian atau investasi yang terlihat menarik.',o:'Pertanda keputusan investasi'},
-  {k:'perpustakaan',tier:'pro',t:'Berada dalam perpustakaan yang besar dan penuh buku: kamu sedang dalam periode belajar yang penting dan subur. Mencari buku tertentu tapi tidak menemukan: ada pengetahuan yang kamu butuhkan yang belum kamu tahu di mana mencarinya. Perpustakaan yang lengang dan damai: ruang refleksi dan ketenangan intelektual.',o:'Pertanda pembelajaran'},
-  {k:'lautan awan',tier:'pro',t:'Berjalan atau berada di atas lautan awan: kamu berada di atas semua kekhawatiran duniawi, perspektif yang tinggi dan luas. Dalam primbon Jawa kuno, ini pertanda jiwa yang sedang dalam kondisi sangat tinggi secara spiritual — disinari dan dilindungi.',o:'Pertanda ketinggian spiritual'},
-  {k:'bintang jatuh',tier:'pro',t:'Bintang jatuh dalam mimpi adalah momen yang sangat bertuah — ini adalah simbol keinginan yang dikabulkan, harapan yang tiba-tiba terwujud. Dalam primbon, bintang jatuh yang kamu lihat dalam mimpi dipercaya membawa energi pengabulan yang kuat. Ingat apa yang kamu "inginkan" saat bintang itu jatuh.',o:'Pertanda harapan dikabulkan'},
-
-/* ─── TAMBAHAN: keyword penting yang sering dicari ─── */
-  {k:'makan',tier:'basic',t:'Makan dengan lahap dan nikmat dalam mimpi adalah pertanda rezeki yang sedang mengalir — sesuatu yang kamu kerjakan atau rencanakan akan memberikan kepuasan nyata. Makan bersama orang banyak di meja yang penuh: kebersamaan dan kemakmuran yang sedang bertumbuh. Makan sendirian dalam keheningan: periode refleksi diri atau kemandirian yang perlu dinikmati. Makanan yang tiba-tiba habis sebelum selesai: waspada terhadap peluang yang bisa berlalu cepat — ambil ketika masih ada.',o:'Pertanda rezeki dan kepuasan'},
-  {k:'minum',tier:'basic',t:'Minum air jernih dan segar: ketenangan batin, kejernihan pikiran, dan kebutuhan dasar yang terpenuhi. Minum air keruh atau pahit: ada situasi atau hubungan yang terasa tidak menyenangkan tapi harus dihadapi. Minum dari sumber mata air langsung: rezeki yang datang dari sumber yang paling murni dan alami. Kehausan tapi tidak menemukan air: ada kebutuhan penting yang belum terpenuhi dalam hidupmu.',o:'Pertanda kebutuhan terpenuhi'},
-  {k:'lapar',tier:'basic',t:'Mimpi merasa sangat lapar dalam primbon Jawa sering bermakna keinginan atau ambisi yang belum terpenuhi — bukan selalu soal makanan, tapi soal pencapaian, pengakuan, atau cinta yang kamu rindukan. Lapar tapi tidak ada makanan: periode kekurangan yang sementara. Lapar lalu menemukan makanan berlimpah: periode sulit yang akan segera berakhir dengan keberlimpahan.',o:'Cerminan keinginan yang belum terpenuhi'},
-  {k:'melahirkan',tier:'basic',t:'Melahirkan dalam mimpi — baik kamu sendiri maupun menyaksikan kelahiran — adalah salah satu simbol paling kuat. Ini bukan tentang kehamilan literal, melainkan tentang sesuatu yang baru yang sedang "dilahirkan" ke dunia: proyek besar, fase hidup baru, atau sisi dirimu yang baru. Proses melahirkan yang lancar: transisi yang mulus menuju babak baru. Melahirkan dengan perjuangan: babak baru yang datang dengan perjuangan nyata, tapi hasilnya sangat berharga.',o:'Pertanda kelahiran babak baru'},
-  {k:'hamil kembar',tier:'basic',t:'Hamil kembar dalam mimpi memperkuat makna kehamilan biasa berlipat ganda — ada dua hal besar sekaligus yang sedang "dikandung" dalam hidupmu. Bisa berupa dua rencana besar, dua peluang yang datang bersamaan, atau dua tanggung jawab besar yang harus diemban. Primbon menganggap ini pertanda luar biasa yang membutuhkan persiapan ekstra.',o:'Pertanda berlimpah ganda'},
-  {k:'potong rambut',tier:'basic',t:'Memotong rambut sendiri dengan sengaja: keputusan untuk melepaskan sesuatu yang sudah tidak perlu — identitas lama, kebiasaan buruk, atau hubungan yang menguras. Rambut dipotong paksa oleh orang lain: ada perubahan yang datang dari luar kontrolmu. Potong rambut dan merasa lega: pertanda positif — kamu siap untuk versi baru dirimu.',o:'Pertanda transformasi diri'},
-  {k:'dipukul',tier:'basic',t:'Dipukul dalam mimpi oleh seseorang yang dikenal: ada kata-kata atau tindakan orang itu yang secara tidak sadar terasa menyakitimu — mungkin sudah waktunya dibicarakan. Dipukul oleh orang asing: tekanan dari situasi atau lingkungan yang terasa menyerang. Dipukul tapi tidak sakit: kamu lebih kuat dari tekanan yang sedang kamu hadapi.',o:'Pertanda tekanan yang perlu diatasi'},
-  {k:'memukul',tier:'basic',t:'Memukul seseorang dalam mimpi bukan berarti kamu ingin menyakiti mereka. Ini cerminan frustrasi, amarah yang terpendam, atau keinginan untuk "menghentikan" sesuatu. Pertanyaan pentingnya: siapa yang kamu pukul, dan apa yang mereka wakili dalam hidupmu? Di situlah letak frustrasi yang perlu diselesaikan.',o:'Cerminan frustrasi terpendam'},
-  {k:'naik motor',tier:'basic',t:'Naik motor dengan kencang dan bebas: kebebasan, kemandirian, dan perjalanan hidup yang bergerak cepat sesuai kemauanmu. Motor yang mogok di tengah jalan: hambatan tiba-tiba yang menghentikan rencana. Jatuh dari motor: perlu lebih berhati-hati dalam keputusan yang diambil terlalu cepat. Rem motor blong: situasi yang terasa di luar kendali.',o:'Pertanda kemandirian'},
-  {k:'naik sepeda',tier:'basic',t:'Bersepeda dengan santai dan menyenangkan: ritme hidup yang sehat, seimbang, dan berkelanjutan. Sepeda yang susah dikayuh menanjak: usaha keras yang sedang dilakukan — hasilnya setimpal. Bersepeda bersama seseorang: perjalanan hidup yang dilakukan berdua dengan harmonis.',o:'Pertanda keseimbangan hidup'},
-  {k:'selingkuh',tier:'pro',t:'Bermimpi berselingkuh atau diselingkuhi bukan pertanda ini akan terjadi. Mimpi berselingkuh: bisa berarti kamu merindukan sesuatu yang tidak kamu dapatkan dalam hubungan saat ini — bukan orang lain, tapi kualitas tertentu. Mimpi diselingkuhi: cerminan ketidakamanan dalam hubungan, rasa takut kehilangan, atau kepercayaan yang perlu diperkuat bersama pasangan.',o:'Cerminan dinamika hubungan'},
-  {k:'dikhianati pasangan',tier:'pro',t:'Mimpi dikhianati oleh pasangan spesifik mencerminkan kerentanan dan ketakutan yang dalam terhadap kehilangan kepercayaan. Bukan ramalan — tapi sinyal bahwa ada kekhawatiran yang perlu dikomunikasikan secara terbuka dengan pasangan. Ketenangan dalam hubungan dimulai dari kejujuran.',o:'Cerminan insekuritas dalam hubungan'},
-  {k:'dipeluk orang meninggal',tier:'pro',t:'Dipeluk oleh seseorang yang sudah meninggal — terutama orang tua atau orang yang sangat dekat — adalah salah satu mimpi paling bermakna dan mengharukan. Dalam primbon Jawa, ini bukan mimpi biasa. Ini adalah kunjungan nyata: mereka datang untuk memberikan ketenangan, menunjukkan mereka baik-baik saja, dan menyampaikan kasih sayang yang tidak terputus oleh kematian.',o:'Pertanda kunjungan penuh kasih'},
-  {k:'bertemu orang meninggal',tier:'pro',t:'Bertemu orang yang sudah meninggal dalam mimpi dengan kondisi mereka tampak bahagia dan sehat: tanda bahwa mereka benar-benar baik-baik saja di alam sana, dan mereka ingin kamu tahu itu. Jika mereka terlihat sedih atau mengingatkan sesuatu: perhatikan baik-baik — ada amanah, doa, atau hubungan keluarga yang perlu kamu perhatikan.',o:'Pertanda pesan dari alam sana'},
-  {k:'hamil di luar nikah',tier:'pro',t:'Mimpi hamil di luar nikah bukan pertanda buruk secara harfiah. Ini melambangkan sesuatu yang sedang "tumbuh" dalam hidupmu tapi belum siap atau belum pada waktunya — sebuah rencana, hubungan, atau tanggung jawab yang datang lebih cepat dari yang dipersiapkan. Sinyal untuk segera mempersiapkan diri menyambut apa yang sedang datang.',o:'Pertanda persiapan yang diperlukan'},
-  {k:'menang lotere',tier:'pro',t:'Menang lotere atau undian besar dalam mimpi adalah simbol rezeki mendadak dan tak terduga yang sedang dalam perjalanan. Tapi primbon mengingatkan: rezeki dari mimpi ini biasanya datang dalam bentuk yang berbeda dari yang dibayangkan — mungkin peluang bisnis, pertemuan tak terduga, atau solusi masalah yang selama ini terasa mustahil.',o:'Pertanda rezeki tak terduga'},
-  {k:'menang pertandingan',tier:'pro',t:'Menang dalam pertandingan atau kompetisi apapun dalam mimpi adalah pertanda langsung dari primbon: kamu akan berhasil dalam hal yang sedang kamu perjuangkan. Semakin besar pertandingan dalam mimpi, semakin signifikan kemenangan yang akan datang dalam kehidupan nyata.',o:'Pertanda kemenangan'},
-  {k:'kehilangan dompet',tier:'basic',t:'Kehilangan dompet dalam mimpi melambangkan kekhawatiran kehilangan sesuatu yang bernilai — identitas, keuangan, atau keamanan. Primbon Jawa sering menafsirkan ini sebagai sinyal untuk lebih berhati-hati dalam menjaga apa yang sudah ada, baik secara finansial maupun dalam hal kepercayaan.',o:'Pertanda waspada finansial'},
-  {k:'kehilangan hp',tier:'basic',t:'Kehilangan handphone dalam mimpi mencerminkan kekhawatiran terputus dari koneksi penting — dengan orang-orang yang dicintai, informasi, atau peluang. Di era sekarang, hp dalam mimpi juga bisa melambangkan identitas digital dan cara kamu menampilkan diri kepada dunia.',o:'Pertanda koneksi yang perlu dijaga'},
-  {k:'hp rusak',tier:'basic',t:'HP yang rusak atau layar pecah dalam mimpi: komunikasi yang sedang terganggu, kesalahpahaman yang perlu dibereskan, atau cara kamu terhubung dengan orang lain yang perlu diperbaiki. Ini juga bisa sinyal untuk lebih hadir secara langsung — kurangi ketergantungan pada dunia digital.',o:'Pertanda komunikasi terganggu'},
-  {k:'lupa password',tier:'pro',t:'Mimpi lupa password atau tidak bisa masuk ke akun adalah cerminan modern dari perasaan terkunci — ada akses, posisi, atau kesempatan yang terasa susah dijangkau. Mungkin ada "pintu" dalam hidupmu yang perlu kunci yang berbeda dari yang kamu coba selama ini.',o:'Cerminan rasa terkunci'},
-  {k:'ujian tidak siap',tier:'basic',t:'Ujian yang tidak bisa dikerjakan karena tidak belajar adalah salah satu mimpi paling umum di dunia. Dalam primbon, ini bukan hanya tentang sekolah — ini cerminan kekhawatiran terhadap situasi nyata di mana kamu merasa tidak cukup siap. Sinyal yang baik: alam bawah sadarmu sedang mendorongmu untuk lebih mempersiapkan diri.',o:'Cerminan kecemasan kesiapan'},
-  {k:'dipecat',tier:'pro',t:'Mimpi dipecat dari pekerjaan melambangkan ketakutan akan kehilangan posisi, identitas profesional, atau sumber penghidupan. Bukan ramalan. Justru ini dorongan untuk mengevaluasi: apakah kamu sudah memberikan yang terbaik? Atau ada ketidaknyamanan dalam pekerjaanmu yang perlu diakui?',o:'Cerminan kecemasan profesional'},
-  {k:'naik jabatan',tier:'pro',t:'Mimpi naik jabatan atau mendapat promosi adalah pertanda positif yang langsung dari primbon — pengakuan, kenaikan derajat, dan tanggung jawab yang lebih besar sedang dalam perjalanan. Terima dengan percaya diri dan bersiaplah.',o:'Pertanda kenaikan derajat'},
-  {k:'kecelakaan',tier:'basic',t:'Mimpi kecelakaan adalah sinyal untuk lebih berhati-hati dan waspada — bukan berarti kecelakaan akan terjadi, tapi tubuh dan pikiranmu sedang mengingatkan untuk melambat dan lebih perhatian. Kecelakaan dan selamat: kamu akan melewati situasi berbahaya dengan selamat. Kecelakaan orang lain: ada orang di sekitarmu yang perlu perhatianmu.',o:'Pertanda kehati-hatian'},
-  {k:'kebanjiran rumah',tier:'basic',t:'Rumah yang kebanjiran spesifik lebih personal daripada sekadar mimpi banjir. Rumah adalah dirimu — banjir di dalamnya berarti emosi atau masalah yang sudah masuk ke dalam "dirimu" dan perlu segera dibersihkan. Semakin dalam airnya, semakin mendesak untuk ditangani.',o:'Pertanda masalah yang masuk ke kehidupan pribadi'},
-  {k:'rumah baru',tier:'basic',t:'Mimpi memiliki atau pindah ke rumah baru adalah salah satu pertanda paling menyenangkan dalam primbon. Ini simbol babak hidup baru, fase baru, atau identitas baru yang sedang kamu masuki. Rumah baru yang indah dan luas: kemakmuran dan keluasan hidup yang sedang datang.',o:'Pertanda babak baru yang menyenangkan'},
-  {k:'pindah rumah',tier:'basic',t:'Pindah rumah dalam mimpi melambangkan transisi besar dalam hidup — meninggalkan yang lama dan memulai yang baru. Pindah dengan senang hati: siap melepaskan dan memulai. Pindah terpaksa: ada perubahan yang datang tanpa diminta — tapi bukan berarti buruk.',o:'Pertanda transisi hidup'},
-  {k:'kuburan orang tua',tier:'pro',t:'Berziarah ke kuburan orang tua dalam mimpi adalah bentuk penghormatan dan koneksi spiritual yang kuat. Dalam primbon, ini sering berarti orang tua yang sudah tiada ingin mengingatkan sesuatu — bisa berupa wasiat yang belum terlaksana, doa yang belum dipanjatkan, atau sekedar rindu yang perlu dibalas dengan doa.',o:'Pertanda hubungan spiritual dengan leluhur'},
-  {k:'tangan',tier:'basic',t:'Tangan dalam primbon melambangkan kemampuan, kerja, dan hubungan. Tangan yang kuat dan bersih: kemampuan dan integritas yang sedang memuncak. Tangan yang terluka: ada pengorbanan dalam pekerjaanmu. Tangan yang terulur meminta: kerendahan hati yang membutuhkan bantuan — tidak ada salahnya meminta. Berjabat tangan: perjanjian atau hubungan baru yang bermakna.',o:'Pertanda kemampuan dan hubungan'},
-  {k:'kaki',tier:'basic',t:'Kaki dalam primbon melambangkan arah, perjalanan, dan fondasi. Kaki yang kuat dan berlari: kesiapan dan kepercayaan diri dalam melangkah. Kaki yang terluka atau tidak bisa berjalan: hambatan dalam perjalanan atau keraguan dalam mengambil langkah. Kaki yang terpotong: kehilangan kemampuan untuk melanjutkan sesuatu.',o:'Pertanda arah dan langkah hidup'},
-  {k:'mata',tier:'basic',t:'Mata dalam primbon adalah simbol persepsi, kebenaran, dan kebijaksanaan. Mata yang sangat jelas dan tajam: periode kejelasan dan wawasan yang sedang datang — kamu akan "melihat" sesuatu yang sebelumnya tersembunyi. Mata yang kabur atau tidak bisa melihat: ada kebenaran yang kamu hindari atau situasi yang sengaja tidak ingin kamu lihat.',o:'Pertanda persepsi dan kebenaran'},
-  {k:'mulut',tier:'pro',t:'Mulut dalam primbon berkaitan dengan komunikasi, ekspresi, dan kebenaran. Mulut yang terkunci atau tidak bisa berbicara: ada sesuatu yang ingin kamu ungkapkan tapi tertahan — baik karena takut atau kondisi yang tidak memungkinkan. Mulut yang berbicara lantang dan didengarkan: suaramu akan diperhatikan dalam situasi penting.',o:'Pertanda komunikasi'},
-  {k:'perut',tier:'pro',t:'Perut dalam primbon dikaitkan dengan intuisi ("perut" sering dipakai untuk instinct dalam bahasa Jawa), juga rezeki dan nafkah. Perut yang besar dan kenyang: kemakmuran dan kepuasan. Perut yang sakit atau kembung: ada sesuatu yang "tidak bisa dicerna" — situasi atau informasi yang sulit diterima.',o:'Pertanda intuisi dan rezeki'},
-  {k:'jantung',tier:'pro',t:'Melihat atau merasakan jantung dalam mimpi adalah pengalaman yang sangat intens secara emosional. Jantung yang berdetak kuat dan sehat: vitalitas, cinta, dan semangat yang sedang memuncak. Jantung yang lemah atau sakit: ada beban emosional yang terlalu berat — perlu diperhatikan sebelum menjadi luka yang lebih dalam.',o:'Pertanda kondisi emosional'},
-  {k:'kepala',tier:'basic',t:'Kepala dalam primbon melambangkan pikiran, status, dan identitas. Kepala yang sakit atau pusing: terlalu banyak beban pikiran yang harus dibagi atau dilepaskan. Kepala yang botak tiba-tiba: perubahan besar dalam cara pandang atau hilangnya sesuatu yang selama ini menjadi "mahkota" identitasmu.',o:'Pertanda kondisi pikiran'},
-  {k:'tertabrak',tier:'basic',t:'Tertabrak kendaraan atau benda dalam mimpi adalah sinyal keras untuk lebih waspada — baik terhadap situasi yang datang tiba-tiba maupun keputusan orang lain yang bisa berdampak padamu. Tertabrak dan selamat: kamu akan melewati benturan atau kejutan hidup dengan selamat.',o:'Pertanda kewaspadaan'},
-  {k:'menabrak',tier:'basic',t:'Menabrak sesuatu dalam mimpi mencerminkan kekhawatiran bahwa tindakanmu mungkin melukai orang lain atau menyebabkan masalah yang tidak diinginkan. Evaluasi: apakah ada keputusan yang sedang kamu buat yang perlu lebih berhati-hati agar tidak "menabrak" kepentingan orang lain?',o:'Cerminan kehati-hatian dalam bertindak'},
-  {k:'dimarahi',tier:'basic',t:'Dimarahi seseorang dalam mimpi — terutama orang yang punya otoritas — mencerminkan kekhawatiran terhadap penilaian dan rasa takut mengecewakan. Bukan pertanda akan benar-benar dimarahi. Ini sinyal untuk memeriksa: apakah ada standar atau ekspektasi seseorang yang kamu khawatirkan tidak bisa kamu penuhi?',o:'Cerminan kekhawatiran penilaian'},
-  {k:'memarahi',tier:'basic',t:'Memarahi seseorang dalam mimpi adalah pelepasan amarah atau frustrasi yang tertahan. Kepada siapa kamu marah dalam mimpi adalah petunjuk penting — apa yang orang itu wakili? Ada pesan yang perlu disampaikan dengan lebih tegas dalam kehidupan nyata.',o:'Cerminan amarah yang perlu diungkapkan'},
-  {k:'pesta pernikahan',tier:'basic',t:'Menghadiri pesta pernikahan yang meriah: akan ada perayaan dan kebahagiaan bersama yang sedang datang. Menjadi penganten dalam pesta besar: derajat dan pengakuan yang sedang naik. Pesta pernikahan yang kacau: kekhawatiran terhadap komitmen atau perubahan besar yang sedang datang.',o:'Pertanda perayaan dan komitmen'},
-  {k:'perceraian',tier:'pro',t:'Mimpi tentang perceraian bukan berarti hubunganmu akan berakhir. Ini melambangkan pemutusan dari sesuatu yang sudah tidak sehat — bisa berupa kebiasaan buruk, pola pikir yang merugikan, atau situasi yang sudah harus dilepaskan. Kadang perceraian dalam mimpi justru pertanda kebebasan yang sedang mendekat.',o:'Pertanda pelepasan yang diperlukan'},
-  {k:'cincin kawin',tier:'pro',t:'Cincin kawin yang bersinar dan utuh: komitmen yang kuat, hubungan yang sedang dalam kondisi terbaiknya. Cincin kawin yang hilang: kekhawatiran mendalam tentang ikatan pernikahan — perlu komunikasi terbuka. Cincin kawin yang patah: dalam primbon ini adalah pertanda serius yang perlu segera diatasi dengan memperkuat fondasi hubungan.',o:'Pertanda kekuatan komitmen'},
-  {k:'tidur',tier:'basic',t:'Bermimpi sedang tidur — mimpi di dalam mimpi — adalah tanda kepekaan batin yang tinggi. Tidur dengan nyenyak dan damai dalam mimpi: kedamaian batin yang sedang atau akan kamu rasakan. Tidak bisa tidur dalam mimpi: kecemasan yang perlu diselesaikan agar pikiranmu benar-benar bisa beristirahat.',o:'Cerminan kondisi batin'},
-  {k:'bermimpi buruk',tier:'basic',t:'Mimpi tentang mimpi buruk (nightmares) adalah cara alam bawah sadar memproses ketakutan, trauma, atau kecemasan yang belum terselesaikan. Dalam primbon, mimpi buruk yang berulang adalah sinyal paling jelas bahwa ada sesuatu yang sangat butuh perhatian dan penyelesaian — jangan terus diabaikan.',o:'Sinyal perhatian mendesak'},
-  {k:'melihat diri sendiri',tier:'pro',t:'Melihat dirimu sendiri dari luar — seolah kamu adalah orang ketiga — adalah pengalaman jiwa yang keluar dari tubuh (astral). Dalam primbon Jawa, ini adalah salah satu tanda kepekaan spiritual tertinggi. Kamu sedang dalam kondisi sangat sadar secara batin dan bisa melihat dirimu dengan lebih objektif dari biasanya.',o:'Pertanda kepekaan spiritual tinggi'},
-  {k:'tubuh mengambang',tier:'pro',t:'Merasakan tubuh mengambang atau melayang tepat di atas tubuhmu dalam primbon Jawa dikaitkan dengan perjalanan jiwa. Ini pertanda jiwa yang sangat ringan — bebas dari beban, kondisi spiritual yang sedang baik. Atau bisa juga sinyal bahwa kamu perlu lebih "membumi" dan hadir sepenuhnya dalam kehidupan nyata.',o:'Pertanda kondisi spiritual'},
-  {k:'lari dari bencana',tier:'basic',t:'Berlari menyelamatkan diri dari bencana (banjir, gempa, kebakaran) melambangkan naluri bertahan hidup yang kuat dan kemampuan adaptasi di bawah tekanan. Berhasil selamat: kamu akan berhasil melewati situasi kritis. Tidak berhasil lari: ada situasi yang tidak bisa diselesaikan dengan lari — harus dihadapi.',o:'Pertanda ketahanan'},
-  {k:'menolong orang',tier:'basic',t:'Menolong orang dalam kesusahan dalam mimpi adalah pertanda sangat baik — kemurahan hati yang sedang kamu tunjukkan akan dibalas dengan rezeki dari arah tak terduga. Primbon berkata: orang yang suka menolong dalam mimpi adalah orang yang di sekitarnya selalu ada pertolongan saat ia membutuhkan.',o:'Pertanda kemurahan hati'},
-  {k:'ditolong orang',tier:'basic',t:'Ditolong oleh seseorang dalam situasi sulit: ada orang di sekitarmu yang tulus ingin membantumu — mungkin kamu belum memperhatikan atau menerima bantuan mereka dengan sepenuh hati. Bisa juga pertanda bahwa pertolongan yang kamu butuhkan sedang dalam perjalanan.',o:'Pertanda pertolongan yang datang'},
-  {k:'uang banyak',tier:'basic',t:'Menemukan atau mendapat uang dalam jumlah sangat banyak dalam mimpi — dalam primbon ini sering bermakna terbalik. Bukan berarti akan dapat uang banyak, tapi bisa berarti ada pengeluaran besar yang perlu diantisipasi, atau ada "harga" yang harus dibayar untuk sesuatu yang kamu inginkan. Gunakan mimpi ini sebagai sinyal untuk lebih bijak mengelola keuangan.',o:'Pertanda hati-hati finansial'},
-  {k:'utang',tier:'pro',t:'Memiliki utang yang banyak dalam mimpi mencerminkan beban tanggung jawab yang terasa menumpuk. Bukan selalu tentang utang uang — bisa berupa kewajiban moral, janji yang belum ditepati, atau rasa bersalah terhadap seseorang. Melunasi utang dalam mimpi: pertanda sangat baik — beban yang sedang kamu bawa akan terangkat.',o:'Cerminan beban tanggung jawab'},
-  {k:'harta karun',tier:'pro',t:'Menemukan harta karun dalam mimpi adalah salah satu pertanda paling menggembirakan dalam primbon. Ada sesuatu yang sangat berharga yang selama ini tersembunyi dalam hidupmu — bisa berupa bakat yang belum digali, peluang yang belum terlihat, atau hubungan yang belum sepenuhnya diapresiasi. Saatnya menggali lebih dalam.',o:'Pertanda penemuan berharga'},
-  {k:'kebun binatang',tier:'pro',t:'Berada di kebun binatang dalam mimpi melambangkan berbagai aspek kepribadianmu yang sedang "dikandangkan" atau dikontrol. Hewan yang keluar dari kandangnya: sesuatu dalam dirimu yang tidak bisa lagi ditahan — ekspresi diri, emosi, atau ambisi yang perlu diberi ruang.',o:'Cerminan aspek diri yang terkekang'},
-  {k:'bermain dengan anak kecil',tier:'basic',t:'Bermain dengan anak kecil yang bahagia dalam mimpi adalah salah satu pengalaman paling menyenangkan — pertanda kegembiraan tulus, kreativitas yang bebas, dan koneksi dengan sisi polos darimu. Ini juga sinyal bahwa hidupmu sedang terlalu serius dan butuh lebih banyak kesenangan yang sederhana.',o:'Pertanda kegembiraan tulus'},
-  {k:'sekolah lama',tier:'basic',t:'Kembali ke sekolah lama dalam mimpi adalah salah satu yang paling sering dialami orang dewasa. Ini bukan tentang masa lalu yang indah saja — ada pelajaran dari periode itu yang belum selesai kamu proses. Ada nilai, kebiasaan, atau pola pikir dari masa sekolah yang masih memengaruhi hidupmu saat ini.',o:'Pertanda pelajaran masa lalu'},
-  {k:'ospek',tier:'pro',t:'Bermimpi ospek atau orientasi masuk ke lingkungan baru mencerminkan kecemasan terhadap proses adaptasi — masuk ke lingkungan baru, pekerjaan baru, atau fase hidup baru. Melewati ospek dengan sukses: kamu akan berhasil melalui masa adaptasi dengan baik. Gagal ospek: butuh lebih banyak persiapan mental.',o:'Cerminan kecemasan adaptasi'},
-  {k:'ketinggalan pesawat',tier:'basic',t:'Ketinggalan pesawat, kereta, atau kendaraan penting adalah mimpi klasik tentang kecemasan kehilangan peluang. Ini sinyal untuk lebih terorganisir, lebih sigap, dan tidak menunda-nunda. Tapi ingat: dalam primbon, melewatkan satu transportasi sering berarti ada yang lebih baik yang sedang menunggumu.',o:'Cerminan kecemasan melewatkan peluang'},
-  {k:'buku pelajaran',tier:'pro',t:'Buku pelajaran yang tidak bisa kamu baca atau pahami: ada ilmu atau informasi yang kamu butuhkan tapi belum bisa kamu akses. Buku pelajaran yang bersih dan mudah dipahami: kesiapan belajar yang tinggi dan periode penyerapan ilmu yang produktif sedang datang.',o:'Pertanda proses belajar'},
-  {k:'berantem sama teman',tier:'basic',t:'Bertengkar dengan teman dekat dalam mimpi mencerminkan ketegangan atau gesekan yang ada dalam hubungan tersebut — mungkin belum terucap tapi sudah terasa. Ini undangan untuk memeriksa apakah ada yang mengganjal dalam hubungan itu yang perlu dibicarakan dengan jujur sebelum menjadi jarak.',o:'Cerminan ketegangan hubungan'},
-  {k:'diselamatkan',tier:'basic',t:'Diselamatkan dari bahaya oleh seseorang dalam mimpi melambangkan sosok pelindung dalam hidupmu — orang yang tulus ada untukmu di saat paling sulit. Bisa juga pertanda bahwa pertolongan dari sumber tak terduga akan datang tepat waktu saat kamu benar-benar membutuhkannya.',o:'Pertanda perlindungan'},
-  {k:'tersenyum',tier:'basic',t:'Mimpi di mana kamu atau orang-orang di sekitarmu terus tersenyum adalah salah satu pertanda paling sederhana tapi paling bermakna. Ini adalah konfirmasi dari alam bawah sadar bahwa sesuatu dalam hidupmu sedang baik-baik saja — atau akan segera baik-baik saja. Percayai perasaan itu saat bangun.',o:'Pertanda kebaikan'},
-  {k:'mengemudi',tier:'basic',t:'Mengemudi dengan tenang dan percaya diri: kamu sedang dalam kendali penuh atas arah hidupmu. Mengemudi di jalan yang tidak dikenal: petualangan baru yang membutuhkan kepercayaan pada intuisi. Mengemudi di jalan tol yang lurus dan panjang: fase hidup yang stabil dan terarah tanpa banyak hambatan.',o:'Pertanda kendali hidup'},
-  {k:'bermain musik',tier:'pro',t:'Bermain musik dengan indah dan mengalir: ekspresi diri yang sedang menemukan jalannya yang sempurna — ada harmoni dalam hidupmu saat ini. Musik yang sumbang atau alat yang rusak: ada disonansi atau ketidakselarasan dalam suatu aspek hidupmu yang perlu disetel ulang.',o:'Pertanda harmoni hidup'},
-  {k:'mendengar musik',tier:'pro',t:'Mendengar musik yang sangat indah dalam mimpi sering dikaitkan dengan pesan dari alam bawah sadar yang disampaikan lewat nada. Perhatikan jenis musiknya: musik yang menggembirakan pertanda kabar baik; musik yang sedih tapi indah pertanda pelepasan dan penyembuhan; musik yang mengganggu pertanda ada sesuatu yang tidak harmonis.',o:'Pertanda pesan bawah sadar'}
+  {k:'ular',t:'Ular dalam mimpi adalah salah satu simbol paling kaya dalam primbon Jawa. Bila ularnya jinak, melingkar tenang, atau kamu memegangnya — ini pertanda jodoh yang mendekat atau rezeki yang akan datang dari arah tak terduga. Bila ular menyerangmu, ada urusan atau orang yang perlu kamu hadapi dengan berani, jangan dihindari lagi. Ular yang sangat besar melambangkan kekuatan tersembunyi dalam dirimu yang belum sepenuhnya kamu manfaatkan. Dalam tradisi Jawa kuno, ular sering dikaitkan dengan "wahyu" atau berkat yang sedang dalam perjalanan menujumu.',o:'Umumnya pertanda baik'},
+  {k:'gigi copot',t:'Mimpi gigi tanggal atau copot adalah salah satu yang paling sering ditanyakan, dan primbon Jawa memiliki tafsir yang cukup spesifik. Gigi bawah copot biasanya dikaitkan dengan kabar duka dari keluarga pihak ibu; gigi atas dengan pihak ayah. Semakin banyak gigi yang copot dalam mimpi, semakin kuat pesannya. Ini bukan kutukan, melainkan sinyal untuk mempererat tali silaturahmi dengan keluarga, memperbanyak doa, dan lebih memperhatikan orang-orang tersayang sebelum terlambat.',o:'Pertanda waspada'},
+  {k:'terbang',t:'Terbang dalam mimpi adalah salah satu pengalaman paling indah — dan dalam primbon Jawa, maknanya pun positif. Terbang tinggi dengan tenang melambangkan terangkatnya derajat, terbukanya peluang baru, dan jiwa yang bebas dari beban. Bila kamu terbang di atas rumahmu sendiri, ini pertanda kemakmuran keluarga yang sedang bertumbuh. Terbang di atas kota atau tempat yang luas melambangkan ambisi dan cita-cita yang sedang menemukan jalannya. Satu-satunya catatan: bila dalam mimpi kamu takut jatuh — itu cerminan kekhawatiran terhadap kesuksesan yang belum kamu yakini layak kamu dapatkan.',o:'Pertanda baik'},
+  {k:'jatuh',t:'Jatuh dari ketinggian dalam mimpi hampir universal dirasakan manusia, dan primbon Jawa menafsirkannya sebagai sinyal introspeksi. Ini bukan pertanda buruk yang pasti terjadi, melainkan cerminan rasa tidak aman atau kekhawatiran akan kehilangan sesuatu — posisi, hubungan, atau kepercayaan diri. Pertanyaan pentingnya: dari mana kamu jatuh? Dari rumah sendiri berarti kekhawatiran soal keluarga; dari tempat tinggi di luar berarti soal status sosial atau pekerjaan. Mimpi ini adalah undangan untuk berpijak lebih kuat dan membangun fondasi yang lebih solid.',o:'Pertanda introspeksi'},
+  {k:'air',t:'Air adalah simbol paling dinamis dalam primbon — maknanya sangat bergantung kondisinya. Air jernih mengalir tenang: rezeki lancar, ketenangan batin, dan kabar baik dari jauh. Air keruh: ada masalah yang sedang mengaduk perasaan, perlu kejernihan dalam mengambil keputusan. Berenang di air tenang: kamu sedang dalam kontrol penuh hidupmu. Tenggelam: beban yang terasa terlalu berat — ini sinyal untuk meminta bantuan, bukan terus berjuang sendirian. Air terjun yang deras: perubahan besar yang tak terbendung sedang datang, bersiaplah.',o:'Tergantung kondisi air'},
+  {k:'banjir',t:'Banjir dalam mimpi memang terasa menakutkan, tapi primbon Jawa punya perspektif yang lebih nuanced. Air yang membludak dan melanda melambangkan emosi atau persoalan yang sudah terlalu lama dipendam hingga akhirnya meluap. Ini bukan pertanda bencana, tapi undangan untuk tidak lagi menyimpan terlalu banyak beban sendirian. Yang menarik dalam primbon: setelah banjir dalam mimpi, sering datang keberkahan — sama seperti banjir sungguhan yang meninggalkan tanah subur setelah surut. Hadapi yang sedang membanjirimu, dan setelah itu bersiap untuk panen.',o:'Ujian lalu berkah'},
+  {k:'dikejar',t:'Dikejar dalam mimpi adalah cermin dari sesuatu yang kamu hindari dalam kehidupan nyata — bisa berupa tanggung jawab, percakapan sulit, keputusan yang ditunda, atau perasaan yang belum diproses. Semakin cepat pengejarnya, semakin mendesak urusan itu untuk diselesaikan. Yang dikejar bisa bermakna: dikejar manusia (konflik interpersonal), dikejar binatang (naluri atau ketakutan primitif), dikejar bayangan (masalah internal yang belum diakui). Primbon menyarankan satu hal: berhenti lari. Hadapi apa yang mengejarmu — itu satu-satunya cara mimpi ini berhenti.',o:'Pertanda introspeksi'},
+  {k:'api',t:'Api dalam mimpi membawa energi yang kuat dan perlu diperhatikan konteksnya. Api kecil yang terkendali — semangat, gairah, dan motivasi yang sedang menyala. Api besar yang berkobar indah — perubahan transformatif yang akan mengubah hidupmu, umumnya ke arah yang lebih baik. Api yang membakar barang milikmu — kehilangan sesuatu yang material tapi diikuti dengan kebebasan. Api yang tidak bisa dipadamkan — amarah atau tekanan yang sudah terlalu lama disimpan, butuh disalurkan dengan sehat. Dalam primbon, api sering juga dikaitkan dengan semangat juang yang sedang bangkit.',o:'Tergantung besar api'},
+  {k:'kebakaran',t:'Kebakaran adalah salah satu mimpi yang paling sering ditafsirkan terbalik dalam primbon Jawa — semakin besar apinya, semakin besar potensi rezeki yang akan datang. Ini bukan berarti kamu harus berharap rumah terbakar, tentu saja. Maknanya lebih dalam: sesuatu yang lama ada dalam hidupmu sedang "dibakar" habis untuk memberi ruang bagi yang baru. Kebakaran rumah orang lain berarti kabar mengejutkan dari lingkungan sekitar. Kebakaran yang berhasil kamu padamkan: kamu akan berhasil mengatasi masalah besar dengan kemampuanmu sendiri.',o:'Pertanda baik'},
+  {k:'uang',t:'Paradoks mimpi uang dalam primbon Jawa sudah dikenal luas: menemukan uang banyak justru sering jadi pertanda pengeluaran tak terduga atau keuangan yang perlu diwaspadai. Sebaliknya, memberikan uang atau kehilangan uang dalam mimpi justru sering pertanda rezeki yang akan datang. Mengapa? Primbon percaya mimpi bekerja dalam logika terbalik untuk hal-hal material. Namun konteks tetap penting: jika dalam mimpi kamu merasa senang dan ringan saat memberi — itu pertanda sangat baik. Jika berhitung-hitung soal uang — pertanda ada kecemasan finansial yang perlu dihadapi.',o:'Sering bermakna terbalik'},
+  {k:'emas',t:'Emas dalam primbon Jawa adalah simbol kemuliaan, rezeki, dan anugerah. Menerima emas sebagai hadiah: akan datang anugerah atau kehormatan yang tidak kamu duga. Menemukan emas: ada bakat atau peluang tersembunyi yang belum kamu sadari nilainya. Kehilangan emas: waspada terhadap kepercayaan yang diberikan padamu — jangan disia-siakan. Memakai perhiasan emas: derajatmu akan terangkat, kemungkinan besar melalui usaha dan kerja keras yang sudah kamu lakukan sebelumnya.',o:'Pertanda baik'},
+  {k:'menikah',t:'Mimpi menikah memiliki tafsir yang berbeda berdasarkan status. Bagi yang belum menikah: pertanda jodoh sedang mendekat, atau setidaknya ada seseorang yang layak dipertimbangkan lebih serius. Bagi yang sudah menikah: ini bukan pertanda perselingkuhan atau perceraian — justru sebaliknya, ini tanda babak baru dalam pernikahan, komitmen yang diperbaharui, atau tanggung jawab baru dalam keluarga. Menikah dengan orang yang tidak dikenal: akan ada hubungan penting baru yang masuk dalam hidupmu, tidak selalu romantis.',o:'Pertanda perubahan'},
+  {k:'hamil',t:'Mimpi hamil dalam primbon Jawa adalah salah satu yang paling positif — dan berlaku untuk laki-laki maupun perempuan. Hamil melambangkan sesuatu yang sedang "dikandung" dalam hidupmu: rencana besar, ide yang belum dilahirkan, atau harapan yang sedang bertumbuh perlahan. Semakin besar kandungannya dalam mimpi, semakin matang rencana itu dan semakin dekat waktunya untuk "dilahirkan" menjadi aksi nyata. Ini sinyal kuat untuk mulai bergerak dan merealisasikan apa yang sudah terlalu lama hanya ada di kepala.',o:'Pertanda baik'},
+  {k:'bayi',t:'Bayi dalam mimpi hampir selalu membawa energi positif. Bayi yang sehat, tertawa, dan dalam gendonganmu: kebahagiaan baru sedang tumbuh — bisa berupa hubungan baru, usaha baru, atau fase kehidupan baru yang penuh harapan. Bayi yang menangis: ada sesuatu dalam hidupmu yang masih "bayi" dan butuh lebih banyak perhatian dan nurturing. Menemukan bayi: akan ada tanggung jawab baru yang datang — dan kamu lebih siap dari yang kamu kira.',o:'Pertanda baik'},
+  {k:'meninggal',t:'Mimpi tentang kematian — entah kematian diri sendiri atau orang lain — adalah yang paling sering disalahartikan. Dalam primbon Jawa maupun psikologi modern, mimpi ini jarang bermakna harfiah. Kematian diri sendiri: transformasi besar sedang terjadi, kamu sedang meninggalkan versi lama dirimu. Kematian orang yang masih hidup: bukan pertanda mereka akan meninggal, tapi bisa berarti perubahan besar dalam hubunganmu dengan mereka, atau perpisahan dari fase tertentu dalam hubungan itu. Kematian orang yang sudah meninggal: biasanya kunjungan spiritual yang membawa pesan atau ketenangan.',o:'Pertanda perubahan'},
+  {k:'rambut',t:'Rambut dalam primbon dikaitkan dengan kekuatan, vitalitas, dan kebanggaan. Rambut rontok berlebihan: kekhawatiran soal sesuatu yang kamu anggap "milik" atau identitasmu — bisa jabatan, hubungan, atau reputasi. Rambut tumbuh panjang dan lebat: bertambahnya rezeki, kesehatan, dan energi positif. Rambut dipotong paksa: ada situasi di luar kontrolmu yang akan mengubah sesuatu. Rambut berwarna berbeda dari biasanya: kamu sedang dalam fase perubahan identitas atau cara pandang.',o:'Tergantung kondisi'},
+  {k:'rumah',t:'Rumah dalam mimpi adalah representasi dirimu sendiri — jiwamu, hidupmu, keluargamu. Rumah baru yang indah: pertanda kemakmuran, kehidupan yang akan meningkat, atau babak baru yang menyenangkan. Rumah lama yang runtuh: ada fondasi dalam hidupmu yang perlu diperbaiki sebelum terlambat. Rumah yang sangat besar: ambisi dan cita-cita yang sedang membesar. Rumah yang sempit dan pengap: merasa terkekang atau terbatas dalam suatu situasi. Menemukan kamar tersembunyi dalam rumahmu sendiri: bakat atau kemampuan yang belum kamu sadari.',o:'Cerminan kondisi batin'},
+  {k:'hewan',t:'Hewan dalam mimpi membawa energi yang beragam tergantung jenisnya. Secara umum: hewan jinak yang ramah adalah pertanda baik dan keselarasan dengan alam. Hewan liar yang mengancam: ada kekuatan atau emosi primitif yang belum dijinakkan dalam dirimu. Memelihara hewan: tanggung jawab baru yang akan datang. Hewan yang berbicara: pesan penting dari alam bawah sadar yang perlu kamu dengarkan.',o:'Tergantung jenis hewan'},
+  {k:'sekolah',t:'Mimpi tentang sekolah atau ujian hampir selalu berkaitan dengan kekhawatiran tentang penilaian dan kecukupan diri. Ujian yang tidak bisa kamu kerjakan: rasa tidak siap menghadapi tantangan dalam kehidupan nyata. Lulus ujian dengan nilai tinggi: kepercayaan dirimu akan tumbuh setelah melewati situasi sulit. Kembali ke sekolah lama: ada pelajaran dari masa lalu yang belum selesai kamu proses. Terlambat ke sekolah: kekhawatiran akan melewatkan peluang penting.',o:'Cerminan kecemasan'},
+  {k:'menangis',t:'Menangis dalam mimpi, anehnya, sering kali membawa perasaan lega saat bangun — dan primbon Jawa mengkonfirmasi ini sebagai pertanda baik. Air mata dalam mimpi adalah pelepasan emosi yang tertahan dalam kehidupan nyata. Menangis karena bahagia: kebahagiaan nyata yang akan segera datang. Menangis karena sedih tapi terasa lega: penyembuhan dari luka yang sudah lama. Menangis sendirian: butuh ruang untuk mengekspresikan perasaan yang selama ini disembunyikan.',o:'Pertanda pelepasan'},
+  {k:'tertawa',t:'Mimpi tertawa terbahak-bahak adalah salah satu pertanda paling menyenangkan dalam primbon Jawa. Tertawa bersama orang-orang yang kamu cintai: kebahagiaan dan kebersamaan yang akan semakin kuat. Tertawa sendiri: kepuasan batin yang sedang tumbuh dari dalam, tidak bergantung pada validasi luar. Tertawa yang tidak bisa berhenti: luapan kebahagiaan yang sudah lama kamu tahan. Satu catatan: tertawa mengejek orang lain dalam mimpi justru kurang baik — cermin dari sikap yang perlu dievaluasi.',o:'Pertanda baik'},
+  {k:'hutan',t:'Hutan dalam primbon Jawa adalah simbol perjalanan batin dan ketidakpastian yang harus dihadapi. Hutan lebat yang gelap: kamu sedang dalam periode hidup yang penuh ketidakjelasan — tapi ingat, semua hutan punya ujung. Hutan yang indah dan terang dengan cahaya masuk dari sela-sela daun: petualangan spiritual atau pengalaman transformatif yang indah sedang menunggumu. Tersesat dalam hutan: butuh waktu untuk menemukan kembali arah hidupmu, dan itu wajar.',o:'Perjalanan batin'},
+  {k:'gunung',t:'Gunung adalah simbol ambisi, pencapaian, dan perjalanan menuju tujuan besar. Mendaki gunung dengan semangat: kamu sedang dalam perjalanan menuju tujuan besar yang layak diperjuangkan. Mencapai puncak: pencapaian besar yang akan datang — mungkin tidak hari ini, tapi pada waktunya. Turun dari gunung: fase baru setelah perjuangan panjang, saatnya menikmati hasil. Gunung yang meletus: perubahan dramatis yang tidak bisa dihindari — tapi ingat, gunung berapi justru membuat tanah menjadi paling subur.',o:'Pertanda pencapaian'},
+  {k:'laut',t:'Laut dalam primbon adalah cerminan ketidaksadaran, kedalaman emosi, dan luasnya kemungkinan. Laut yang tenang dan biru jernih: ketenangan batin, rezeki yang lapang, dan hubungan yang harmonis. Laut bergelombang: emosi yang sedang bergolak, situasi yang tidak stabil — butuh ketenangan dan pegangan. Berenang di laut: kamu sedang menyelami kedalaman dirimu sendiri dengan berani. Tenggelam di laut: beban emosi yang terlalu berat untuk ditanggung sendirian — ini saatnya mencari bantuan.',o:'Cerminan kedalaman batin'},
+  {k:'kendaraan',t:'Kendaraan dalam mimpi mewakili kendali atas arah hidupmu. Mengendarai mobil/motor dengan lancar: kamu sedang dalam kontrol penuh, perjalanan hidupmu berjalan sesuai rencana. Kendaraan yang mogok atau rusak: ada hambatan dalam perjalananmu yang perlu diselesaikan sebelum bisa melanjutkan. Kendaraan yang berjalan sendiri tanpa kamu kendalikan: merasa hidupmu sedang dikemudikan oleh hal-hal di luar kontrolmu. Kecelakaan kendaraan: peringatan untuk lebih berhati-hati dalam keputusan besar.',o:'Cerminan kendali hidup'},
+  {k:'jembatan',t:'Jembatan adalah simbol transisi — dari satu fase kehidupan ke fase berikutnya. Menyeberangi jembatan dengan lancar: perubahan besar dalam hidup yang akan berjalan mulus jika kamu mau melangkah. Jembatan yang goyah atau hampir runtuh: transisi yang sedang kamu hadapi membutuhkan lebih banyak persiapan dan keberanian. Berdiri di tengah jembatan dan ragu-ragu: kamu sedang di persimpangan keputusan penting dan belum bisa melangkah ke satu arah.',o:'Pertanda transisi'},
+  {k:'buku',t:'Buku dalam mimpi berkaitan dengan pengetahuan, ilmu, dan perjalanan intelektual. Membaca buku dengan asyik: ilmu dan kebijaksanaan baru sedang dalam perjalanan menujumu — buka dirimu untuk belajar. Buku yang tidak bisa dibaca atau tulisannya kabur: ada informasi penting yang belum bisa kamu akses, saatnya mencari mentor atau sumber pengetahuan baru. Menulis buku: kamu punya cerita dan pengalaman yang berharga untuk dibagikan kepada dunia.',o:'Pertanda ilmu'},
+  {k:'cincin',t:'Cincin dalam primbon Jawa sangat erat dengan komitmen, ikatan, dan janji. Menerima cincin: akan ada komitmen baru yang masuk dalam hidupmu — bisa berupa pekerjaan, hubungan, atau tanggung jawab yang bermakna. Kehilangan cincin: ada ikatan atau komitmen yang sedang diuji kekuatannya. Cincin yang patah: perlu evaluasi serius terhadap suatu hubungan atau perjanjian. Menemukan cincin: peluang komitmen yang berharga sedang menunggumu — jangan dilewatkan.',o:'Pertanda komitmen'},
+  {k:'kucing',t:'Kucing dalam primbon Jawa memiliki aura yang misterius dan spiritual. Kucing putih yang jinak: keberuntungan dan perlindungan spiritual yang sedang mengiringi langkahmu. Kucing hitam yang mengancam: dalam primbon, ini sering dikaitkan dengan gangguan atau energi negatif yang perlu diwaspadai — bukan kutukan, tapi sinyal waspada. Kucing yang mengeong terus-menerus: ada sesuatu yang perlu kamu perhatikan tapi selama ini kamu abaikan.',o:'Tergantung warna dan perilaku'},
+  {k:'anjing',t:'Anjing dalam mimpi melambangkan kesetiaan, pertemanan, dan perlindungan. Anjing yang ramah dan bermain denganmu: persahabatan sejati yang bisa diandalkan, atau akan datang orang baru yang tulus dalam hidupmu. Anjing yang menggonggong atau menggigit: ada orang di sekitarmu yang tampak setia tapi perlu kamu perhatikan lebih seksama niatnya. Anjing yang sakit atau mati: perubahan dalam suatu persahabatan atau kesetiaan yang sedang diuji.',o:'Cerminan kesetiaan'},
+  {k:'burung',t:'Burung adalah simbol kebebasan, pesan, dan jiwa dalam primbon Jawa. Burung terbang bebas di langit: jiwa yang bebas, kabar baik dari jauh, atau harapan yang sedang mengudara. Burung yang masuk ke rumah: tamu atau kabar tak terduga akan datang — biasanya membawa kegembiraan. Burung yang jatuh atau mati: pertanda sedih atau kabar duka dari seseorang yang jauh. Burung berkicau indah: suara alam sedang berbicara kepadamu — dengarkan.',o:'Tergantung kondisi burung'},
+  {k:'nasi',t:'Nasi — makanan pokok Jawa — adalah simbol rezeki, kehidupan, dan kemakmuran yang paling mendasar. Makan nasi dengan lahap dan kenyang: rezeki yang cukup dan kehidupan yang memuaskan. Nasi yang berlebihan hingga menumpuk: kemakmuran yang akan datang, tapi perlu dikelola dengan bijak. Nasi yang basi atau busuk: sesuatu dalam hidupmu yang sudah "kadaluarsa" dan perlu diperbarui. Memasak nasi: proses yang sedang berjalan dengan baik, hasilnya tinggal ditunggu.',o:'Pertanda rezeki'},
+  {k:'sawah',t:'Sawah dalam mimpi adalah salah satu simbol paling positif dalam primbon Jawa — keterikatan dengan tanah, kerja keras, dan panen. Sawah yang hijau subur: kesejahteraan yang sedang bertumbuh, jerih payahmu sedang berakar dengan kuat. Sawah yang kering atau tandus: ada area dalam hidupmu yang butuh lebih banyak "air" — perhatian, energi, atau investasi. Memanen padi: saatnya menikmati hasil dari kerja keras yang sudah lama kamu lakukan.',o:'Pertanda kemakmuran'},
+  {k:'pasar',t:'Pasar dalam mimpi melambangkan aktivitas sosial, transaksi, dan pertukaran dalam arti yang luas. Pasar yang ramai dan semarak: kehidupan sosialmu sedang dalam puncaknya, ada banyak peluang yang bisa kamu manfaatkan. Pasar yang sepi: merasa kurang koneksi atau dukungan sosial — waktunya untuk lebih aktif membangun hubungan. Berbelanja di pasar dengan senang: pilihan-pilihan baik sedang tersedia bagimu, gunakan dengan bijak.',o:'Cerminan kehidupan sosial'},
+  {k:'hujan',t:'Hujan dalam primbon Jawa hampir selalu membawa makna yang positif — sama seperti petani yang bersyukur saat hujan turun. Hujan deras yang menyegarkan: rezeki yang akan turun deras, masalah yang akan segera terselesaikan. Hujan gerimis yang lembut: kabar baik yang datang perlahan tapi pasti. Kehujanan tanpa tempat berlindung: merasa tidak ada yang mendukung di saat sulit — tapi dalam primbon, ini juga berarti kamu lebih tangguh dari yang kamu kira. Bau tanah setelah hujan dalam mimpi: momen ketenangan dan rasa syukur yang akan kamu rasakan.',o:'Pertanda baik'},
+  {k:'matahari',t:'Matahari dalam primbon adalah simbol keagungan, rezeki, dan pencerahan tertinggi. Matahari terbit cerah: awal yang baru yang sangat menjanjikan, semangat yang kembali membara. Matahari yang sangat terik: sukses yang besar tapi perlu persiapan agar tidak "terbakar" — jaga kesehatanmu. Matahari terbenam yang indah: fase yang sedang berakhir dengan indah, dan yang baru akan segera dimulai. Gerhana matahari: perubahan besar yang sementara mengaburkan pandanganmu — tapi matahari selalu kembali.',o:'Pertanda cahaya dan rezeki'},
+  {k:'bulan',t:'Bulan dalam primbon dikaitkan dengan siklus, intuisi, dan sisi tersembunyi dari diri. Bulan purnama yang terang: kelimpahan, keindahan, dan kepenuhan — sesuatu dalam hidupmu sedang berada di puncaknya. Bulan sabit: sesuatu yang baru sedang mulai tumbuh, fase permulaan yang penuh potensi. Bulan yang tertutup awan: kejelasan yang sedang terhalangi — sabar, awan akan berlalu. Banyak bulan di langit: mimpi yang sangat istimewa, menandakan berkah yang berlipat ganda.',o:'Pertanda siklus hidup'},
+  {k:'bintang',t:'Bintang dalam mimpi adalah salah satu pertanda paling indah dalam primbon — harapan, cita-cita, dan cahaya di kegelapan. Langit berbintang terang dan jernih: masa depan yang cerah, jalan hidupmu sedang diterangi oleh kekuatan yang lebih besar. Menggapai bintang dan berhasil: cita-cita tertinggimu bisa dan akan terwujud. Bintang jatuh: perubahan besar yang datang cepat — buatlah permohonan dan bersiaplah menyambut.',o:'Pertanda harapan'},
+  {k:'membayar',t:'Mimpi membayar hutang menandakan penyelesaian kewajiban yang sudah lama menggantung. Ini pertanda lega, bukan beban — sesuatu yang mengikatmu akan segera terselesaikan. Membayar lunas dengan senang: kebebasan dari kewajiban lama yang akan segera kamu rasakan. Tidak bisa membayar: masih ada tanggung jawab yang belum kamu selesaikan dan terus menghantui bawah sadarmu.',o:'Pertanda penyelesaian'},
+  {k:'kaya',t:'Mimpi menjadi sangat kaya atau berlimpah harta dalam primbon memiliki dua sisi. Jika terasa alami dan membahagiakan: motivasi dari dalam yang mendorong kamu bekerja lebih keras dan lebih cerdas. Jika terasa berlebihan atau tidak nyata: mungkin ada keinginan materialistis yang perlu dievaluasi — kekayaan sejati tidak selalu berbentuk materi. Dalam primbon, mimpi kaya sering juga pertanda akan ada rezeki yang datang dari usaha yang sudah kamu lakukan.',o:'Pertanda motivasi'},
+  {k:'miskin',t:'Mimpi menjadi miskin atau kehilangan segalanya adalah pengingat yang kuat dari alam bawah sadar. Ini bukan pertanda kamu akan jatuh miskin — melainkan sinyal untuk lebih bersyukur dengan apa yang sudah ada dan tidak menyia-nyiakan rezeki yang sedang kamu miliki. Dalam primbon, mimpi kehilangan harta kadang justru pertanda akan datangnya rezeki baru — setelah yang lama "dibersihkan".',o:'Pertanda pengingat'},
+  {k:'tamu',t:'Mimpi kedatangan tamu dalam primbon Jawa bermakna akan ada kabar, kunjungan, atau sesuatu yang tidak terduga masuk dalam hidupmu. Tamu yang ramah dan disambut dengan baik: kabar baik, rezeki, atau pertemuan yang menyenangkan akan segera terjadi. Tamu yang tidak dikenal tapi terasa familiar: seseorang baru akan masuk dalam hidupmu dan membawa pengaruh positif. Tamu yang tidak disambut atau menyeramkan: waspada terhadap situasi atau orang yang belum kamu kenali sepenuhnya.',o:'Pertanda kabar'},
+  {k:'hadiah',t:'Menerima hadiah dalam mimpi adalah salah satu pertanda terbaik — sesuatu yang berharga akan datang tanpa kamu minta atau duga. Hadiah yang indah dan kamu sukai: rezeki atau anugerah yang sangat sesuai dengan kebutuhan hatimu. Hadiah yang tidak kamu mengerti atau tidak sesuai harapan: akan ada pemberian yang butuh waktu untuk kamu pahami nilainya. Memberi hadiah dalam mimpi: kebaikanmu akan kembali padamu berlipat ganda.',o:'Pertanda rezeki'},
+  {k:'mencuri',t:'Mimpi mencuri — entah kamu yang mencuri atau melihat pencurian — adalah sinyal dari bawah sadar tentang keinginan yang tidak terpenuhi atau cara yang tidak selaras dengan nilai-nilaimu. Kamu yang mencuri: ada sesuatu yang kamu inginkan tapi merasa tidak berhak mendapatkannya dengan cara yang benar — evaluasi ini. Kamu yang dicuri: waspada terhadap orang yang mungkin mengambil keuntungan dari kepercayaanmu.',o:'Pertanda evaluasi'},
+  {k:'dicuri',t:'Mimpi kemalingan atau kehilangan sesuatu karena dicuri adalah sinyal waspada yang perlu diperhatikan. Ini bukan berarti rumahmu pasti akan kemalingan, tapi lebih kepada: ada sesuatu yang berharga dalam hidupmu — kepercayaan, energi, waktu, atau aset — yang mungkin sedang "diambil" tanpa kamu sadari sepenuhnya. Evaluasi hubungan dan situasi di sekitarmu dengan lebih kritis.',o:'Pertanda waspada'},
+  {k:'gigi',t:'Mimpi tentang gigi berkaitan dengan keluarga dan kekuatan diri. Gigi yang kuat menandakan keluarga yang harmonis; gigi goyah menandakan ada yang perlu dijaga.',o:'Tergantung kondisi'},
+  {k:'ujian',t:'Mimpi menghadapi ujian menandakan kekhawatiran akan penilaian orang lain atau tantangan nyata yang sedang menanti. Persiapkan dirimu dengan tenang.',o:'Pertanda introspeksi'},
+  {k:'terlambat',t:'Mimpi terlambat menandakan kecemasan akan kehilangan kesempatan. Ini pengingat untuk menata prioritas dan tidak menunda hal penting.',o:'Pertanda pengingat'},
+  {k:'harimau',t:'Mimpi harimau atau hewan buas melambangkan kekuatan, kekuasaan, atau lawan yang tangguh. Bila kamu menaklukkannya, pertanda kemenangan akan datang.',o:'Tergantung hasil'},
+  {k:'burung',t:'Mimpi burung melambangkan kabar yang akan datang dan kebebasan jiwa. Burung yang terbang tinggi membawa kabar baik dan harapan.',o:'Pertanda baik'},
+  {k:'ikan',t:'Mimpi ikan, terutama menangkapnya, menandakan rezeki yang akan datang. Semakin banyak dan besar ikannya, semakin besar pula rezekinya.',o:'Pertanda baik'},
+  {k:'hujan',t:'Hujan dalam mimpi melambangkan berkah, kesuburan, dan pembersihan. Hujan yang teduh adalah pertanda rahmat; hujan badai menandakan ujian sesaat.',o:'Umumnya pertanda baik'},
+  {k:'gunung',t:'Mimpi gunung melambangkan cita-cita tinggi dan tantangan besar. Mendaki gunung dengan lancar menandakan jalan menuju tujuanmu sedang terbuka.',o:'Pertanda baik'},
+  {k:'laut',t:'Laut melambangkan kehidupan, perasaan yang dalam, dan rezeki yang luas. Laut tenang pertanda kedamaian; laut bergelombang menandakan emosi yang bergejolak.',o:'Tergantung kondisi laut'},
+  {k:'rumah',t:'Mimpi rumah berkaitan dengan diri dan keluarga. Rumah yang luas dan terang menandakan kemapanan; rumah rusak menandakan ada hal dalam diri yang perlu dibenahi.',o:'Tergantung kondisi'},
+  {k:'mobil',t:'Mimpi kendaraan melambangkan perjalanan hidup dan arah tujuanmu. Mengemudi dengan lancar pertanda hidup berada di jalur yang tepat.',o:'Tergantung kondisi'},
+  {k:'berenang',t:'Mimpi berenang menandakan kemampuanmu mengarungi persoalan hidup. Berenang dengan lancar adalah pertanda kamu mampu melewati tantangan saat ini.',o:'Pertanda baik'},
+  {k:'menangis',t:'Mimpi menangis sering bermakna terbalik — ia justru menandakan akan datang kelegaan, kabar gembira, atau berakhirnya kesedihan.',o:'Sering bermakna terbalik'},
+  {k:'tertawa',t:'Mimpi tertawa lepas justru kadang ditafsir sebagai pengingat agar berhati-hati, supaya kegembiraan tidak berubah menjadi kelalaian.',o:'Pertanda pengingat'},
+  {k:'bertengkar',t:'Mimpi bertengkar menandakan ada ketegangan yang terpendam. Ini ajakan untuk menyelesaikan persoalan secara terbuka sebelum membesar.',o:'Pertanda introspeksi'},
+  {k:'leluhur',t:'Bertemu orang tua atau leluhur yang telah tiada menandakan ada pesan, restu, atau pengingat untuk kembali pada nilai-nilai luhur keluarga.',o:'Pertanda pesan'},
+  {k:'tangga',t:'Mimpi menaiki tangga melambangkan peningkatan derajat dan kemajuan. Menuruni tangga menandakan perlunya kerendahan hati atau evaluasi diri.',o:'Tergantung arah'},
+  {k:'pohon',t:'Mimpi pohon yang rindang dan berbuah melambangkan keluarga yang sejahtera dan rezeki yang tumbuh. Pohon tumbang menandakan ujian bagi keluarga.',o:'Tergantung kondisi'},
+  {k:'darah',t:'Mimpi darah, meski terkesan menyeramkan, sering ditafsir sebagai pertanda rezeki atau hubungan kekerabatan yang akan menguat.',o:'Sering pertanda baik'},
+  {k:'cincin',t:'Mimpi cincin melambangkan ikatan, janji, dan kesetiaan. Menerima cincin menandakan akan datang komitmen atau hubungan yang mengikat.',o:'Pertanda ikatan'}
+,
+  {k:'kucing',t:'Mimpi kucing menandakan intuisi dan kemandirian. Kucing yang jinak membawa keberuntungan kecil; kucing liar menandakan ada hal tersembunyi yang perlu diwaspadai.',o:'Tergantung perilaku'},
+  {k:'anjing',t:'Mimpi anjing melambangkan kesetiaan dan perlindungan. Anjing yang menjaga menandakan ada seseorang yang setia di sisimu. Anjing menggonggong menandakan ada peringatan.',o:'Pertanda perlindungan'},
+  {k:'kuda',t:'Mimpi kuda melambangkan kekuatan, kemerdekaan, dan perjalanan. Menunggang kuda dengan lancar menandakan kemajuan karier atau kehidupan.',o:'Pertanda kemajuan'},
+  {k:'gajah',t:'Mimpi gajah menandakan kekuatan besar, kebijaksanaan, dan keberuntungan. Dalam tradisi Asia, gajah adalah simbol kemakmuran yang akan datang.',o:'Pertanda kemakmuran'},
+  {k:'kambing',t:'Mimpi kambing menandakan rezeki yang datang dari usaha kecil namun konsisten. Kambing yang sehat pertanda berkah dalam pekerjaan.',o:'Pertanda rezeki halal'},
+  {k:'sapi',t:'Mimpi sapi melambangkan kerja keras dan hasil yang berlimpah. Sapi yang gemuk menandakan hasil panen atau usaha yang akan memuaskan.',o:'Pertanda hasil kerja'},
+  {k:'ayam',t:'Mimpi ayam menandakan rezeki sehari-hari dan hal-hal domestik. Ayam bertelur pertanda rezeki kecil namun teratur akan datang.',o:'Pertanda rezeki rutin'},
+  {k:'bebek',t:'Mimpi bebek menandakan adaptasi dan kemampuan menghadapi dua dunia (darat dan air). Pertanda kamu bisa menyesuaikan diri dengan situasi baru.',o:'Pertanda adaptasi'},
+  {k:'kupu-kupu',t:'Mimpi kupu-kupu melambangkan transformasi dan keindahan. Menandakan masa transisi yang membawamu ke fase hidup lebih baik.',o:'Pertanda transformasi'},
+  {k:'semut',t:'Mimpi semut menandakan kerja keras dan kesabaran. Koloni semut yang ramai menandakan hasil kerja kolektif akan membuahkan hasil.',o:'Pertanda kerja keras'},
+  {k:'laba-laba',t:'Mimpi laba-laba menandakan kesabaran dan strategi. Melihat jaring laba-laba menandakan ada rencana yang sedang kamu rajut.',o:'Pertanda perencanaan'},
+  {k:'lebah',t:'Mimpi lebah menandakan kerja produktif dan hasil yang manis. Lebah yang sibuk melambangkan masa sibuk yang menguntungkan.',o:'Pertanda produktivitas'},
+  {k:'kadal',t:'Mimpi kadal menandakan kemampuan adaptasi dan bertahan. Kadal yang lincah menandakan kamu bisa menghindari bahaya dengan cepat.',o:'Pertanda ketangkasan'},
+  {k:'katak',t:'Mimpi katak melambangkan transformasi dan keberkahan setelah hujan. Dalam budaya Jawa, katak sering dikaitkan dengan datangnya rezeki.',o:'Pertanda rezeki'},
+  {k:'tikus',t:'Mimpi tikus menandakan ada hal kecil yang mengganggu atau merugikan. Perlu kehati-hatian dalam menjaga harta dan privasi.',o:'Pertanda waspada'},
+  {k:'nasi',t:'Mimpi nasi menandakan rezeki dan kehidupan sehari-hari yang berkelimpahan. Nasi putih yang banyak pertanda kesejahteraan.',o:'Pertanda rezeki'},
+  {k:'makan',t:'Mimpi makan menandakan penerimaan rezeki atau pengetahuan baru. Makan bersama orang lain menandakan keharmonisan sosial.',o:'Pertanda rezeki'},
+  {k:'lapar',t:'Mimpi lapar menandakan ada kebutuhan yang belum terpenuhi, baik materi maupun emosional. Ini ajakan untuk memenuhi kebutuhanmu.',o:'Pertanda kekurangan'},
+  {k:'minum',t:'Mimpi minum air jernih menandakan ketenangan batin dan terpenuhinya kebutuhan spiritual. Air yang menyegarkan pertanda solusi akan datang.',o:'Pertanda solusi'},
+  {k:'buah',t:'Mimpi buah yang matang menandakan hasil kerja yang akan dipetik. Buah segar melambangkan kesehatan dan kebahagiaan.',o:'Pertanda hasil'},
+  {k:'daging',t:'Mimpi daging menandakan kekuatan dan kesehatan fisik. Makan daging menandakan energi dan vitalitas yang kembali.',o:'Pertanda kekuatan'},
+  {k:'sekolah',t:'Mimpi sekolah menandakan pembelajaran dan pertumbuhan. Kembali ke sekolah menandakan ada pelajaran hidup yang perlu dipahami.',o:'Pertanda pembelajaran'},
+  {k:'kantor',t:'Mimpi kantor berkaitan dengan pekerjaan dan tanggung jawab. Kantor yang ramai menandakan kesibukan produktif akan datang.',o:'Pertanda pekerjaan'},
+  {k:'pasar',t:'Mimpi pasar menandakan rezeki dan transaksi. Pasar yang ramai melambangkan peluang ekonomi yang beragam.',o:'Pertanda peluang'},
+  {k:'masjid',t:'Mimpi masjid atau tempat ibadah menandakan kedamaian spiritual dan perlindungan. Ini pertanda baik untuk kehidupan rohani.',o:'Pertanda spiritual'},
+  {k:'kuburan',t:'Mimpi kuburan menandakan perenungan tentang kehidupan dan akhirat. Bukan pertanda buruk, namun ajakan untuk lebih mendekatkan diri pada Tuhan.',o:'Pertanda perenungan'},
+  {k:'jembatan',t:'Mimpi jembatan melambangkan transisi dan perpindahan dari satu fase ke fase lain. Menyeberangi jembatan menandakan kamu sedang melewati perubahan.',o:'Pertanda transisi'},
+  {k:'taman',t:'Mimpi taman yang hijau menandakan ketenangan, pertumbuhan, dan kebahagiaan. Taman yang indah melambangkan kehidupan yang harmonis.',o:'Pertanda kebahagiaan'},
+  {k:'hotel',t:'Mimpi hotel menandakan perjalanan atau fase sementara dalam hidup. Hotel yang mewah menandakan kenyamanan yang akan datang.',o:'Pertanda perjalanan'},
+  {k:'baju',t:'Mimpi baju baru menandakan identitas baru atau perubahan citra diri. Baju lusuh menandakan perlu memperbaiki penampilan atau reputasi.',o:'Tergantung kondisi'},
+  {k:'sepatu',t:'Mimpi sepatu menandakan perjalanan atau langkah-langkah dalam hidup. Sepatu baru menandakan awal perjalanan yang baik.',o:'Pertanda perjalanan'},
+  {k:'kacamata',t:'Mimpi kacamata menandakan kebutuhan untuk melihat sesuatu dengan lebih jelas. Ada hal yang perlu kamu pahami lebih dalam.',o:'Pertanda klarifikasi'},
+  {k:'topi',t:'Mimpi topi menandakan identitas atau peran sosial. Topi yang bagus menandakan status atau penghargaan yang akan diterima.',o:'Pertanda status'},
+  {k:'berlari',t:'Mimpi berlari menandakan usaha keras atau mengejar sesuatu. Berlari dengan mudah menandakan pencapaian yang dekat.',o:'Pertanda usaha'},
+  {k:'jalan kaki',t:'Mimpi berjalan kaki menandakan perjalanan hidup yang stabil. Jalan yang mulus menandakan proses yang lancar.',o:'Pertanda proses'},
+  {k:'naik motor',t:'Mimpi naik motor menandakan kecepatan dan efisiensi dalam mencapai tujuan. Berkendara dengan aman pertanda perjalanan yang baik.',o:'Pertanda kemajuan'},
+  {k:'naik bus',t:'Mimpi naik bus menandakan perjalanan bersama atau mengikuti jalur yang sudah ditentukan. Pertanda kamu tidak sendirian dalam usaha.',o:'Pertanda kebersamaan'},
+  {k:'kereta',t:'Mimpi kereta api menandakan perjalanan panjang atau masa depan yang terencana. Kereta yang tepat waktu menandakan segala sesuatu berjalan sesuai jadwal.',o:'Pertanda rencana'},
+  {k:'pesawat',t:'Mimpi pesawat menandakan ambisi tinggi dan perubahan besar. Terbang dengan pesawat menandakan lompatan kemajuan dalam hidup.',o:'Pertanda kemajuan'},
+  {k:'kapal',t:'Mimpi kapal laut menandakan perjalanan emosional atau spiritual. Kapal yang berlayar mulus menandakan kamu mengarungi kehidupan dengan baik.',o:'Pertanda perjalanan'},
+  {k:'mandi',t:'Mimpi mandi menandakan pembersihan diri dari beban atau dosa. Air mandi yang jernih menandakan pembaruan spiritual.',o:'Pertanda pembersihan'},
+  {k:'mencuci',t:'Mimpi mencuci menandakan keinginan membersihkan diri dari masa lalu. Mencuci pakaian menandakan pembaruan identitas.',o:'Pertanda pembaruan'},
+  {k:'masak',t:'Mimpi memasak menandakan kreativitas dan persiapan untuk sesuatu. Masakan yang enak menandakan hasil usaha yang memuaskan.',o:'Pertanda kreativitas'},
+  {k:'belajar',t:'Mimpi belajar menandakan pertumbuhan pengetahuan. Ini pertanda baik untuk perkembangan diri dan karier.',o:'Pertanda pertumbuhan'},
+  {k:'membaca',t:'Mimpi membaca menandakan pencarian pengetahuan atau jawaban. Buku yang menarik menandakan solusi akan ditemukan.',o:'Pertanda jawaban'},
+  {k:'menulis',t:'Mimpi menulis menandakan ekspresi diri atau mencatat sesuatu yang penting. Pertanda ada pesan yang perlu kamu sampaikan.',o:'Pertanda ekspresi'},
+  {k:'menyanyi',t:'Mimpi menyanyi menandakan kegembiraan dan ekspresi emosi. Suara yang merdu menandakan harmoni dalam hidup.',o:'Pertanda kegembiraan'},
+  {k:'menari',t:'Mimpi menari menandakan kegembiraan dan kebebasan berekspresi. Tarian yang indah menandakan kehidupan yang seimbang.',o:'Pertanda keseimbangan'},
+  {k:'telepon',t:'Mimpi telepon menandakan komunikasi atau kabar yang akan datang. Telepon berdering menandakan ada pesan penting untukmu.',o:'Pertanda komunikasi'},
+  {k:'buku',t:'Mimpi buku menandakan pengetahuan dan pembelajaran. Buku tebal menandakan ada banyak hal yang perlu kamu pelajari.',o:'Pertanda ilmu'},
+  {k:'pisau',t:'Mimpi pisau menandakan alat untuk memisahkan atau memotong sesuatu. Bisa berarti keputusan tegas yang perlu diambil.',o:'Pertanda keputusan'},
+  {k:'cermin',t:'Mimpi cermin menandakan refleksi diri dan introspeksi. Cermin yang bersih menandakan kejujuran pada diri sendiri.',o:'Pertanda refleksi'},
+  {k:'jam',t:'Mimpi jam menandakan waktu dan kesadaran akan batasan waktu. Jam yang berhenti menandakan perlu mengevaluasi penggunaan waktu.',o:'Pertanda waktu'},
+  {k:'kunci',t:'Mimpi kunci menandakan solusi atau akses ke sesuatu yang terkunci. Menemukan kunci menandakan jawaban akan segera ditemukan.',o:'Pertanda solusi'},
+  {k:'pintu',t:'Mimpi pintu menandakan peluang atau transisi. Pintu terbuka menandakan kesempatan baru; pintu tertutup menandakan hambatan.',o:'Tergantung kondisi'},
+  {k:'jendela',t:'Mimpi jendela menandakan perspektif dan pandangan terhadap kehidupan. Jendela yang terang menandakan optimisme.',o:'Pertanda perspektif'},
+  {k:'lampu',t:'Mimpi lampu menandakan pencerahan atau pemahaman. Lampu yang terang menandakan kejelasan akan datang.',o:'Pertanda pencerahan'},
+  {k:'angin',t:'Mimpi angin menandakan perubahan yang akan datang. Angin sepoi-sepoi menandakan perubahan yang menyegarkan.',o:'Pertanda perubahan'},
+  {k:'badai',t:'Mimpi badai menandakan gejolak emosi atau situasi yang bergejolak. Setelah badai reda, biasanya ada ketenangan.',o:'Pertanda ujian'},
+  {k:'petir',t:'Mimpi petir menandakan kejutan atau pencerahan mendadak. Pertanda akan ada realisasi atau berita tak terduga.',o:'Pertanda kejutan'},
+  {k:'salju',t:'Mimpi salju menandakan kesucian dan ketenangan. Bagi orang Indonesia, ini sering melambangkan sesuatu yang langka dan istimewa.',o:'Pertanda keistimewaan'},
+  {k:'matahari',t:'Mimpi matahari menandakan kehangatan, energi, dan kejayaan. Matahari terbit menandakan awal yang cerah.',o:'Pertanda kejayaan'},
+  {k:'bulan',t:'Mimpi bulan menandakan intuisi, emosi, dan siklus kehidupan. Bulan purnama menandakan kesempurnaan atau puncak sesuatu.',o:'Pertanda siklus'},
+  {k:'bintang',t:'Mimpi bintang menandakan harapan dan cita-cita. Bintang terang menandakan impian yang akan tercapai.',o:'Pertanda harapan'},
+  {k:'awan',t:'Mimpi awan menandakan pikiran atau emosi yang melayang. Awan putih menandakan ketenangan pikiran.',o:'Pertanda pikiran'},
+  {k:'pelangi',t:'Mimpi pelangi menandakan harapan setelah kesulitan. Ini pertanda sangat baik untuk masa depan yang cerah.',o:'Pertanda harapan'},
+  {k:'gempa',t:'Mimpi gempa menandakan guncangan atau perubahan besar dalam hidup. Setelah gempa, ada pembangunan kembali yang lebih kuat.',o:'Pertanda perubahan besar'},
+  {k:'takut',t:'Mimpi merasa takut menandakan kekhawatiran yang terpendam. Ini ajakan untuk menghadapi ketakutanmu dengan berani.',o:'Pertanda kekhawatiran'},
+  {k:'bahagia',t:'Mimpi merasa bahagia menandakan kepuasan batin dan keseimbangan emosi. Pertanda baik untuk kesehatan mental.',o:'Pertanda keseimbangan'},
+  {k:'marah',t:'Mimpi marah menandakan ada frustrasi yang terpendam. Perlu menemukan cara sehat untuk mengekspresikan emosi.',o:'Pertanda frustrasi'},
+  {k:'sakit',t:'Mimpi sakit menandakan ada aspek kehidupan yang perlu perhatian. Bisa fisik atau emosional yang perlu disembuhkan.',o:'Pertanda perhatian'},
+  {k:'sembuh',t:'Mimpi sembuh dari penyakit menandakan pemulihan dan pembaruan. Pertanda baik untuk kesehatan dan kehidupan.',o:'Pertanda pemulihan'},
+  {k:'hutang',t:'Mimpi berhutang menandakan beban tanggung jawab. Perlu mengevaluasi komitmen dan kewajiban yang ada.',o:'Pertanda tanggung jawab'},
+  {k:'membayar',t:'Mimpi membayar hutang menandakan penyelesaian kewajiban. Pertanda lega dan lepas dari beban.',o:'Pertanda penyelesaian'},
+  {k:'kaya',t:'Mimpi menjadi kaya menandakan keinginan akan kesejahteraan. Kadang ini motivasi untuk bekerja lebih keras.',o:'Pertanda motivasi'},
+  {k:'miskin',t:'Mimpi menjadi miskin menandakan kekhawatiran tentang kecukupan. Ini pengingat untuk bersyukur dan berhemat.',o:'Pertanda pengingat'},
+  {k:'bank',t:'Mimpi tentang bank menandakan keamanan finansial atau investasi. Menabung di bank menandakan persiapan masa depan.',o:'Pertanda persiapan'},
+  {k:'wisuda',t:'Mimpi wisuda menandakan pencapaian dan pengakuan. Pertanda kesuksesan yang akan dirayakan.',o:'Pertanda pencapaian'},
+  {k:'ulang tahun',t:'Mimpi ulang tahun menandakan perayaan dan refleksi perjalanan hidup. Pertanda babak baru yang dimulai.',o:'Pertanda perayaan'},
+  {k:'pesta',t:'Mimpi pesta menandakan kegembiraan sosial dan perayaan. Pertanda akan ada kabar gembira yang dibagikan.',o:'Pertanda kegembiraan'},
+  {k:'perjalanan',t:'Mimpi melakukan perjalanan menandakan eksplorasi dan petualangan. Perjalanan lancar menandakan kehidupan yang berjalan baik.',o:'Pertanda eksplorasi'},
+  {k:'tamu',t:'Mimpi kedatangan tamu menandakan kabar atau kunjungan yang tak terduga. Tamu yang ramah menandakan kabar baik.',o:'Pertanda kabar'},
+  {k:'hadiah',t:'Mimpi menerima hadiah menandakan rezeki atau apresiasi yang tak terduga. Hadiah bagus menandakan berkah.',o:'Pertanda rezeki'},
+  {k:'mencuri',t:'Mimpi mencuri menandakan keinginan yang tidak terpenuhi dengan cara halal. Perlu evaluasi cara mencapai tujuan.',o:'Pertanda evaluasi'},
+  {k:'dicuri',t:'Mimpi dicuri menandakan kehilangan atau kekhawatiran kehilangan sesuatu yang berharga. Jaga dengan lebih baik apa yang kamu miliki.',o:'Pertanda kehilangan'}
 ];
 /* Tafsir berdasarkan waktu mimpi */
 const TAFSIR_WAKTU = {
@@ -1832,36 +1847,11 @@ function cariMimpi(){
     const words = q.split(/\s+/);
     return words.some(w => w.length > 2 && m.k.includes(w));
   });
-  if(found){
-    // Cek apakah entry ini butuh tier pro
-    if(found.tier === 'pro' && !userIsPamungkas){
-      tampilMimpiTeaser(found.k);
-    } else {
-      tampilMimpi(found);
-    }
-  } else {
+  if(found){ tampilMimpi(found); }
+  else {
     document.getElementById('dream-result').classList.remove('show');
     document.getElementById('dream-notfound').style.display = 'block';
   }
-}
-
-function tampilMimpiTeaser(keyword){
-  document.getElementById('dream-notfound').style.display = 'none';
-  const el = document.getElementById('dream-result');
-  el.innerHTML = `
-    <div style="text-align:center;padding:20px 0">
-      <div style="font-size:32px;margin-bottom:10px">🔒</div>
-      <h4 style="font-family:'Fraunces',serif;font-size:18px;margin-bottom:6px;text-transform:capitalize">${keyword}</h4>
-      <p style="font-size:13.5px;color:var(--ink-soft);margin-bottom:16px">Tafsir mimpi ini tersedia di paket <strong>Pamungkas</strong> (Rp 49rb/bulan). Dapatkan akses ke 100+ tafsir mimpi mendalam, termasuk yang langka dan spesifik.</p>
-      <div style="background:var(--paper-2);border-radius:10px;padding:12px 16px;font-size:13px;color:var(--ink-soft);border-left:3px solid var(--accent-2);text-align:left;margin-bottom:14px">
-        ✦ Tafsir berdasarkan weton kelahiranmu<br>
-        ✦ Makna berdasarkan waktu mimpi<br>
-        ✦ 178+ entri mimpi dari primbon asli
-      </div>
-      <button onclick="showPanel('ai')" class="action-btn" style="max-width:220px;padding:10px">Lihat Paket Pamungkas →</button>
-    </div>
-  `;
-  el.classList.add('show');
 }
 
 function buildDreamTags(){
@@ -2444,6 +2434,7 @@ function showPanel(name){
     t.classList.toggle('active', t.getAttribute('data-panel')===name);
   });
   if (name === 'wuku') buildWukuGrid30();
+  if (name === 'ai' && aiUserData === null && window._currentUser) initAIPanel(window._currentUser);
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function buildMobileTabs(){
@@ -2509,9 +2500,6 @@ async function checkPremiumAccess() {
         .single();
       isPremium = sub && sub.tier_code === 'pamungkas';
     }
-
-    // Set global tier flag untuk tafsir mimpi
-    userIsPamungkas = isOwner || isPremium;
 
     if (isPremium) {
       // Hapus blur & overlay untuk premium user
@@ -2617,6 +2605,7 @@ async function checkAuthAndInit() {
 
   // Show personalized greeting in topbar
   showGreeting(user);
+  window._currentUser = user;
 
   // Auto-fill all date pickers with user's saved birth date
   autoFillBirthDate(user.profile?.birth_date);
@@ -2625,7 +2614,255 @@ async function checkAuthAndInit() {
 // Check auth on page load
 checkAuthAndInit();
 
-/* ============== SISTEM WUKU — DATA & FUNGSI ============== */
+/* ============================================================
+   KONSULTASI AI — DEEPSEEK
+   ============================================================ */
+const DEEPSEEK_KEY = 'sk-2493c80932db49ff89a442b232542b0c';
+const AI_MODEL     = 'deepseek-chat';
+const AI_MAX_MSG   = 80;   // max pesan per periode
+const AI_PERIODE   = 14;   // hari reset
+
+let aiChatHistory  = [];   // {role, content}[]
+let aiUserData     = null; // data weton user
+let aiMsgCount     = 0;    // jumlah pesan sesi ini
+let aiSedangKirim  = false;
+
+/* ── Build system prompt dari data user ── */
+function buatSystemPromptAI(userData) {
+  const { nama, weton, wuku, neptu, elemenWuku, elemenPasaran } = userData;
+  return `Kamu adalah Ki Primbon — konsultan primbon Jawa yang bijak, hangat, dan mendalam. Kamu berbicara dalam Bahasa Indonesia yang natural, tidak kaku, dan penuh kasih.
+
+DATA PENGGUNA:
+- Nama: ${nama}
+- Weton: ${weton}
+- Neptu: ${neptu}
+- Wuku: ${wuku}
+- Elemen Wuku: ${elemenWuku}
+- Elemen Pasaran: ${elemenPasaran}
+
+CARA MENJAWAB:
+- Selalu gunakan data weton dan wuku di atas sebagai dasar analisis
+- Jawab dengan hangat, personal, dan menyebut nama pengguna sesekali
+- Gabungkan primbon Jawa dengan perspektif praktis kehidupan modern
+- Panjang jawaban: cukup 3-5 paragraf, tidak perlu terlalu panjang
+- Gunakan bahasa Jawa sesekali (italic) untuk memperkuat nuansa primbon
+- Akhiri dengan satu kalimat nasihat atau dorongan yang personal
+- JANGAN membuat angka-angka atau tabel yang rumit
+- JANGAN mengklaim bisa meramal masa depan secara pasti — gunakan kata "cenderung", "berpotensi", "dalam pandangan primbon"
+- Jika pertanyaan di luar konteks primbon/kehidupan, arahkan kembali dengan lembut`;
+}
+
+/* ── Init AI saat panel dibuka ── */
+function initAIPanel(user) {
+  if (!user?.profile) return;
+
+  const nama = (user.profile.full_name || user.email.split('@')[0]).split(' ')[0];
+  let weton = 'belum diset', neptu = 0, wukuNama = 'belum dihitung';
+  let elemenWuku = 'Bumi', elemenPasaran = 'Bumi';
+
+  if (user.profile.birth_date) {
+    const p = user.profile.birth_date.split('-');
+    const w = getWeton(parseInt(p[0]), parseInt(p[1])-1, parseInt(p[2]));
+    weton   = w.label;
+    neptu   = w.total;
+    elemenPasaran = ELEMEN_PASARAN[w.pas.n] || 'B';
+
+    const ref = new Date(2001,0,7);
+    const tgl = new Date(parseInt(p[0]), parseInt(p[1])-1, parseInt(p[2]));
+    const idx = Math.floor((((Math.floor((tgl-ref)/86400000))%210)+210)%210/7);
+    if (WUKU_DATA[idx]) {
+      wukuNama = WUKU_DATA[idx].nama;
+      elemenWuku = ELEMEN_WUKU[idx] || 'B';
+    }
+  }
+
+  aiUserData = {
+    nama,
+    weton,
+    neptu,
+    wuku: wukuNama,
+    elemenWuku: NAMA_ELEMEN[elemenWuku] || elemenWuku,
+    elemenPasaran: NAMA_ELEMEN[elemenPasaran] || elemenPasaran
+  };
+
+  // Update chip info
+  const chip = document.getElementById('ai-weton-chip');
+  if (chip) chip.textContent = `🌀 ${weton} · Wuku ${wukuNama}`;
+
+  // Cek kuota dari localStorage
+  cekKuotaAI();
+
+  // Reset history dengan system prompt
+  aiChatHistory = [];
+}
+
+/* ── Cek dan tampilkan kuota ── */
+function cekKuotaAI() {
+  const key    = 'ai_quota_' + (aiUserData?.nama || 'user');
+  const stored = JSON.parse(localStorage.getItem(key) || '{"count":0,"start":' + Date.now() + '}');
+  const selisihHari = (Date.now() - stored.start) / 86400000;
+
+  if (selisihHari >= AI_PERIODE) {
+    // Reset kuota
+    localStorage.setItem(key, JSON.stringify({count:0, start:Date.now()}));
+    aiMsgCount = 0;
+  } else {
+    aiMsgCount = stored.count || 0;
+  }
+
+  const sisa = AI_MAX_MSG - aiMsgCount;
+  const quotaChip = document.getElementById('ai-quota-chip');
+  if (quotaChip) quotaChip.textContent = `💬 ${sisa} pesan tersisa`;
+
+  if (sisa <= 0) {
+    const hariReset = Math.ceil(AI_PERIODE - selisihHari);
+    document.getElementById('ai-quota-warn').style.display = 'block';
+    document.getElementById('ai-reset-days').textContent = hariReset;
+    document.getElementById('ai-send-btn').disabled = true;
+    document.getElementById('ai-textarea') && (document.getElementById('ai-input').disabled = true);
+  }
+}
+
+/* ── Simpan kuota ── */
+function simpanKuotaAI() {
+  const key    = 'ai_quota_' + (aiUserData?.nama || 'user');
+  const stored = JSON.parse(localStorage.getItem(key) || '{"count":0,"start":' + Date.now() + '}');
+  stored.count = (stored.count || 0) + 1;
+  localStorage.setItem(key, JSON.stringify(stored));
+  aiMsgCount++;
+  const sisa = AI_MAX_MSG - aiMsgCount;
+  const quotaChip = document.getElementById('ai-quota-chip');
+  if (quotaChip) quotaChip.textContent = `💬 ${sisa} pesan tersisa`;
+  if (sisa <= 0) {
+    document.getElementById('ai-quota-warn').style.display = 'block';
+    document.getElementById('ai-send-btn').disabled = true;
+  }
+}
+
+/* ── Tambah bubble ke chat ── */
+function tambahBubble(role, text, isTyping = false) {
+  const msgs = document.getElementById('ai-messages');
+  const nama1 = aiUserData?.nama?.charAt(0)?.toUpperCase() || 'U';
+  const div   = document.createElement('div');
+  div.className = 'ai-msg ' + (role === 'user' ? 'user' : 'bot');
+
+  if (isTyping) {
+    div.id = 'ai-typing';
+    div.innerHTML = `
+      <div class="ai-msg-avatar">✺</div>
+      <div class="ai-msg-bubble">
+        <div class="ai-typing-dots"><span></span><span></span><span></span></div>
+      </div>`;
+  } else {
+    const avatar = role === 'user' ? nama1 : '✺';
+    // Format teks: bold **text**, newline
+    const formatted = text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/\n/g, '<br>');
+    div.innerHTML = `
+      <div class="ai-msg-avatar">${avatar}</div>
+      <div class="ai-msg-bubble">${formatted}</div>`;
+  }
+
+  // Sembunyikan suggestions setelah pesan pertama user
+  if (role === 'user') {
+    const sug = document.getElementById('ai-suggestions');
+    if (sug) sug.style.display = 'none';
+  }
+
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+/* ── Kirim pesan ke Deepseek ── */
+async function kirimPesanAI() {
+  if (aiSedangKirim) return;
+  if (aiMsgCount >= AI_MAX_MSG) return;
+
+  const input = document.getElementById('ai-input');
+  const pesan = input.value.trim();
+  if (!pesan) return;
+
+  // Tampilkan pesan user
+  tambahBubble('user', pesan);
+  input.value = '';
+  input.style.height = 'auto';
+
+  // Tambah ke history
+  if (aiChatHistory.length === 0) {
+    // Pertama kali — buat window 5 pesan + summary
+    aiChatHistory.push({ role: 'system', content: buatSystemPromptAI(aiUserData || {nama:'Pengguna',weton:'belum diset',neptu:0,wuku:'belum dihitung',elemenWuku:'Bumi',elemenPasaran:'Bumi'}) });
+  }
+
+  // Sliding window: simpan max 10 pesan terakhir (5 bolak-balik)
+  if (aiChatHistory.filter(m => m.role !== 'system').length >= 10) {
+    const system = aiChatHistory[0];
+    const recent = aiChatHistory.slice(-8);
+    aiChatHistory = [system, ...recent];
+  }
+
+  aiChatHistory.push({ role: 'user', content: pesan });
+
+  // Tampilkan typing
+  const typingEl = tambahBubble('bot', '', true);
+  document.getElementById('ai-send-btn').disabled = true;
+  aiSedangKirim = true;
+
+  try {
+    const res = await fetch('https://api.deepseek.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + DEEPSEEK_KEY
+      },
+      body: JSON.stringify({
+        model: AI_MODEL,
+        messages: aiChatHistory,
+        max_tokens: 800,
+        temperature: 0.8
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.choices && data.choices[0]) {
+      const jawaban = data.choices[0].message.content;
+      aiChatHistory.push({ role: 'assistant', content: jawaban });
+
+      // Hapus typing, tampilkan jawaban
+      typingEl.remove();
+      tambahBubble('bot', jawaban);
+      simpanKuotaAI();
+    } else {
+      typingEl.remove();
+      tambahBubble('bot', 'Maaf, ada gangguan sesaat. Coba lagi ya.');
+      console.error('Deepseek error:', data);
+    }
+  } catch (err) {
+    typingEl.remove();
+    tambahBubble('bot', 'Koneksi bermasalah. Pastikan internetmu stabil lalu coba lagi.');
+    console.error('AI fetch error:', err);
+  }
+
+  document.getElementById('ai-send-btn').disabled = (aiMsgCount >= AI_MAX_MSG);
+  aiSedangKirim = false;
+}
+
+/* ── Enter untuk kirim (Shift+Enter = baris baru) ── */
+function aiEnterSend(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    kirimPesanAI();
+  }
+}
+
+/* ── Pakai suggestion chip ── */
+function pakaiSuggestion(el) {
+  document.getElementById('ai-input').value = el.textContent;
+  kirimPesanAI();
+}
 const WUKU_DATA = [
   {nomor:1,nama:'SINTA',lambang:'🐂',dewa:'Yamadipati',dewaNama:'Dewa Keadilan & Penjaga Kehidupan',
    watak:'Penyayang sejati, penuh bakti kepada keluarga, setia, rela berkorban, sifat pelindung yang kuat. Lebih mengutamakan orang lain daripada diri sendiri.',
