@@ -416,6 +416,124 @@
   .panduan-icon { flex-shrink: 0; font-size: 15px; margin-top: 1px; }
   .panduan-row p { color: var(--ink); line-height: 1.6; margin: 0; }
   @media (max-width: 500px) { .nama-analysis-grid { grid-template-columns: 1fr; } }
+
+  /* ===== SISTEM WUKU ===== */
+  .wuku-intro-card {
+    background: var(--white); border: 1px solid var(--line); border-radius: 14px;
+    padding: 18px 20px; margin-bottom: 18px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .wuku-intro-icon { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
+  .wuku-intro-text { font-size: 14px; color: var(--ink-soft); line-height: 1.7; }
+  .wuku-intro-text strong { color: var(--ink); font-size: 14.5px; display: block; margin-bottom: 4px; }
+  .wuku-intro-text em { color: var(--accent); font-style: normal; font-weight: 600; }
+
+  .wuku-hasil-wrap {
+    background: var(--white); border: 1px solid var(--line); border-radius: 16px;
+    padding: 24px; margin-bottom: 18px; display: none;
+    animation: fade .4s ease;
+  }
+  .wuku-hasil-wrap.show { display: block; }
+
+  .wuku-hero {
+    display: flex; align-items: center; gap: 18px; margin-bottom: 20px;
+    padding-bottom: 18px; border-bottom: 1px solid var(--line);
+  }
+  .wuku-hero-lambang {
+    width: 72px; height: 72px; border-radius: 18px; background: var(--paper-2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px; flex-shrink: 0; border: 1px solid var(--line);
+  }
+  .wuku-hero-nomor {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-soft); margin-bottom: 4px;
+  }
+  .wuku-hero-nama {
+    font-family: 'Fraunces', serif; font-size: 32px; font-weight: 600;
+    letter-spacing: -0.01em; color: var(--accent); line-height: 1;
+  }
+  .wuku-hero-dewa { font-size: 13px; color: var(--ink-soft); margin-top: 5px; }
+
+  .wuku-grid-detail {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;
+  }
+  @media (max-width: 500px) { .wuku-grid-detail { grid-template-columns: 1fr; } }
+  .wuku-cell {
+    background: var(--paper-2); border-radius: 11px; padding: 13px 14px;
+  }
+  .wuku-cell-label {
+    font-size: 10.5px; font-weight: 700; letter-spacing: 0.07em;
+    text-transform: uppercase; color: var(--ink-soft); margin-bottom: 5px;
+  }
+  .wuku-cell-val { font-size: 13.5px; color: var(--ink); line-height: 1.6; }
+
+  .wuku-nasihat-strip {
+    background: var(--accent-deep); border-radius: 12px; padding: 16px 18px;
+    color: #F4F2EC; margin-bottom: 10px;
+  }
+  .wns-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(244,242,236,0.45); margin-bottom: 7px;
+  }
+  .wns-text {
+    font-family: 'Fraunces', serif; font-size: 15px; font-style: italic;
+    line-height: 1.7; color: rgba(244,242,236,0.9);
+  }
+  .wns-text::before { content: '\201C'; }
+  .wns-text::after  { content: '\201D'; }
+
+  .wuku-haribaik-strip {
+    background: rgba(60,122,78,0.07); border: 1px solid rgba(60,122,78,0.2);
+    border-radius: 12px; padding: 14px 16px;
+  }
+  .whb-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--good); margin-bottom: 6px;
+  }
+  .whb-text { font-size: 13.5px; color: var(--ink); line-height: 1.65; }
+
+  /* Grid 30 Wuku */
+  .wuku-grid-30 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(82px, 1fr));
+    gap: 8px;
+  }
+  .wuku-chip {
+    background: var(--white); border: 1px solid var(--line); border-radius: 11px;
+    padding: 10px 6px; text-align: center; cursor: pointer;
+    transition: all .15s;
+  }
+  .wuku-chip:hover { background: var(--paper-2); border-color: var(--accent); }
+  .wuku-chip.aktif  { background: var(--paper-2); border-color: var(--accent); }
+  .wc-no   { font-size: 10px; font-weight: 700; color: var(--ink-soft); letter-spacing: 0.05em; }
+  .wc-emj  { font-size: 20px; margin: 4px 0; }
+  .wc-nama { font-size: 10.5px; font-weight: 700; color: var(--ink); }
+
+  /* Detail drawer */
+  .wuku-detail-drawer {
+    background: var(--white); border: 1px solid var(--line); border-radius: 16px;
+    padding: 22px; margin-top: 16px; display: none;
+    animation: fade .3s ease;
+  }
+  .wuku-detail-drawer.show { display: block; }
+  .wdd-close {
+    float: right; background: var(--paper-2); border: 1px solid var(--line);
+    border-radius: 7px; font-size: 12px; padding: 4px 11px; cursor: pointer;
+    color: var(--ink-soft);
+  }
+  .wdd-close:hover { background: var(--line); }
+  .wdd-hero {
+    display: flex; align-items: center; gap: 14px;
+    margin: 6px 0 16px; clear: both;
+  }
+  .wdd-lambang {
+    width: 58px; height: 58px; border-radius: 14px;
+    background: var(--paper-2); border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0;
+  }
+  .wdd-nomor { font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+  .wdd-nama  { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; color: var(--accent); }
+  .wdd-dewa  { font-size: 12px; color: var(--ink-soft); }
 </style>
 </head>
 <body>
@@ -497,6 +615,13 @@
         <span class="side-ico">✿</span>
         <span class="side-text">
           <span class="side-name">Weton Anak</span>
+          <span class="side-tier"><span class="tier-dot basic"></span>Pendalaman</span>
+        </span>
+      </button>
+      <button class="side-item" data-panel="wuku">
+        <span class="side-ico">🌀</span>
+        <span class="side-text">
+          <span class="side-name">Sistem Wuku</span>
           <span class="side-tier"><span class="tier-dot basic"></span>Pendalaman</span>
         </span>
       </button>
@@ -941,6 +1066,98 @@
             <div class="ai-bubble user">Bidang apa yang paling cocok untukku?</div>
           </div>
           <p class="note-line">Tampilan di atas hanyalah contoh — bukan jawaban sungguhan.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PANEL: SISTEM WUKU ===== -->
+    <section class="panel" id="panel-wuku">
+      <div class="panel-head">
+        <span class="panel-tier basic">● Paket Pendalaman</span>
+        <h1>Sistem Wuku Jawa</h1>
+        <p>30 siklus Pawukon — sistem leluhur yang lebih tua dari penanggalan Masehi, menyimpan rahasia karakter terdalam setiap orang.</p>
+      </div>
+
+      <!-- Edukatif -->
+      <div class="wuku-intro-card">
+        <div class="wuku-intro-icon">📜</div>
+        <div class="wuku-intro-text">
+          <strong>Apa itu Wuku?</strong>
+          Dalam <em>Primbon Betaljemur Adammakna</em>, selain Weton ada sistem <em>Pawukon</em> — siklus 210 hari yang terbagi menjadi <em>30 Wuku</em>. Setiap orang lahir dalam salah satu wuku dengan karakter, dewa pelindung, pantangan, dan hari terbaiknya sendiri. Ini sistem yang selama ini hanya diketahui kalangan terbatas.
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div class="card">
+        <div class="card-title">Temukan Wuku Kelahiranmu</div>
+        <label class="field-label">Tanggal kelahiran</label>
+        <div class="date-inputs" style="max-width:340px">
+          <select id="wk-day"></select>
+          <select id="wk-month"></select>
+          <select id="wk-year"></select>
+        </div>
+        <button class="action-btn" style="max-width:340px" onclick="hitungWukuPanel()">Temukan Wukukku</button>
+      </div>
+
+      <!-- Hasil -->
+      <div class="wuku-hasil-wrap" id="wuku-hasil">
+        <div class="wuku-hero">
+          <div class="wuku-hero-lambang" id="wk-lambang">🐂</div>
+          <div>
+            <div class="wuku-hero-nomor" id="wk-nomor">Wuku ke-1 dari 30</div>
+            <div class="wuku-hero-nama" id="wk-nama">SINTA</div>
+            <div class="wuku-hero-dewa" id="wk-dewa">Dewa Yamadipati · Dewa Keadilan</div>
+          </div>
+        </div>
+        <div class="wuku-grid-detail">
+          <div class="wuku-cell"><div class="wuku-cell-label">⚡ Watak Utama</div><div class="wuku-cell-val" id="wk-watak">—</div></div>
+          <div class="wuku-cell"><div class="wuku-cell-label">💰 Karakter Rezeki</div><div class="wuku-cell-val" id="wk-rezeki">—</div></div>
+          <div class="wuku-cell"><div class="wuku-cell-label">❤ Asmara & Jodoh</div><div class="wuku-cell-val" id="wk-asmara">—</div></div>
+          <div class="wuku-cell"><div class="wuku-cell-label">⚠ Pantangan</div><div class="wuku-cell-val" id="wk-pantangan">—</div></div>
+          <div class="wuku-cell"><div class="wuku-cell-label">🎯 Karir Cocok</div><div class="wuku-cell-val" id="wk-karir">—</div></div>
+          <div class="wuku-cell"><div class="wuku-cell-label">🌈 Warna Keberuntungan</div><div class="wuku-cell-val" id="wk-warna">—</div></div>
+        </div>
+        <div class="wuku-nasihat-strip">
+          <div class="wns-label">💬 Nasihat Leluhur</div>
+          <div class="wns-text" id="wk-nasihat">—</div>
+        </div>
+        <div class="wuku-haribaik-strip">
+          <div class="whb-label">✦ Hari Terbaik dalam Hidupmu</div>
+          <div class="whb-text" id="wk-haribaik">—</div>
+        </div>
+      </div>
+
+      <!-- Grid 30 Wuku -->
+      <div class="card">
+        <div class="card-title">Jelajahi Semua 30 Wuku</div>
+        <p style="font-size:13.5px;color:var(--ink-soft);margin-bottom:16px">Klik wuku manapun untuk melihat karakter lengkapnya.</p>
+        <div class="wuku-grid-30" id="wuku-grid-30"></div>
+        <div class="wuku-detail-drawer" id="wuku-drawer">
+          <button class="wdd-close" onclick="tutupDrawerWuku()">✕ Tutup</button>
+          <div class="wdd-hero">
+            <div class="wdd-lambang" id="wd-lambang">🐂</div>
+            <div>
+              <div class="wdd-nomor" id="wd-nomor">Wuku ke-1</div>
+              <div class="wdd-nama"  id="wd-nama">SINTA</div>
+              <div class="wdd-dewa"  id="wd-dewa">Dewa Yamadipati</div>
+            </div>
+          </div>
+          <div class="wuku-grid-detail">
+            <div class="wuku-cell"><div class="wuku-cell-label">⚡ Watak</div><div class="wuku-cell-val" id="wd-watak"></div></div>
+            <div class="wuku-cell"><div class="wuku-cell-label">💰 Rezeki</div><div class="wuku-cell-val" id="wd-rezeki"></div></div>
+            <div class="wuku-cell"><div class="wuku-cell-label">❤ Asmara</div><div class="wuku-cell-val" id="wd-asmara"></div></div>
+            <div class="wuku-cell"><div class="wuku-cell-label">⚠ Pantangan</div><div class="wuku-cell-val" id="wd-pantangan"></div></div>
+            <div class="wuku-cell"><div class="wuku-cell-label">🎯 Karir</div><div class="wuku-cell-val" id="wd-karir"></div></div>
+            <div class="wuku-cell"><div class="wuku-cell-label">🌈 Warna Hoki</div><div class="wuku-cell-val" id="wd-warna"></div></div>
+          </div>
+          <div class="wuku-nasihat-strip" style="margin-top:12px">
+            <div class="wns-label">💬 Nasihat Leluhur</div>
+            <div class="wns-text" id="wd-nasihat"></div>
+          </div>
+          <div class="wuku-haribaik-strip" style="margin-top:10px">
+            <div class="whb-label">✦ Hari Terbaik</div>
+            <div class="whb-text" id="wd-haribaik"></div>
+          </div>
         </div>
       </div>
     </section>
@@ -2103,13 +2320,14 @@ function showPanel(name){
   document.querySelectorAll('.m-tab').forEach(t=>{
     t.classList.toggle('active', t.getAttribute('data-panel')===name);
   });
+  if (name === 'wuku') buildWukuGrid30();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function buildMobileTabs(){
   const tabs=[
     {p:'jodoh',n:'Kecocokan Jodoh'},{p:'ramalanhari',n:'Ramalan Hari Ini'},
     {p:'rezeki',n:'Rezeki'},{p:'mimpi',n:'Tafsir Mimpi'},
-    {p:'wetonanak',n:'Weton Anak'},{p:'haribaik',n:'Hari Baik'},{p:'nama',n:'Nama Bayi'},{p:'ai',n:'Konsultasi AI'}
+    {p:'wetonanak',n:'Weton Anak'},{p:'wuku',n:'🌀 Sistem Wuku'},{p:'haribaik',n:'Hari Baik'},{p:'nama',n:'Nama Bayi'},{p:'ai',n:'Konsultasi AI'}
   ];
   const box=document.getElementById('mobile-tabs');
   tabs.forEach((t,i)=>{
@@ -2142,6 +2360,7 @@ fillDate('bb',1,0,2026);
 fillDate('wa',1,0,2024);
 fillDate('waibu',17,7,1995);
 fillDate('waayah',10,5,1993);
+fillDate('wk',17,7,1995);
 buildDreamTags();
 buildMobileTabs();
 
@@ -2226,7 +2445,7 @@ function autoFillBirthDate(birthDateStr) {
   const d = parseInt(parts[2]);
 
   // All prefixes that represent the logged-in user's own birth date
-  ['rz','hb','j1','waibu','rhi'].forEach(prefix => {
+  ['rz','hb','j1','waibu','rhi','wk'].forEach(prefix => {
     const ds = document.getElementById(prefix+'-day');
     const ms = document.getElementById(prefix+'-month');
     const ys = document.getElementById(prefix+'-year');
@@ -2279,6 +2498,354 @@ async function checkAuthAndInit() {
 
 // Check auth on page load
 checkAuthAndInit();
+
+/* ============== SISTEM WUKU — DATA & FUNGSI ============== */
+const WUKU_DATA = [
+  {nomor:1,nama:'SINTA',lambang:'🐂',dewa:'Yamadipati',dewaNama:'Dewa Keadilan & Penjaga Kehidupan',
+   watak:'Penyayang sejati, penuh bakti kepada keluarga, setia, rela berkorban, sifat pelindung yang kuat. Lebih mengutamakan orang lain daripada diri sendiri.',
+   rezeki:'Rezeki datang dari ketulusan dan pengabdian. Cenderung makmur karena sifat dermawan yang justru menarik keberkahan. Cocok mengelola usaha keluarga.',
+   asmara:'Pasangan yang sangat setia dan penuh kasih. Sulit jatuh cinta, tapi sekali cinta bisa seumur hidup. Rawan dimanfaatkan karena terlalu baik hati.',
+   pantangan:'Jangan memaksakan kehendak kepada orang lain. Hindari bersikap terlalu mengalah hingga merugikan diri sendiri. Waspada hari Selasa dan Sabtu.',
+   karir:'Dokter, perawat, guru, pengasuh, konselor, pekerjaan sosial, bidang kemanusiaan, pemimpin komunitas',
+   warna:'Putih, Kuning Gading, Hijau Muda',
+   nasihat:'Sinta iku welas asih tanpa wates. Kasihmu adalah kekuatan terbesar — jaga agar tidak habis untuk yang tidak menghargainya.',
+   hariBaik:'Senin Legi dan Kamis Pahing adalah hari paling bertuah bagimu untuk memulai hal baru, melamar pekerjaan, atau menjalin komitmen.'},
+  {nomor:2,nama:'LANDEP',lambang:'🗡️',dewa:'Mahadewa',dewaNama:'Dewa Kebijaksanaan Tertinggi',
+   watak:'Pikiran sangat tajam dan analitis, diplomatis, berwibawa alami, mampu membaca situasi dengan cepat. Kata-katanya penuh makna dan berpengaruh.',
+   rezeki:'Rezeki dari kecerdasan dan kemampuan bicara/negosiasi. Pandai memanfaatkan peluang yang tidak dilihat orang lain. Cocok di bidang bisnis dan strategi.',
+   asmara:'Menarik perhatian lawan jenis dengan mudah berkat karisma intelektualnya. Namun bisa terlalu analitis soal cinta sehingga sulit pasrah sepenuhnya.',
+   pantangan:'Hindari menggunakan kepandaian untuk memperdaya orang lain — akan berbalik menjadi bencana. Jangan terlalu kritis terhadap orang sekitar.',
+   karir:'Pengacara, diplomat, jurnalis, konsultan bisnis, politisi, penulis, pembicara publik, analis strategi',
+   warna:'Hitam, Abu-abu Baja, Biru Tua',
+   nasihat:'Landep pikire, landep pula budine. Ketajaman pikiran tanpa keluhuran budi hanya akan melukai diri sendiri.',
+   hariBaik:'Rabu Wage dan Jumat Kliwon — hari terbaik untuk membuat keputusan besar, menandatangani kontrak, atau memulai negosiasi penting.'},
+  {nomor:3,nama:'WUKIR',lambang:'⛰️',dewa:'Mahayekti',dewaNama:'Dewa Gunung & Keteguhan',
+   watak:'Teguh pendirian seperti gunung, jujur hingga terkesan blak-blakan, tidak mudah terpengaruh orang lain, prinsip kuat, apa adanya.',
+   rezeki:'Rezeki didapat dengan kerja keras dan ketekunan yang konsisten. Tidak suka jalan pintas. Lambat tapi pasti — akumulasi kekayaan bertahap namun solid.',
+   asmara:'Sulit mengungkapkan perasaan, tapi cintanya dalam dan tulus. Perlu pasangan yang memahami sifat diamnya. Sangat setia dan protektif.',
+   pantangan:'Hindari keras kepala yang berlebihan — belajarlah mendengarkan. Jangan menutup diri dari perubahan. Waspada pada hari Selasa dan Jumat.',
+   karir:'Arsitek, insinyur, petani, peneliti, auditor, pengawas proyek, pekerjaan yang membutuhkan ketepatan dan kesabaran',
+   warna:'Coklat Tanah, Hijau Tua, Abu-abu',
+   nasihat:'Wukir ora obah angin gedhe. Kekokohanmu adalah aset — tapi pastikan bukan tembok yang menghalangimu berkembang.',
+   hariBaik:'Kamis Wage dan Sabtu Legi — waktu terbaik untuk memulai proyek besar, membeli tanah/properti, atau membuat komitmen jangka panjang.'},
+  {nomor:4,nama:'KURANTIL',lambang:'🌿',dewa:'Langsur',dewaNama:'Dewa Kesuburan & Pertumbuhan',
+   watak:'Rajin dan ulet luar biasa, suka bekerja tanpa henti, jiwa sosial tinggi, senang membantu orang lain tanpa diminta, penuh semangat hidup.',
+   rezeki:'Rezeki dari ketekunan dan keuletan. Tangan Kurantil selalu sibuk dan selalu menghasilkan. Cocok di bidang pertanian, wirausaha, atau usaha mandiri.',
+   asmara:'Tulus dan sepenuh hati dalam mencintai. Cara menunjukkan cinta lewat perbuatan nyata bukan kata-kata. Butuh pasangan yang menghargai kerja kerasnya.',
+   pantangan:'Jangan terlalu memaksakan diri bekerja hingga lupa istirahat. Hindari sifat terlalu polos yang bisa dimanfaatkan. Waspada hari Kamis.',
+   karir:'Petani/agribisnis, pengusaha UMKM, koki, pengrajin, pekerja seni, terapis, pekerjaan yang menghasilkan sesuatu secara nyata',
+   warna:'Hijau Segar, Kuning Cerah, Oranye',
+   nasihat:'Kurantil tansah nyambut gawe kanthi ikhlas. Keikhlasanmu dalam bekerja adalah benih yang akan berbuah berlipat ganda.',
+   hariBaik:'Senin Pahing dan Minggu Wage — hari penuh berkah untuk memulai usaha baru, belajar hal baru, atau menanam benih kehidupan.'},
+  {nomor:5,nama:'TOLU',lambang:'🦅',dewa:'Bayu',dewaNama:'Dewa Angin & Kebebasan',
+   watak:'Jiwa petualang sejati, suka kebebasan, dinamis, energik, tidak suka dikekang, selalu ingin bergerak dan menjelajah hal-hal baru.',
+   rezeki:'Rezeki datang dari mobilitas dan koneksi. Semakin banyak bergerak, semakin besar peluang. Tidak cocok bekerja monoton di satu tempat.',
+   asmara:'Romantis dan penuh gairah di awal, tapi butuh pasangan yang tidak posesif. Suka jatuh cinta, tapi perlu belajar bertahan dalam komitmen.',
+   pantangan:'Hindari terlalu impulsif dalam mengambil keputusan penting. Belajar menyelesaikan apa yang sudah dimulai sebelum memulai hal baru.',
+   karir:'Pilot, pramugari, jurnalis lapangan, content creator traveling, sales lapangan, diplomat, pekerjaan banyak perjalanan',
+   warna:'Biru Langit, Putih Bersih, Kuning Terang',
+   nasihat:'Tolu kaya angin — mrana mrene nanging aja ilang. Kebebasanmu adalah berkah, tapi pastikan kamu tetap punya akar yang kuat.',
+   hariBaik:'Selasa Legi dan Jumat Pon — hari terbaik untuk memulai perjalanan jauh, berpindah tempat, atau meluncurkan proyek berjangkauan luas.'},
+  {nomor:6,nama:'GUMBREG',lambang:'🐄',dewa:'Pretanjala',dewaNama:'Dewa Kemakmuran & Kesuburan Bumi',
+   watak:'Murah hati, sabar, mudah bergaul, suka memberi dan berbagi, jiwa penyayang kepada semua makhluk. Kehadirannya membuat orang lain nyaman.',
+   rezeki:'Diberkahi rezeki yang stabil dan melimpah. Semakin banyak memberi, semakin banyak mendapat. Keberuntungan datang dari komunitas dan jaringan sosial.',
+   asmara:'Pasangan yang hangat, tidak pencemburu, dan penuh pengertian. Keluarga adalah segalanya. Cocok untuk membina rumah tangga yang harmonis.',
+   pantangan:'Hindari terlalu mudah percaya pada semua orang. Jangan mengorbankan kepentingan sendiri secara berlebihan.',
+   karir:'Peternak, chef/kuliner, pengusaha katering, konselor keluarga, pemimpin komunitas, pekerjaan berkaitan makanan/kesejahteraan',
+   warna:'Hijau Zamrud, Kuning Emas, Merah Muda',
+   nasihat:'Gumbreg iku ibarat lemah sing subur — sapa wae sing cedhak bakal melu makmur. Kebaikanmu menular — rawat itu.',
+   hariBaik:'Kamis Legi dan Rabu Pahing — hari paling bertuah untuk urusan keluarga, pernikahan, membuka usaha bersama, atau bersedekah.'},
+  {nomor:7,nama:'WARIGALIT',lambang:'🌸',dewa:'Samara',dewaNama:'Dewa Cinta & Keindahan',
+   watak:'Jiwa seni yang tinggi, lembut hati, romantis, penuh kasih sayang, punya selera estetika yang halus. Kehadiran mereka memperindah lingkungan sekitar.',
+   rezeki:'Rezeki dari kreativitas, keindahan, dan seni. Bisa menghasilkan dari hobi bila ditekuni. Cocok di industri kreatif, mode, atau seni.',
+   asmara:'Penuh cinta dan romantisme. Sangat setia kepada yang dicintai. Namun sensitif dan mudah terluka — butuh pasangan yang lembut dan peka.',
+   pantangan:'Hindari terlalu larut dalam perasaan hingga tidak realistis. Jangan mengorbankan kebutuhan praktis demi idealisme cinta.',
+   karir:'Seniman, desainer, fotografer, musisi, penulis kreatif, perencana pernikahan, dekorator interior',
+   warna:'Merah Muda, Ungu Lavender, Emas',
+   nasihat:'Warigalit kaya kembang — endah nanging uga rapuh yen ora dijaga. Rawat kepekaan hatimu tapi jangan biarkan ia menjadi kelemahanmu.',
+   hariBaik:'Jumat Kliwon dan Senin Legi — hari paling indah untuk urusan cinta, melamar, menikah, atau meluncurkan karya seni.'},
+  {nomor:8,nama:'WARIGAGUNG',lambang:'🌾',dewa:'Sri',dewaNama:'Dewi Padi & Kemakmuran',
+   watak:'Penuh berkah alami, hidupnya diberkahi kemakmuran, suka berbagi hasil, subur dalam segala hal — ide, usaha, maupun keturunan.',
+   rezeki:'Salah satu wuku dengan rezeki terbesar. Seperti padi — semakin merunduk semakin berisi. Kekayaan datang dari kerja ikhlas dan sikap rendah hati.',
+   asmara:'Hubungan yang diberkahi keharmonisan dan kesuburan. Keluarga bisa besar dan bahagia. Pasangan yang hangat dan bersyukur atas hal-hal kecil.',
+   pantangan:'Hindari kesombongan atas kemakmuran yang didapat — itu bisa memotong aliran berkah. Jangan lupa berbagi dengan sesama.',
+   karir:'Petani modern, pengusaha pangan, dokter gizi, pengusaha properti, investasi, semua bidang yang berhubungan dengan keberlanjutan',
+   warna:'Kuning Emas, Hijau Subur, Putih',
+   nasihat:'Sri iku ibu kabeh kemakmuran. Kamu lahir dengan berkah berlimpah — tugasmu menyebarkannya, bukan menimbunnya.',
+   hariBaik:'Minggu Pon dan Kamis Wage — waktu terbaik untuk berinvestasi, membuka ladang usaha baru, atau memulai proyek jangka panjang.'},
+  {nomor:9,nama:'JULUNGWANGI',lambang:'🌴',dewa:'Sangkara',dewaNama:'Dewa Pohon Besar & Keteduhan',
+   watak:'Berwibawa alami seperti pohon besar, menjadi tempat berlindung bagi banyak orang, dihormati tanpa harus meminta, bijaksana dan tenang.',
+   rezeki:'Rezeki dari kepemimpinan dan kepercayaan orang lain. Sering dipercaya memegang amanah besar. Kekayaan lebih bersifat sosial dan pengaruh.',
+   asmara:'Pasangan yang protektif dan menjadi andalan keluarga. Namun kadang kurang ekspresif — perlu lebih terbuka soal perasaan.',
+   pantangan:'Hindari arogansi kewibawaan. Ingat bahwa pohon besar pun bisa tumbang jika akarnya busuk. Waspada hari Selasa Kliwon.',
+   karir:'Pemimpin organisasi, kepala adat, politisi, rektor/kepala sekolah, direktur, pemuka agama',
+   warna:'Hijau Tua, Emas, Coklat Mahogani',
+   nasihat:'Julungwangi kaya wit gedhe — papan ngayomi wong akeh. Jadikan wibawamu untuk melindungi, bukan menguasai.',
+   hariBaik:'Sabtu Pahing dan Rabu Legi — hari terbaik untuk dilantik/diangkat jabatan, memimpin upacara penting, atau memulai lembaga baru.'},
+  {nomor:10,nama:'SUNGSANG',lambang:'🐘',dewa:'Gana',dewaNama:'Dewa Kekuatan & Penakluk Halangan',
+   watak:'Sangat kuat secara mental dan fisik, pantang menyerah, keras kepala dalam hal positif, berani menghadapi tantangan yang membuat orang lain mundur.',
+   rezeki:'Rezeki dari keberanian mengambil risiko yang diperhitungkan. Cocok di usaha yang membutuhkan keberanian modal besar atau tantangan tinggi.',
+   asmara:'Penuh gairah dan protektif terhadap yang dicintai. Tapi keras kepala bisa jadi sumber konflik. Butuh pasangan yang cukup kuat untuk tidak hanyut.',
+   pantangan:'Jangan memaksakan kehendak dalam hubungan. Belajar mengalah dalam hal-hal kecil. Hindari konfrontasi yang tidak perlu.',
+   karir:'Militer, polisi, olahragawan, pengusaha besar, pemimpin proyek besar, pekerjaan yang membutuhkan ketangguhan mental dan fisik',
+   warna:'Merah, Hitam, Abu-abu Tua',
+   nasihat:'Sungsang kuwat nanging ojo nganti kekuwatane dadi kesombongan. Kekuatanmu untuk membangun, bukan untuk menghancurkan.',
+   hariBaik:'Selasa Wage dan Minggu Kliwon — hari paling kuat untuk memulai kompetisi, melamar pekerjaan kompetitif, atau mengambil keputusan berani.'},
+  {nomor:11,nama:'GALUNGAN',lambang:'🐯',dewa:'Kala',dewaNama:'Dewa Waktu & Kekuasaan',
+   watak:'Jiwa pemimpin sejati, dominan, berani, karismatik, lahir untuk memimpin dan diikuti. Sering menjadi figur sentral dalam kelompok manapun.',
+   rezeki:'Rezeki besar tapi bisa berfluktuasi drastis. Perlu disiplin mengelola keuangan. Potensi kaya sangat besar jika channeled dengan baik.',
+   asmara:'Menarik dan menggoda secara alami. Butuh pasangan yang kuat secara karakter — yang bisa jadi partner setara, bukan sekadar pengikut.',
+   pantangan:'Hindari dominasi berlebihan yang mengorbankan orang lain. Belajar menerima masukan dan kritik dengan lapang dada.',
+   karir:'CEO, direktur, jenderal, politisi senior, pengusaha besar, entertainer/artis, pemimpin agama, tokoh publik berpengaruh',
+   warna:'Emas, Merah Menyala, Hitam',
+   nasihat:'Galungan iku ratu ing endi wae anggone manggon. Kepemimpinanmu bukan pilihan — itu takdirmu. Gunakan untuk kebaikan.',
+   hariBaik:'Jumat Legi dan Rabu Kliwon — hari paling bertuah untuk dilantik, memimpin upacara besar, atau membuat keputusan yang mengubah hidup banyak orang.'},
+  {nomor:12,nama:'KUNINGAN',lambang:'🐉',dewa:'Indra',dewaNama:'Raja Para Dewa, Penguasa Langit',
+   watak:'Bijaksana, dermawan, karisma raja, disegani oleh semua kalangan, selalu berpikir untuk kebaikan bersama.',
+   rezeki:'Rezeki berlimpah dan mengalir dari berbagai arah. Kemurahan hati perlu diimbangi kecerdasan finansial agar tidak habis di tangan orang lain.',
+   asmara:'Pasangan yang dihormati dan dipercaya. Hubungan yang matang dan penuh martabat. Mencari pasangan yang setara secara intelektual dan spiritual.',
+   pantangan:'Hindari menggunakan pengaruh untuk kepentingan pribadi semata. Waspadai orang-orang yang mendekati hanya karena posisi atau kekayaanmu.',
+   karir:'Pemimpin tertinggi, hakim, duta besar, rohaniwan senior, konsultan senior, penasihat utama negara/kerajaan',
+   warna:'Kuning Keemasan, Ungu Royal, Putih',
+   nasihat:'Kuningan iku cahyane ngalahake peteng. Kebijakanmu adalah cahaya bagi banyak orang — jangan padamkan ia dengan ego.',
+   hariBaik:'Kamis Kliwon dan Sabtu Pon — hari paling sakral dan bertuah untuk ritual penting, mengambil keputusan besar, atau memulai jabatan tinggi.'},
+  {nomor:13,nama:'LANGKIR',lambang:'🐒',dewa:'Kala',dewaNama:'Dewa Waktu & Kepintaran',
+   watak:'Cerdik dan kreatif, gesit dalam berpikir, banyak akal, mampu keluar dari situasi sulit dengan cara yang tidak terduga, improvisator ulung.',
+   rezeki:'Rezeki dari kecerdikan dan kemampuan improvisasi. Sering menemukan solusi yang menghasilkan uang dari masalah. Cocok di industri kreatif dan startup.',
+   asmara:'Penuh kejutan dan selalu membuat pasangan tidak bosan. Tapi perlu lebih serius soal komitmen jangka panjang.',
+   pantangan:'Hindari menggunakan kecerdikan untuk menipu atau memanipulasi. Sifat licik jika tidak dikontrol bisa menghancurkan reputasi.',
+   karir:'Pengusaha startup, programmer, komedian, konsultan kreatif, problem solver, negosiator, pekerjaan yang butuh improvisasi cepat',
+   warna:'Oranye, Kuning, Merah Muda',
+   nasihat:'Langkir pinter golek dalan — ning eling yen dalan sing bener luwih langgeng. Kecerdikanmu adalah hadiah — arahkan ke jalan yang benar.',
+   hariBaik:'Selasa Pon dan Jumat Wage — hari terbaik untuk brainstorming, meluncurkan ide baru, atau menyelesaikan masalah yang sudah lama stuck.'},
+  {nomor:14,nama:'MANDASIYA',lambang:'☀️',dewa:'Brahma',dewaNama:'Dewa Penciptaan & Api Suci',
+   watak:'Ambisius, penuh semangat api, pionir sejati, selalu ingin menjadi yang pertama dan terdepan, energi tidak habis-habis, inspiratif bagi orang sekitar.',
+   rezeki:'Rezeki dari ambisi dan keberanian berinovasi. Sering menjadi pembuka jalan yang kemudian diikuti banyak orang. Potensi sangat besar jika terarah.',
+   asmara:'Penuh gairah dan totalitas dalam cinta. Namun ambisi bisa mengalahkan perhatian kepada pasangan. Butuh pasangan yang mendukung mimpi besarnya.',
+   pantangan:'Hindari terburu-buru tanpa perhitungan matang. Jangan membakar semua jembatan hanya karena semangat sesaat. Kendalikan ego.',
+   karir:'Entrepreneur, inovator, pendiri startup, sutradara, pencipta lagu, chef kreatif, pekerjaan yang butuh api kreasi dan inovasi',
+   warna:'Merah Api, Emas, Oranye',
+   nasihat:'Mandasiya kobong kaya geni — panas nanging uga bisa ngobong yen ora dikontrol. Api semangatmu indah — pastikan membakar tujuan, bukan diri sendiri.',
+   hariBaik:'Minggu Legi dan Rabu Pon — waktu paling pas untuk meluncurkan produk/karya baru, memulai usaha, atau menyatakan visi besar.'},
+  {nomor:15,nama:'JULUNGPUJUT',lambang:'🦌',dewa:'Guru',dewaNama:'Dewa Ilmu & Kebijaksanaan',
+   watak:'Jiwa guru sejati, penuh hikmat, suka berbagi ilmu, sabar dalam mengajar, spiritualitas tinggi, dipercaya sebagai penasihat dan panutan.',
+   rezeki:'Rezeki dari ilmu dan kebijaksanaan yang dibagikan. Makin banyak mengajar dan berbagi, makin banyak berkah yang kembali.',
+   asmara:'Hubungan yang dalam secara intelektual dan spiritual. Mencari pasangan yang bisa diajak berdiskusi tentang kehidupan. Kurang ekspresif secara romantis tapi sangat setia.',
+   pantangan:'Hindari sikap merasa paling tahu sehingga tidak mau mendengarkan. Jangan menutup diri dari pelajaran hidup yang datang dari orang yang lebih muda.',
+   karir:'Guru, dosen, ulama, filsuf, penulis buku, mentor, konsultan spiritual, pemimpin komunitas berbasis ilmu',
+   warna:'Biru Tua, Putih, Ungu',
+   nasihat:'Guru iku digugu lan ditiru. Kamu lahir untuk mengajarkan sesuatu kepada dunia — temukan pelajaranmu dan bagikan.',
+   hariBaik:'Kamis Pon dan Senin Wage — hari paling bertuah untuk memulai studi, mengajar, menulis buku, atau membagi ilmu penting.'},
+  {nomor:16,nama:'PAHANG',lambang:'🐍',dewa:'Anantaboga',dewaNama:'Dewa Ular Bumi & Kekayaan Tersembunyi',
+   watak:'Tekun, tahan banting, sabar menjalani proses panjang, banyak menyimpan (tidak suka pamer), kaya batin dan kaya material secara tersembunyi.',
+   rezeki:'Rezeki tersembunyi tapi nyata. Seperti emas di dalam bumi — ada, tapi harus digali. Akumulasi kekayaan yang perlahan tapi pasti.',
+   asmara:'Setia dan tahan uji. Tidak mudah jatuh cinta, tapi sekali cinta sangat dalam dan jarang berubah. Pasangan yang bisa diandalkan jangka panjang.',
+   pantangan:'Hindari menyimpan dendam terlalu lama — seperti racun yang merusak dari dalam. Belajar untuk lebih terbuka kepada orang-orang terdekat.',
+   karir:'Bankir, investor, akuntan, analis keuangan, penambang, geolog, arkeolog, peneliti, pekerjaan butuh kesabaran dan ketelitian jangka panjang',
+   warna:'Hijau Tua, Coklat, Emas Tua',
+   nasihat:'Pahang kaya naga bumi — kasiate gedhe ning ora nampak. Kekayaanmu sejati ada di dalam — terus gali dan jangan terburu menampakkannya.',
+   hariBaik:'Sabtu Legi dan Rabu Wage — waktu paling tepat untuk berinvestasi jangka panjang, menyimpan tabungan, atau memulai proyek dedikasi bertahun-tahun.'},
+  {nomor:17,nama:'KURUWELUT',lambang:'🦀',dewa:'Wisnu',dewaNama:'Dewa Pelindung Semesta',
+   watak:'Pelindung sejati, setia luar biasa, rela berkorban untuk orang yang dicintai, kuat dalam diam, pertahanan yang tidak goyah.',
+   rezeki:'Rezeki dari loyalitas dan kepercayaan yang dibangun bertahun-tahun. Sering mendapat rezeki karena diingat oleh orang yang pernah ditolong.',
+   asmara:'Sangat setia dan protektif kepada pasangan. Kadang terlalu posesif karena rasa cinta yang besar. Butuh belajar memberi ruang kepada orang yang dicintai.',
+   pantangan:'Jangan terlalu bergantung pada pengakuan orang lain. Hindari balas dendam meski sudah dikhianati — itu bukan jalanmu.',
+   karir:'Tentara, satpam, polisi, dokter gawat darurat, pemadam kebakaran, pengacara pembela, aktivis hak asasi',
+   warna:'Biru Navy, Putih, Perak',
+   nasihat:'Kuruwelut iku tameng sing ora katon. Kamu tidak harus terlihat kuat untuk melindungi — cukuplah selalu ada.',
+   hariBaik:'Senin Kliwon dan Jumat Pahing — hari terbaik untuk membuat janji setia, memulai tugas perlindungan, atau memperbarui komitmen dalam hubungan.'},
+  {nomor:18,nama:'MARAKEH',lambang:'🦚',dewa:'Semara',dewaNama:'Dewa Asmara & Kemolekan',
+   watak:'Karismatik, penuh pesona alami, indah secara lahir dan batin, mampu menarik perhatian tanpa usaha, membawa kesenangan ke mana pun pergi.',
+   rezeki:'Rezeki dari pesona, koneksi, dan kepandaian sosial. Pintu rezeki sering terbuka karena orang menyukai dan percaya kepadanya.',
+   asmara:'Sangat menarik bagi lawan jenis, selalu dikelilingi perhatian. Tantangannya adalah menemukan cinta yang tulus di antara banyak yang sekadar terpesona.',
+   pantangan:'Hindari terlalu mengandalkan penampilan atau pesona luar saja. Pastikan ada substansi di balik karisma.',
+   karir:'Artis, model, MC, public relations, brand ambassador, diplomat budaya, influencer, hospitality',
+   warna:'Emas, Hijau Merak, Merah Merlot',
+   nasihat:'Marakeh kaya merak ngigel — endah nanging ojo lali njaga isen-isene. Pesona luar itu modal, tapi isi hati yang membuat bertahan.',
+   hariBaik:'Jumat Legi dan Selasa Kliwon — hari paling berkilau untuk penampilan publik, audisi, peluncuran brand, atau bertemu orang-orang penting.'},
+  {nomor:19,nama:'TAMBIR',lambang:'🐟',dewa:'Indra',dewaNama:'Dewa Hujan & Kelimpahan Air',
+   watak:'Sangat adaptif, fleksibel dalam menghadapi perubahan, intuisi tajam seperti ikan yang merasakan arus, bisa menyesuaikan diri di lingkungan apapun.',
+   rezeki:'Rezeki mengalir seperti air — ke mana pun pergi selalu menemukan jalan. Namun perlu wadah yang kuat agar tidak terbuang sia-sia.',
+   asmara:'Sangat peka terhadap perasaan pasangan, tapi kadang mudah hanyut oleh arus emosi. Butuh pasangan yang stabil untuk mengimbangi sifat fleksibel.',
+   pantangan:'Hindari terlalu mudah berubah haluan mengikuti tekanan orang lain. Tetapkan pendirian dan prinsip agar tidak selalu terbawa arus.',
+   karir:'Psikolog, terapis, mediator, diplomat, peneliti perilaku, guru konseling, pekerjaan yang membutuhkan empati dan kemampuan adaptasi tinggi',
+   warna:'Biru Aqua, Hijau Tosca, Perak',
+   nasihat:'Tambir kaya banyu — bisa ngalir menyang ngendi wae, ning kudu ngerti nang ngendi kudu mandheg. Fleksibilitasmu kekuatan — tapi perlu juga keberanian berdiri teguh.',
+   hariBaik:'Rabu Legi dan Sabtu Wage — waktu terbaik untuk meditasi, introspeksi mendalam, membuat keputusan berbasis intuisi, atau memulai hubungan baru.'},
+  {nomor:20,nama:'MEDANGKUNGAN',lambang:'🦁',dewa:'Brahma',dewaNama:'Dewa Api & Keperkasaan',
+   watak:'Gagah, berwibawa, penuh keyakinan diri, lahir dengan aura pemimpin yang kuat, dicintai sekaligus disegani oleh orang-orang di sekitarnya.',
+   rezeki:'Rezeki besar dari kepemimpinan dan keberanian. Pantang surut di tengah jalan. Sering mendapat rezeki dari hal-hal besar yang orang biasa tidak berani coba.',
+   asmara:'Penuh gairah dan totalitas. Pasangan yang dicintai diperlakukan seperti raja/ratu. Tapi ego tinggi bisa jadi batu sandungan dalam hubungan.',
+   pantangan:'Hindari terlalu mendominasi dalam semua aspek — belajar memberi ruang kepada orang lain untuk bersinar.',
+   karir:'Pemimpin militer, pengusaha besar, atlet profesional, tokoh politik, direktur utama, semua posisi yang butuh ketegasan dan keperkasaan',
+   warna:'Emas, Merah Darah, Hitam',
+   nasihat:'Medangkungan iku cahyane panas nanging menerangi. Keperkasaanmu bukan untuk menakuti, tapi untuk menerangi dan membuka jalan bagi yang lemah.',
+   hariBaik:'Minggu Pahing dan Kamis Legi — hari paling kuat untuk memimpin upacara, membuat deklarasi penting, atau memulai era baru dalam hidupmu.'},
+  {nomor:21,nama:'MAKTAL',lambang:'🐘',dewa:'Guru',dewaNama:'Dewa Kebijaksanaan Agung',
+   watak:'Bijaksana, kuat, teguh seperti gajah, disegani karena intelektual dan moralnya, tidak banyak bicara tapi setiap kata penuh makna dan didengarkan.',
+   rezeki:'Rezeki dari kebijaksanaan dan reputasi yang dibangun dengan integritas. Sering dipercaya menjadi pengelola aset atau penasihat utama.',
+   asmara:'Jarang jatuh cinta, tapi sekali memilih sangat serius. Pasangan yang dipilih dengan pertimbangan matang. Dalam hubungan, sangat loyal.',
+   pantangan:'Hindari terlalu lambat mengambil keputusan karena terlalu banyak pertimbangan. Kadang perlu bergerak lebih cepat mengikuti momen.',
+   karir:'Hakim, notaris, rektor, kepala adat, penasihat hukum, guru besar, arsitek senior, posisi yang butuh kebijaksanaan dan integritas tinggi',
+   warna:'Abu-abu Tua, Putih Gading, Emas Tua',
+   nasihat:'Maktal kaya gajah putih — langka nanging yen ana mesti dadi pemberkahan. Keberadaanmu adalah berkat langka — jangan sia-siakan.',
+   hariBaik:'Kamis Pahing dan Senin Kliwon — waktu paling bertuah untuk membuat keputusan penting, menulis wasiat, atau menetapkan warisan nilai hidup.'},
+  {nomor:22,nama:'WUYE',lambang:'🦉',dewa:'Singajalma',dewaNama:'Dewa Misteri & Pengetahuan Rahasia',
+   watak:'Intuitif, misterius, waspada, mampu melihat apa yang tidak dilihat orang lain, bicara sedikit tapi tepat sasaran, kepekaan spiritual tinggi.',
+   rezeki:'Rezeki dari pengetahuan tersembunyi dan kemampuan melihat peluang yang tidak kasat mata. Sering mendapat rezeki dari jalur yang tidak terduga.',
+   asmara:'Sulit dipahami oleh pasangan biasa — butuh seseorang yang cukup sabar dan intuitif. Cinta yang dalam tapi tersembunyi di balik ketenangan.',
+   pantangan:'Hindari menutup diri terlalu dalam sehingga tidak ada yang bisa mendekat. Belajar untuk lebih terbuka dan mengekspresikan perasaan.',
+   karir:'Detektif, peneliti, psikiater, ahli mistis, konsultan spiritual, paranormal, penulis fiksi misteri',
+   warna:'Hitam, Ungu Tua, Biru Malam',
+   nasihat:'Wuye ngerti apa sing ora katon — nanging aja nganti mung seneng nonton saka kadohan. Gunakan kepekaanmu untuk bertindak, bukan hanya mengamati.',
+   hariBaik:'Jumat Kliwon dan Rabu Wage — waktu paling tepat untuk meditasi, ritual spiritual, mencari petunjuk, atau membuat keputusan berbasis intuisi.'},
+  {nomor:23,nama:'MANAHIL',lambang:'⭐',dewa:'Resi',dewaNama:'Dewa Penunjuk Jalan & Bintang Petunjuk',
+   watak:'Diberkahi keberuntungan alami, seperti bintang yang selalu menerangi kegelapan, hidupnya penuh kemujuran, sering menjadi petunjuk bagi orang lain.',
+   rezeki:'Salah satu wuku paling beruntung. Rezeki datang hampir tanpa usaha keras — tapi justru perlu hati-hati agar tidak malas karena terlalu dimudahkan.',
+   asmara:'Beruntung dalam urusan cinta — orang yang baik secara alami tertarik kepadanya. Perlu memastikan memilih pasangan dengan bijak, bukan sekadar karena kebetulan.',
+   pantangan:'Jangan terlalu mengandalkan keberuntungan saja tanpa usaha. Rasa syukur harus selalu dijaga agar bintang keberuntungan tidak padam.',
+   karir:'Investor, trader, seniman yang dikenal mendadak, atau pekerjaan apa pun — keberuntungan akan selalu hadir di bidang yang dipilih',
+   warna:'Emas, Putih Bercahaya, Kuning Terang',
+   nasihat:'Manahil iku lintang sirah — sapa sing ngiring bakal ketemu baskara. Keberuntunganmu bukan hanya untukmu — jadilah penunjuk jalan bagi orang lain.',
+   hariBaik:'Minggu Legi dan Jumat Pon — hari paling bercahaya untuk memulai hal baru apapun, peluang di hari ini lebih besar dari hari biasa bagimu.'},
+  {nomor:24,nama:'PRANGBAKAT',lambang:'🌙',dewa:'Kamajaya',dewaNama:'Dewa Cinta Agung & Bulan',
+   watak:'Romantis, sensitif, lembut hati, penuh imajinasi, jiwa penyair dan seniman, merasakan segala sesuatu lebih dalam dari orang lain.',
+   rezeki:'Rezeki dari kreativitas dan kepekaan emosi yang diterjemahkan ke dalam karya. Musik, puisi, seni, film — semua bisa menghasilkan bila ditekuni.',
+   asmara:'Hidup untuk cinta — cinta adalah pusat hidupnya. Sangat romantis dan penuh perasaan, tapi juga mudah terluka. Mencari cinta sejati yang mendalam.',
+   pantangan:'Hindari terlalu tenggelam dalam perasaan hingga lupa realita. Jangan biarkan kepekaan berubah menjadi kecemasan atau depresi.',
+   karir:'Musisi, penyair, penulis novel, fotografer seni, sutradara, psikolog, konselor cinta, semua pekerjaan yang mengekspresikan perasaan manusia',
+   warna:'Putih Bulan, Ungu Pastel, Biru Malam',
+   nasihat:'Prangbakat iku lintang wengi — paling endah yen wengi paling peteng. Kepekaan terdalammu muncul saat situasi paling sulit — percayalah pada itu.',
+   hariBaik:'Jumat Legi dan Senin Pahing — waktu paling puitik untuk mengekspresikan cinta, menciptakan karya, atau memulai perjalanan spiritual batin.'},
+  {nomor:25,nama:'BALA',lambang:'🐎',dewa:'Wisnu',dewaNama:'Dewa Pelindung & Perjalanan',
+   watak:'Energik, suka bergerak, tidak bisa diam, jiwa petualang yang ingin terus maju, bekerja keras dan tidak kenal lelah dalam mengejar tujuan.',
+   rezeki:'Rezeki dari mobilitas dan kerja keras tanpa henti. Semakin aktif bergerak, semakin besar rezeki. Cocok di bidang usaha yang dinamis dan penuh pergerakan.',
+   asmara:'Penuh gairah dan antusias di awal hubungan. Tantangannya adalah menjaga konsistensi komitmen di tengah semangat yang selalu ingin hal baru.',
+   pantangan:'Hindari kelelahan karena terlalu banyak mengambil tanggung jawab sekaligus. Belajar untuk beristirahat dan merawat diri sendiri.',
+   karir:'Atlet, tentara lapangan, kurir, supir, pebisnis traveling, tour guide, sales, aktivis lapangan',
+   warna:'Merah, Jingga, Putih',
+   nasihat:'Bala kaya jaran — mlayune banter nanging ojo lali kendhaline. Energimu luar biasa — pastikan ada arah yang jelas dan kendali yang baik.',
+   hariBaik:'Selasa Legi dan Sabtu Pahing — hari paling bertenaga untuk memulai perjalanan penting, kompetisi, atau proyek yang butuh tenaga besar.'},
+  {nomor:26,nama:'UGU',lambang:'🐃',dewa:'Kuwera',dewaNama:'Dewa Kekayaan & Kemakmuran Material',
+   watak:'Kuat, sabar, pekerja keras tanpa banyak mengeluh, berjiwa sederhana tapi punya fondasi material yang sangat solid. Kekuatan diam yang menopang banyak orang.',
+   rezeki:'Wuku dengan potensi kekayaan material terbesar. Rezeki dari kerja keras yang konsisten dan tidak mudah tergoda investasi berisiko. Akumulasi kekayaan nyata.',
+   asmara:'Setia dan dapat diandalkan, tapi kurang ekspresif secara romantis. Butuh pasangan yang bisa menghargai kesetiaan dan kestabilan di atas romantisme.',
+   pantangan:'Hindari terlalu materialistis sehingga lupa nilai-nilai spiritual dan hubungan manusiawi. Jangan terlalu hemat hingga menjadi kikir.',
+   karir:'Bankir, konglomerat, developer properti, pengusaha tambang, trader komoditas, akuntan, auditor keuangan',
+   warna:'Coklat Emas, Hijau Tua, Hitam',
+   nasihat:'Ugu kaya kebo — ora ngomongi kekuwatane, nanging nyambut gawe tanpa kendhat. Diam-diammu bekerja, diam-diammu mengumpulkan — itulah kekuatanmu.',
+   hariBaik:'Sabtu Pahing dan Kamis Wage — hari paling subur secara finansial untuk berinvestasi, membeli aset, atau menandatangani kontrak bisnis besar.'},
+  {nomor:27,nama:'WAYANG',lambang:'🎭',dewa:'Kala',dewaNama:'Dewa Seni, Bayangan & Ghaib',
+   watak:'Jiwa seni yang paling tinggi, kreatif, imajinatif, mampu memainkan berbagai peran dalam kehidupan, peka terhadap dimensi yang tidak kasat mata.',
+   rezeki:'Rezeki dari seni, pertunjukan, dan kreativitas tingkat tinggi. Bisa juga dari kemampuan memahami psikologi orang dan bermain peran dalam situasi sosial.',
+   asmara:'Penuh misteri dan daya tarik yang sulit dijelaskan. Cintanya dalam tapi kompleks. Butuh pasangan yang bisa menerima keunikan dan kedalaman jiwanya.',
+   pantangan:'Hindari memakai "topeng" terlalu lama hingga kehilangan jati diri asli. Pastikan permainan peran tidak mengorbankan kejujuran dalam hubungan nyata.',
+   karir:'Dalang, aktor, sutradara teater, penulis skenario, psikolog, antropolog, seniman tradisional',
+   warna:'Hitam, Emas, Merah Tua',
+   nasihat:'Wayang iku ora mung bayangan — dheweke sing nggawa cahya ing balik kelir. Kamu bukan sekadar bayangan — kamu adalah cahaya di balik pertunjukan.',
+   hariBaik:'Jumat Kliwon — hari paling sakral untuk pertunjukan seni, ritual adat, peluncuran karya besar, atau menemukan makna hidup yang lebih dalam.'},
+  {nomor:28,nama:'KULAWU',lambang:'🐐',dewa:'Sadana',dewaNama:'Dewa Keluarga & Kesetiaan',
+   watak:'Sederhana dan bersahaja, sangat mencintai keluarga, setia pada akar dan tradisi, tidak ambisius dalam hal duniawi tapi bahagia dalam kesederhanaan.',
+   rezeki:'Rezeki cukup dan berkah dalam kesederhanaan. Tidak kaya raya, tapi tidak pernah kekurangan. Ketenangan hati adalah kekayaannya yang sesungguhnya.',
+   asmara:'Pasangan yang paling setia dan berdedikasi kepada keluarga. Tidak mencari yang sempurna — mencari yang sungguh-sungguh. Rumah tangga yang hangat dan stabil.',
+   pantangan:'Hindari terlalu anti-perubahan sehingga tertinggal. Jangan meremehkan ambisi yang baik — sederhana bukan berarti berhenti berkembang.',
+   karir:'Petani tradisional, pengajar, pelestari budaya, pendeta/rohaniwan, pengurus rumah tangga, konselor komunitas',
+   warna:'Coklat Muda, Krem, Hijau Sage',
+   nasihat:'Kulawu seneng ing prasaja — ora mbutuhake bintang, cukup rembulan ing mbengi sing andem. Kebahagiaanmu ada di hal-hal kecil — itu berkah yang banyak orang cari.',
+   hariBaik:'Senin Pon dan Kamis Legi — hari paling hangat untuk berkumpul keluarga, merayakan tradisi, atau memperkuat ikatan dengan orang-orang terkasih.'},
+  {nomor:29,nama:'DUKUT',lambang:'🌱',dewa:'Resi',dewaNama:'Dewa Alam & Keseimbangan',
+   watak:'Dekat dengan alam, harmonis, damai, tidak suka konflik, mencari keseimbangan dalam segala hal, punya kemampuan menyembuhkan yang alami.',
+   rezeki:'Rezeki dari alam dan keseimbangan. Sering menemukan rezeki di tempat dan cara yang paling alami dan sederhana.',
+   asmara:'Hubungan yang damai dan saling menghormati. Tidak suka konflik tapi kadang terlalu mengalah. Mencari pasangan yang tenang dan bisa menghargai kedamaian.',
+   pantangan:'Hindari terlalu pasif dan terlalu sering mengalah hingga tidak ada kemajuan. Belajar untuk kadang-kadang berdiri teguh pada prinsip.',
+   karir:'Herbalis, pengobatan alami, petani organik, konservatoris, pengajar yoga/meditasi, terapis, pendamping lansia',
+   warna:'Hijau Natural, Coklat Tanah, Krem',
+   nasihat:'Dukut tansah urip sanajan diidak-idak. Seperti rumput yang selalu tumbuh kembali — ketahananmu yang halus adalah kekuatanmu yang sesungguhnya.',
+   hariBaik:'Rabu Kliwon dan Minggu Legi — hari terbaik untuk healing, meditasi di alam, memulai pengobatan, atau menanam benih baru dalam hidupmu.'},
+  {nomor:30,nama:'WATUGUNUNG',lambang:'🪨',dewa:'Siwa',dewaNama:'Dewa Agung, Penguasa Cosmos',
+   watak:'Sakti, kuat secara spiritual, punya kekuatan batin yang luar biasa, sering mengalami perjalanan hidup yang dramatis tapi selalu bangkit lebih kuat.',
+   rezeki:'Wuku terakhir dan tertinggi secara spiritual. Rezeki dari kekuatan batin dan ketabahan. Sering melalui cobaan berat tapi akhirnya mencapai puncak.',
+   asmara:'Perjalanan cinta yang penuh liku dan dramatis, tapi bila menemukan yang tepat, hubungannya sangat kuat dan spiritual.',
+   pantangan:'Hindari menyimpan amarah yang dalam — itu bisa menjadi kekuatan destruktif. Belajar melepaskan dan memaafkan sebagai bentuk kekuatan tertinggi.',
+   karir:'Pemimpin spiritual, pertapa, tokoh agama besar, pemimpin revolusioner, seniman yang dikenal setelah melalui penderitaan',
+   warna:'Hitam, Putih, Merah Darah',
+   nasihat:'Watugunung wis nglampahi kabeh — lara lan bungah mung dadi guru. Setiap cobaan yang kamu lewati bukan hukuman — itu pelatihan untuk sesuatu yang lebih besar.',
+   hariBaik:'Sabtu Kliwon — hari paling sakral dari seluruh siklus 210 hari. Setiap langkah yang diambil hari ini punya makna spiritual yang sangat dalam bagimu.'}
+];
+
+function hitungWukuPanel() {
+  const a = readDate('wk');
+  if (!a) { alert('Tanggal lahir tidak valid.'); return; }
+  // Referensi: Minggu 7 Januari 2001 = Wuku Sinta, Hari 1 (Redite)
+  const ref = new Date(2001, 0, 7);
+  const tgl = new Date(a.y, a.m, a.d);
+  const selisih = Math.floor((tgl - ref) / 86400000);
+  const posisi  = ((selisih % 210) + 210) % 210;
+  const idx     = Math.floor(posisi / 7);
+  const w       = WUKU_DATA[idx];
+
+  document.getElementById('wk-lambang').textContent  = w.lambang;
+  document.getElementById('wk-nomor').textContent    = `Wuku ke-${w.nomor} dari 30`;
+  document.getElementById('wk-nama').textContent     = w.nama;
+  document.getElementById('wk-dewa').textContent     = `${w.dewa} · ${w.dewaNama}`;
+  document.getElementById('wk-watak').textContent    = w.watak;
+  document.getElementById('wk-rezeki').textContent   = w.rezeki;
+  document.getElementById('wk-asmara').textContent   = w.asmara;
+  document.getElementById('wk-pantangan').textContent= w.pantangan;
+  document.getElementById('wk-karir').textContent    = w.karir;
+  document.getElementById('wk-warna').textContent    = w.warna;
+  document.getElementById('wk-nasihat').textContent  = w.nasihat;
+  document.getElementById('wk-haribaik').textContent = w.hariBaik;
+
+  const wrap = document.getElementById('wuku-hasil');
+  wrap.classList.add('show');
+  wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  document.querySelectorAll('.wuku-chip').forEach(c =>
+    c.classList.toggle('aktif', parseInt(c.dataset.idx) === idx)
+  );
+}
+
+function buildWukuGrid30() {
+  const grid = document.getElementById('wuku-grid-30');
+  if (!grid || grid.children.length > 0) return;
+  WUKU_DATA.forEach((w, i) => {
+    const d = document.createElement('div');
+    d.className = 'wuku-chip';
+    d.dataset.idx = i;
+    d.innerHTML = `<div class="wc-no">${w.nomor}</div><div class="wc-emj">${w.lambang}</div><div class="wc-nama">${w.nama}</div>`;
+    d.onclick = () => bukaDrawerWuku(i);
+    grid.appendChild(d);
+  });
+}
+
+function bukaDrawerWuku(idx) {
+  const w = WUKU_DATA[idx];
+  document.getElementById('wd-lambang').textContent   = w.lambang;
+  document.getElementById('wd-nomor').textContent     = `Wuku ke-${w.nomor} dari 30`;
+  document.getElementById('wd-nama').textContent      = w.nama;
+  document.getElementById('wd-dewa').textContent      = `${w.dewa} · ${w.dewaNama}`;
+  document.getElementById('wd-watak').textContent     = w.watak;
+  document.getElementById('wd-rezeki').textContent    = w.rezeki;
+  document.getElementById('wd-asmara').textContent    = w.asmara;
+  document.getElementById('wd-pantangan').textContent = w.pantangan;
+  document.getElementById('wd-karir').textContent     = w.karir;
+  document.getElementById('wd-warna').textContent     = w.warna;
+  document.getElementById('wd-nasihat').textContent   = w.nasihat;
+  document.getElementById('wd-haribaik').textContent  = w.hariBaik;
+
+  document.querySelectorAll('.wuku-chip').forEach(c =>
+    c.classList.toggle('aktif', parseInt(c.dataset.idx) === idx)
+  );
+  const drawer = document.getElementById('wuku-drawer');
+  drawer.classList.add('show');
+  drawer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function tutupDrawerWuku() {
+  document.getElementById('wuku-drawer').classList.remove('show');
+  document.querySelectorAll('.wuku-chip').forEach(c => c.classList.remove('aktif'));
+}
 </script>
 </body>
 </html>
