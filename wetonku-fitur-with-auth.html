@@ -534,6 +534,98 @@
   .wdd-nomor { font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
   .wdd-nama  { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; color: var(--accent); }
   .wdd-dewa  { font-size: 12px; color: var(--ink-soft); }
+
+  /* ===== KOMBINASI WUKU × WETON ===== */
+  .kombi-divider {
+    text-align: center; margin: 24px 0 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .kombi-divider::before, .kombi-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--line);
+  }
+  .kombi-divider span {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-soft); white-space: nowrap;
+  }
+  .kombi-card {
+    background: var(--accent-deep); border-radius: 16px;
+    padding: 22px; color: #F4F2EC;
+  }
+  .kombi-top { margin-bottom: 18px; }
+  .kombi-badges {
+    display: flex; align-items: center; gap: 10px;
+    flex-wrap: wrap; margin-bottom: 12px;
+  }
+  .kombi-badge {
+    font-size: 12px; font-weight: 700; padding: 5px 12px;
+    border-radius: 999px; letter-spacing: 0.03em;
+  }
+  .kombi-badge.wuku {
+    background: rgba(244,242,236,0.12); color: #F4F2EC;
+    border: 1px solid rgba(244,242,236,0.2);
+  }
+  .kombi-badge.weton {
+    background: rgba(188,108,60,0.3); color: #f0c090;
+    border: 1px solid rgba(188,108,60,0.4);
+  }
+  .kombi-x { font-size: 18px; font-weight: 300; color: rgba(244,242,236,0.4); }
+  .kombi-title {
+    font-family: 'Fraunces', serif; font-size: 26px; font-weight: 600;
+    line-height: 1.2; color: #F4F2EC; margin-bottom: 4px;
+  }
+  .kombi-subtitle { font-size: 12px; color: rgba(244,242,236,0.5); margin-bottom: 10px; }
+  .kombi-harmony-row {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .kombi-stars { font-size: 14px; color: #f0c090; letter-spacing: 2px; }
+  .kombi-keselarasan {
+    font-size: 11.5px; font-weight: 700; padding: 3px 10px;
+    border-radius: 999px; background: rgba(240,192,144,0.15);
+    color: #f0c090; letter-spacing: 0.04em;
+  }
+  .kombi-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;
+  }
+  @media (max-width: 500px) { .kombi-grid { grid-template-columns: 1fr; } }
+  .kombi-cell {
+    background: rgba(255,255,255,0.06); border-radius: 10px; padding: 12px 13px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .kombi-cell-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: rgba(244,242,236,0.45); margin-bottom: 6px;
+  }
+  .kombi-cell-val { font-size: 13px; color: rgba(244,242,236,0.88); line-height: 1.6; }
+  .kombi-narasi-box {
+    background: rgba(255,255,255,0.05); border-radius: 12px;
+    padding: 15px 16px; margin-bottom: 10px;
+    border-left: 3px solid rgba(188,108,60,0.6);
+  }
+  .kombi-narasi-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: rgba(244,242,236,0.4); margin-bottom: 7px;
+  }
+  .kombi-narasi-text { font-size: 14px; color: rgba(244,242,236,0.85); line-height: 1.75; }
+  .kombi-inti-box {
+    background: rgba(188,108,60,0.15); border-radius: 12px;
+    padding: 14px 16px; margin-bottom: 10px;
+    border: 1px solid rgba(188,108,60,0.25);
+  }
+  .kombi-inti-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: #f0c090; margin-bottom: 6px;
+  }
+  .kombi-inti-text {
+    font-family: 'Fraunces', serif; font-size: 15.5px; font-style: italic;
+    color: #f4e8d8; line-height: 1.65;
+  }
+  .kombi-inti-text::before { content: '\201C'; }
+  .kombi-inti-text::after  { content: '\201D'; }
+  .kombi-neptu-note {
+    font-size: 12px; color: rgba(244,242,236,0.4);
+    padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.08);
+    line-height: 1.6;
+  }
 </style>
 </head>
 <body>
@@ -1124,6 +1216,39 @@
         <div class="wuku-haribaik-strip">
           <div class="whb-label">✦ Hari Terbaik dalam Hidupmu</div>
           <div class="whb-text" id="wk-haribaik">—</div>
+        </div>
+
+        <!-- ── KOMBINASI WUKU × WETON ── -->
+        <div class="kombi-divider"><span>✦ Kombinasi Wuku × Weton ✦</span></div>
+        <div class="kombi-card">
+          <div class="kombi-top">
+            <div class="kombi-badges">
+              <div class="kombi-badge wuku" id="k-wuku-badge">🐂 SINTA</div>
+              <div class="kombi-x">×</div>
+              <div class="kombi-badge weton" id="k-weton-badge">Senin Legi · 9</div>
+            </div>
+            <div class="kombi-title" id="k-title">—</div>
+            <div class="kombi-subtitle" id="k-subtitle">—</div>
+            <div class="kombi-harmony-row">
+              <div class="kombi-stars" id="k-stars">—</div>
+              <div class="kombi-keselarasan" id="k-keselarasan">—</div>
+            </div>
+          </div>
+          <div class="kombi-grid">
+            <div class="kombi-cell"><div class="kombi-cell-label">✨ Energi Dominan</div><div class="kombi-cell-val" id="k-energi">—</div></div>
+            <div class="kombi-cell"><div class="kombi-cell-label">💪 Kekuatan Unik</div><div class="kombi-cell-val" id="k-kekuatan">—</div></div>
+            <div class="kombi-cell"><div class="kombi-cell-label">⚡ Tantangan Utama</div><div class="kombi-cell-val" id="k-tantangan">—</div></div>
+            <div class="kombi-cell"><div class="kombi-cell-label">🗺 Jalur Hidup</div><div class="kombi-cell-val" id="k-jalur">—</div></div>
+          </div>
+          <div class="kombi-narasi-box">
+            <div class="kombi-narasi-label">📖 Narasi Kombinasi</div>
+            <div class="kombi-narasi-text" id="k-narasi">—</div>
+          </div>
+          <div class="kombi-inti-box">
+            <div class="kombi-inti-label">🔮 Inti Kepribadianmu</div>
+            <div class="kombi-inti-text" id="k-inti">—</div>
+          </div>
+          <div class="kombi-neptu-note" id="k-neptu-note">—</div>
         </div>
       </div>
 
@@ -2783,7 +2908,9 @@ function hitungWukuPanel() {
   const posisi  = ((selisih % 210) + 210) % 210;
   const idx     = Math.floor(posisi / 7);
   const w       = WUKU_DATA[idx];
+  const weton   = getWeton(a.y, a.m, a.d);
 
+  // — isi hasil wuku individual —
   document.getElementById('wk-lambang').textContent  = w.lambang;
   document.getElementById('wk-nomor').textContent    = `Wuku ke-${w.nomor} dari 30`;
   document.getElementById('wk-nama').textContent     = w.nama;
@@ -2797,6 +2924,9 @@ function hitungWukuPanel() {
   document.getElementById('wk-nasihat').textContent  = w.nasihat;
   document.getElementById('wk-haribaik').textContent = w.hariBaik;
 
+  // — isi kombinasi wuku × weton —
+  hitungKombinasi(w, weton, idx);
+
   const wrap = document.getElementById('wuku-hasil');
   wrap.classList.add('show');
   wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -2804,6 +2934,99 @@ function hitungWukuPanel() {
   document.querySelectorAll('.wuku-chip').forEach(c =>
     c.classList.toggle('aktif', parseInt(c.dataset.idx) === idx)
   );
+}
+
+/* ═══════════════════════════════════════════════════
+   DATA KOMBINASI WUKU × WETON
+   Sistem 5 elemen Pancamahabhuta Jawa
+   Elemen Wuku: B=Bumi, A=Api, An=Angin, Ai=Air, Ak=Akasa
+   ═══════════════════════════════════════════════════ */
+
+// Elemen tiap wuku (index 0–29)
+const ELEMEN_WUKU = ['B','An','B','B','An','B','Ai','B','B','A','A','Ak','An','A','Ak','B','Ai','A','Ai','A','Ak','Ak','Ak','Ai','A','B','Ak','B','B','Ak'];
+const NAMA_ELEMEN = { B:'Bumi', A:'Api', An:'Angin', Ai:'Air', Ak:'Akasa' };
+
+// Elemen tiap pasaran
+const ELEMEN_PASARAN = { Legi:'B', Pahing:'A', Pon:'An', Wage:'Ai', Kliwon:'Ak' };
+
+// Tingkat keselarasan tiap pasangan (wukuElemen + pasaranElemen)
+const HARMONY = {
+  'B-B':5,'B-A':2,'B-An':3,'B-Ai':4,'B-Ak':3,
+  'A-B':2,'A-A':5,'A-An':4,'A-Ai':1,'A-Ak':3,
+  'An-B':3,'An-A':4,'An-An':5,'An-Ai':3,'An-Ak':4,
+  'Ai-B':4,'Ai-A':1,'Ai-An':3,'Ai-Ai':5,'Ai-Ak':4,
+  'Ak-B':4,'Ak-A':3,'Ak-An':3,'Ak-Ai':4,'Ak-Ak':5
+};
+const HARMONY_LABEL = { 5:'Selaras Sempurna', 4:'Sangat Harmonis', 3:'Saling Melengkapi', 2:'Dinamis Kontras', 1:'Kekuatan Tersembunyi' };
+const HARMONY_STARS = { 5:'★★★★★', 4:'★★★★☆', 3:'★★★☆☆', 2:'★★☆☆☆', 1:'★☆☆☆☆' };
+
+const KOMBINASI_DATA = {
+  'B-B':{title:'Pilar Bumi yang Kokoh',energi:'Kestabilan dan ketahanan yang luar biasa — fondasi hidupmu sekuat gunung',kekuatan:'Kemampuan membangun sesuatu yang bertahan lama dan bisa diandalkan orang banyak',tantangan:'Bisa terlalu kaku dan lambat beradaptasi terhadap perubahan yang cepat',jalur:'Pembangun dan pemelihara — hidupmu untuk menciptakan fondasi bagi generasi setelah kamu',narasi:'Kamu adalah kombinasi paling stabil dari seluruh sistem Pawukon. Bumi yang mengalir di wukukmu dan bumi yang mengalir di wetonmu menciptakan pribadi yang tidak mudah goyah oleh badai apapun.',inti:'Kamu adalah fondasi. Orang-orang di sekitarmu bergantung pada kekokohanmu tanpa mereka sadari.'},
+  'B-A':{title:'Tanah yang Bernyala',energi:'Kekuatan bumi yang dihidupkan oleh api — produktif, hangat, dan penuh vitalitas',kekuatan:'Mampu bekerja keras dengan semangat yang tidak padam — kombinasi tangan yang kuat dan hati yang menyala',tantangan:'Api bisa membakar bumi yang subur jika tidak dikontrol — jaga agar semangat tidak berubah menjadi kekerasan',jalur:'Pencipta yang produktif — kamu bisa membangun sesuatu dari nol dengan tangan sendiri',narasi:'Bumi memberimu ketekunan, api memberimu semangat. Kombinasi ini melahirkan orang yang tidak hanya bermimpi tapi juga mengerjakan — dan tidak berhenti sampai selesai.',inti:'Kamu bukan sekadar pemimpin, kamu adalah yang pertama kali kotor tangannya di lapangan.'},
+  'B-An':{title:'Gunung yang Bernapas',energi:'Keteguhan bumi yang diberi sayap oleh angin — kuat tapi tidak kaku',kekuatan:'Bisa bertahan dalam tekanan sekaligus fleksibel dalam pendekatan — kombinasi langka yang membuat orang respek',tantangan:'Angin bisa mengikis gunung perlahan — waspadai pengaruh luar yang menggeser prinsipmu tanpa disadari',jalur:'Komunikator yang dapat dipercaya — kamu bisa menyampaikan hal berat dengan cara yang ringan',narasi:'Kamu punya akar yang dalam sekaligus pikiran yang terbuka. Orang lain melihatmu sebagai tempat yang aman untuk berpijak sekaligus teman yang bisa diajak berdiskusi hal apapun.',inti:'Kamu adalah kombinasi antara kepastian dan keterbukaan — langka dan sangat dibutuhkan.'},
+  'B-Ai':{title:'Sawah yang Selalu Subur',energi:'Bumi yang dibasahi air — kesuburan, pertumbuhan, dan kemakmuran yang terus mengalir',kekuatan:'Kemampuan menumbuhkan apapun yang dimulai — ide, usaha, hubungan, semuanya berkembang di tanganmu',tantangan:'Terlalu banyak air menggenangi sawah — belajar memilih mana yang perlu ditumbuhkan dan mana yang harus dilepaskan',jalur:'Pemelihara dan penumbuh — hidupmu paling bermakna saat membantu orang lain berkembang',narasi:'Kombinasimu adalah yang paling subur dalam sistem Pawukon. Seperti sawah yang dialiri air, apapun yang kamu tanamkan dengan sungguh-sungguh akan tumbuh melampaui ekspektasi.',inti:'Kamu adalah tanah yang paling subur — tapi ingat, tanah yang terlalu lembek tidak bisa menopang bangunan.'},
+  'B-Ak':{title:'Bumi Bertemu Langit',energi:'Kombinasi paling misterius — kebumian yang menyentuh dimensi spiritual',kekuatan:'Intuisi yang dalam tapi tetap realistis — kamu bisa melihat hal gaib tanpa kehilangan pijakan di dunia nyata',tantangan:'Antara bumi dan langit kamu kadang tidak tahu harus berdiri di mana — tentukan prioritasmu',jalur:'Penghubung dunia nyata dan spiritual — kamu bisa menjembatani hal-hal yang bertentangan',narasi:'Wuku bumimu memberimu ketekunan dan realisme. Kliwon memberimu kepekaan spiritual yang luar biasa. Kombinasi ini menciptakan pribadi yang bisa memahami hal-hal yang tidak semua orang bisa lihat.',inti:'Kamu adalah orang yang kakinya di tanah tapi kepalanya bisa menyentuh langit.'},
+  'A-B':{title:'Api yang Berakar',energi:'Semangat api yang punya fondasi — bukan api liar, tapi api yang menerangi dan menghangatkan',kekuatan:'Kepemimpinan yang diimbangi tanggung jawab — orang mengikutimu bukan karena takut tapi karena percaya',tantangan:'Api perlu bahan bakar yang stabil — pastikan energimu punya sumber yang tidak habis',jalur:'Pemimpin yang membangun — kamu tidak hanya menguasai tapi juga menciptakan warisan',narasi:'Api wukukmu memberi intensitas dan keberanian. Legi wetonmu memberi keseimbangan dan kebijaksanaan bumi. Hasilnya adalah kepemimpinan yang hangat dan kuat sekaligus.',inti:'Kamu adalah api yang tidak membakar rumah orang lain — kamu meneranginya.'},
+  'A-A':{title:'Nyala Ganda yang Membara',energi:'Intensitas penuh — dua api menyatu menjadi kobaran yang tak terbendung',kekuatan:'Energi dan semangat yang paling tinggi di antara semua kombinasi — tidak ada yang bisa menandingimu ketika sudah bertekad',tantangan:'Dua api bisa saling membakar — jaga agar energimu tidak merusak dirimu sendiri dan orang-orang terdekat',jalur:'Pejuang dan pionir sejati — hidupmu untuk hal-hal besar yang membutuhkan keberanian ekstrem',narasi:'Kombinasi ini adalah yang paling intens dalam sistem Pawukon. Kamu hadir dengan intensitas penuh dalam setiap hal yang kamu lakukan — dan dunia merasakannya.',inti:'Kamu adalah yang paling menyala — pastikan itu cahaya, bukan kebakaran.'},
+  'A-An':{title:'Badai Api yang Kreatif',energi:'Angin yang menggerakkan api — kreatif, cepat, dan tidak bisa dihentikan',kekuatan:'Ide-ide brilian yang langsung dieksekusi dengan kecepatan dan semangat luar biasa',tantangan:'Badai api menyebar ke mana-mana — belajar fokus pada satu hal sebelum pindah ke hal berikutnya',jalur:'Inovator dan disruptor — kamu lahir untuk mengubah cara orang berpikir dan bekerja',narasi:'Kamu berpikir cepat, bergerak cepat, dan bersemangat penuh. Kombinasi Api-Angin melahirkan pribadi yang paling inovatif — ide datang seperti badai dan energimu cukup untuk menjalankan semuanya.',inti:'Kamu adalah badai yang kreatif — arahkan itu dengan bijak dan dunia tidak bisa mengabaikanmu.'},
+  'A-Ai':{title:'Api dan Air, Uap yang Menggerakkan',energi:'Kontradiksi yang produktif — ketegangan antara api dan air menciptakan energi yang menggerakkan',kekuatan:'Kemampuan menavigasi situasi yang berlawanan — bisa keras sekaligus lembut sesuai kebutuhan',tantangan:'Api dan air saling memadamkan jika tidak dikelola — belajar kapan harus menyala dan kapan harus mengalir',jalur:'Mediator dan transformer — kamu bisa mengubah konflik menjadi energi yang membangun',narasi:'Wuku apimu dan pasaran airmu menciptakan ketegangan internal yang jika dikelola dengan baik menjadi kekuatan luar biasa. Seperti mesin uap — api dan air bekerja bersama menggerakkan sesuatu yang besar.',inti:'Kamu adalah kontradiksi yang hidup — dan justru dari kontradiksi itulah kekuatanmu lahir.'},
+  'A-Ak':{title:'Api Surgawi',energi:'Api yang menyentuh dimensi spiritual — semangat yang didorong oleh tujuan yang lebih tinggi',kekuatan:'Kepemimpinan yang terinspirasi — kamu tidak hanya memimpin tapi memberikan makna bagi orang yang mengikutimu',tantangan:'Api surgawi bisa terlalu tinggi untuk disentuh orang biasa — pastikan kamu tetap terhubung dengan realita',jalur:'Pemimpin spiritual dan visioner — hidupmu untuk sesuatu yang jauh lebih besar dari dirimu sendiri',narasi:'Kamu punya api dalam tubuh dan bintang dalam jiwa. Kombinasi ini menghasilkan pribadi yang memiliki semangat sekaligus kedalaman spiritual — pemimpin yang menginspirasi bukan hanya dengan tindakan tapi dengan makna.',inti:'Kamu adalah api yang tahu mengapa ia menyala — dan itu membuatmu berbeda dari semua.'},
+  'An-B':{title:'Angin yang Berakar',energi:'Kecepatan berpikir yang diimbangi kestabilan — bergerak cepat tapi tidak kehilangan arah',kekuatan:'Kemampuan memproses informasi dengan cepat sekaligus mengambil keputusan yang solid',tantangan:'Angin yang terlalu kencang bisa tumbang jika bertemu bumi yang keras — belajar kapan harus mengurangi kecepatan',jalur:'Intelektual yang produktif — kamu paling bahagia saat pikiranmu menghasilkan sesuatu yang nyata',narasi:'Kecerdasan wukukmu bertemu dengan keseimbangan dan kebumian Legi wetonmu. Hasilnya adalah seseorang yang tidak hanya pintar secara teoritis tapi juga bisa mengeksekusi ide-idenya menjadi kenyataan.',inti:'Kamu adalah pemikir yang tidak hanya berpikir — kamu juga melakukan.'},
+  'An-A':{title:'Angin yang Membawa Api',energi:'Pikiran tajam yang didorong semangat tinggi — intelektual yang penuh gairah',kekuatan:'Kemampuan menyampaikan ide dengan cara yang membakar semangat orang lain',tantangan:'Angin bisa mengipas api hingga tidak terkendali — jaga agar kecerdasanmu tidak dipakai untuk memanas-manasi situasi',jalur:'Orator dan penginspirasi — kata-katamu adalah senjata dan obat sekaligus',narasi:'Kamu berpikir cepat dan berbicara dengan semangat yang menular. Kombinasi ini menghasilkan komunikator terbaik — orang yang bisa mengubah cara pandang orang lain hanya dengan berbicara.',inti:'Kata-katamu adalah api — gunakan untuk menerangi, bukan membakar.'},
+  'An-An':{title:'Badai Pikiran',energi:'Intelektualitas ganda — pikiran yang bergerak di banyak arah sekaligus dengan kecepatan tinggi',kekuatan:'Kemampuan memproses banyak hal sekaligus dan melihat koneksi yang tidak dilihat orang lain',tantangan:'Dua angin bisa menciptakan tornado — belajar untuk memperlambat dan fokus pada satu hal',jalur:'Pemikir multidimensi — paling cocok di bidang yang membutuhkan kreativitas dan inovasi tingkat tinggi',narasi:'Otakmu adalah mesin yang tidak berhenti berputar. Kombinasi Angin-Angin menghasilkan pribadi dengan kemampuan berpikir paling lincah — tapi juga yang paling perlu belajar fokus dan konsisten.',inti:'Kamu adalah badai pikiran — arahkan itu dan tidak ada masalah yang tidak bisa kamu selesaikan.'},
+  'An-Ai':{title:'Gelombang di Permukaan Laut',energi:'Pikiran yang mengalir dengan emosi — intelektual yang juga punya kepekaan mendalam',kekuatan:'Kemampuan memahami orang lain secara intelektual sekaligus emosional — empati yang cerdas',tantangan:'Angin dan air bisa saling mengacaukan — jaga agar pikiran dan perasaan tidak berbenturan',jalur:'Konselor dan psikolog alami — kamu memahami manusia lebih dalam dari rata-rata',narasi:'Kamu memahami situasi dengan pikiran dan merasakannya dengan hati. Kombinasi ini menghasilkan seseorang yang paling mampu memahami kompleksitas manusia — dan orang paling dipercaya untuk diajak curhat.',inti:'Kamu adalah orang yang paling bisa dipercaya — karena kamu memahami sebelum menghakimi.'},
+  'An-Ak':{title:'Angin Kosmik',energi:'Intelektualitas yang bertemu spiritualitas — pikiran yang menembus batas-batas biasa',kekuatan:'Kemampuan memahami konsep abstrak dan menerjemahkannya ke dalam sesuatu yang bermakna bagi orang lain',tantangan:'Terlalu tinggi bisa kehilangan kontak dengan realita — pastikan ada yang menarik kakimu ke bawah',jalur:'Filsuf dan visioner — kamu lahir untuk menjawab pertanyaan-pertanyaan besar tentang kehidupan',narasi:'Pikiranmu melesat jauh dan jiwamu menembus batas. Kombinasi Angin-Akasa menghasilkan pribadi yang paling visioner — mampu melihat ke mana dunia akan pergi sebelum orang lain menyadarinya.',inti:'Kamu adalah visioner — dunia membutuhkan orang yang berpikir setinggi yang kamu pikirkan.'},
+  'Ai-B':{title:'Sumber di Dalam Bumi',energi:'Kepekaan yang punya fondasi — emosi yang stabil dan dapat diandalkan',kekuatan:'Kelembutan yang tidak mudah goyah — bisa menjadi tempat berlindung yang aman bagi orang-orang yang kamu cintai',tantangan:'Air yang terperangkap dalam bumi bisa menjadi stagnan — pastikan kamu terus bergerak dan berkembang',jalur:'Penyembuh dan pendukung — kamu hadir untuk menjadi kekuatan di balik layar bagi orang-orang yang bersinar',narasi:'Kepekaan dan empatimu didukung oleh keseimbangan dan kestabilan Legi. Kamu adalah sumber yang tidak pernah kering — selalu ada untuk orang yang membutuhkan tanpa banyak bicara.',inti:'Kamu adalah sumber air di musim kemarau — langka, berharga, dan menyelamatkan.'},
+  'Ai-A':{title:'Uap yang Mengangkat',energi:'Emosi yang bertemu semangat — perasaan yang mendorong tindakan nyata',kekuatan:'Kemampuan bergerak dari perasaan ke tindakan — tidak hanya merasakan tapi mengubah perasaan itu menjadi energi',tantangan:'Api bisa menguapkan air sepenuhnya — jaga agar semangatmu tidak menguras seluruh perasaanmu',jalur:'Aktivis dan pejuang — kamu bergerak karena kamu peduli, bukan hanya karena ambisi',narasi:'Kamu merasakan segalanya dengan dalam dan meresponsnya dengan semangat penuh. Kombinasi ini menghasilkan orang yang paling sungguh-sungguh dalam segala hal yang mereka kerjakan — karena semua berasal dari hati.',inti:'Kamu adalah orang yang paling tulus — apa yang kamu lakukan selalu berasal dari hati.'},
+  'Ai-An':{title:'Gelombang yang Berpikir',energi:'Kepekaan yang cerdas — emosi yang diproses dengan pikiran jernih',kekuatan:'Kemampuan memahami situasi kompleks dengan perpaduan intuisi dan logika',tantangan:'Angin bisa mengganggu ketenangan air — belajar kapan harus berpikir dan kapan harus merasakan',jalur:'Seniman dan kreator — kamu mengubah perasaan menjadi karya yang orang lain bisa nikmati',narasi:'Perasaanmu dalam dan pikiranmu tajam. Kombinasi Air-Angin menghasilkan seniman dan pemikir yang paling kreatif — mampu menciptakan sesuatu dari pengalaman emosional yang mendalam.',inti:'Kamu adalah seniman sejati — bahkan cara hidupmu adalah sebuah karya.'},
+  'Ai-Ai':{title:'Samudra yang Dalam',energi:'Kepekaan ganda — kedalaman emosi yang tidak ada habisnya',kekuatan:'Empati dan intuisi yang paling dalam — kamu merasakan apa yang orang lain sembunyikan',tantangan:'Samudra yang terlalu dalam bisa menenggelamkan — jaga agar kedalaman emosi tidak menjadi beban terlalu berat',jalur:'Penyembuh jiwa — kamu hadir untuk menjadi tempat orang memulihkan diri dari luka yang tidak terlihat',narasi:'Kamu adalah yang paling peka di antara semua kombinasi. Kedalaman perasaanmu adalah hadiah — kamu bisa memahami orang lain di tingkat yang sangat dalam, jauh melampaui apa yang mereka ungkapkan.',inti:'Kamu adalah samudra — jangan takut dengan kedalamanmu sendiri.'},
+  'Ai-Ak':{title:'Hujan dari Langit',energi:'Kepekaan yang bertemu spiritualitas — emosi yang mengalir dari sumber yang lebih tinggi',kekuatan:'Intuisi spiritual yang luar biasa — kamu sering merasakan sesuatu sebelum hal itu terjadi',tantangan:'Terlalu banyak di dimensi spiritual bisa membuat lupa kebutuhan fisik dan praktis',jalur:'Penyambung dua dunia — kamu bisa menjembatani yang terlihat dan yang tidak terlihat',narasi:'Kamu merasakan hal-hal yang melampaui pancaindera. Kombinasi Air-Akasa menghasilkan pribadi dengan kepekaan spiritual tertinggi — sebuah anugerah yang harus dijaga dan digunakan dengan bijak.',inti:'Kamu adalah hujan yang turun dari langit — memberi kehidupan tanpa pamrih.'},
+  'Ak-B':{title:'Langit yang Menapak Bumi',energi:'Kebijaksanaan yang membumi — spiritual yang tidak lupa kebutuhan duniawi',kekuatan:'Kemampuan menjembatani dunia nyata dan dimensi lebih tinggi — membuat hal abstrak menjadi berguna',tantangan:'Langit dan bumi selalu terpisah — belajar nyaman dengan jarak itu tanpa merasa terbelah',jalur:'Guru yang membumi — kamu dipanggil berbagi kebijaksanaan dengan cara yang bisa dipahami semua orang',narasi:'Akasa wukukmu memberimu kedalaman dan kebijaksanaan. Legi wetonmu memastikanmu tetap realistis dan berguna. Kombinasi ini adalah guru terbaik yang pernah ada — bijaksana tapi tidak menggurui.',inti:'Kamu adalah kebijaksanaan yang bisa disentuh — bukan di menara gading, tapi di tengah kehidupan.'},
+  'Ak-A':{title:'Bintang yang Membakar',energi:'Kebijaksanaan yang penuh semangat — visioner yang juga punya nyali untuk bergerak',kekuatan:'Kemampuan menginspirasi dengan visi besar sekaligus memimpin menuju visi itu',tantangan:'Bintang yang terlalu panas bisa meledak — jaga agar ambisi tidak melampaui kebijaksanaan',jalur:'Pemimpin visioner — kamu tidak hanya tahu ke mana harus pergi, kamu tahu bagaimana mengajak semua orang',narasi:'Kamu punya visi yang jauh dan semangat untuk mengejarnya. Kombinasi ini menghasilkan pemimpin yang paling menginspirasi — orang yang bisa membuat orang lain percaya pada hal-hal yang belum pernah mereka bayangkan.',inti:'Kamu adalah bintang yang memimpin — pastikan cahayamu cukup lama untuk sampai ke tujuan.'},
+  'Ak-An':{title:'Angin di Antara Bintang',energi:'Kebijaksanaan yang bergerak bebas — pemikiran yang melampaui batas-batas konvensional',kekuatan:'Kemampuan menyebarkan ide-ide besar dengan cara yang mudah diterima orang banyak',tantangan:'Bisa terlalu abstrak dan sulit dipahami — belajar menyederhanakan tanpa kehilangan kedalaman',jalur:'Penulis dan filsuf — kamu hadir untuk mendokumentasikan pemikiran yang mengubah dunia',narasi:'Pikiranmu melampaui zamannya. Kombinasi Akasa-Angin menghasilkan pemikir paling orisinal — seseorang yang idenya mungkin baru dipahami bertahun-tahun setelah diungkapkan. Kamu bukan gagal dipahami — kamu hanya terlalu awal.',inti:'Kamu adalah pemikir yang jauh di depan zamannya — bersabarlah dengan dunia yang belum siap.'},
+  'Ak-Ai':{title:'Hujan Bintang',energi:'Spiritualitas yang mengalir dengan kelembutan — bijaksana sekaligus penuh kasih',kekuatan:'Kemampuan menyembuhkan dengan kebijaksanaan — kata-katamu punya efek terapeutik bagi yang mendengarnya',tantangan:'Terlalu lembut bisa membuat kebijaksanaanmu tidak didengar — kadang perlu lebih tegas',jalur:'Penyembuh rohani — kamu hadir untuk membantu orang menemukan kedamaian dalam kekacauan',narasi:'Kebijaksanaanmu mengalir seperti air — lembut, konsisten, dan menyentuh ke sudut-sudut yang paling dalam. Kombinasi ini menghasilkan penyembuh jiwa yang paling alami — hadirmu saja sudah menenangkan.',inti:'Kamu adalah kebijaksanaan yang menyembuhkan — hadirmu sudah cukup untuk menenangkan.'},
+  'Ak-Ak':{title:'Kosmos Ganda — Langit di Atas Langit',energi:'Dimensi paling dalam dan paling tinggi — kombinasi yang paling sakral dan paling jarang',kekuatan:'Kepekaan spiritual dan kebijaksanaan yang melampaui rata-rata — mampu memahami hal-hal yang tidak bisa dijelaskan',tantangan:'Bisa terlalu jauh dari dunia nyata — perlu usaha ekstra untuk tetap terhubung dengan kehidupan sehari-hari',jalur:'Pemimpin spiritual generasi — hidupmu adalah pembelajaran dan pengajaran tentang yang melampaui materi',narasi:'Ini adalah kombinasi paling sakral dalam sistem Pawukon. Kamu datang ke dunia dengan bekal spiritual yang luar biasa — sebuah tanggung jawab yang besar sekaligus anugerah yang tidak ternilai.',inti:'Kamu adalah yang paling langka — jiwa tua yang datang dengan misi yang dalam.'}
+};
+
+const NEPTU_NOTE = [
+  { max:9,  note:'Neptu wetonmu tergolong rendah (total {{n}}). Primbon berkata: cobaan adalah pemurnian — setiap ujian yang kamu lewati membuatmu lebih murni dan lebih kuat dari sebelumnya.' },
+  { max:12, note:'Neptu wetonmu di kisaran sedang (total {{n}}). Kamu punya modal yang cukup — konsistensi adalah kuncimu. Bukan yang paling beruntung, tapi yang paling tekun selalu menang.' },
+  { max:15, note:'Neptu wetonmu seimbang (total {{n}}). Energimu stabil dan harmonis — kamu punya landasan yang solid untuk membangun apapun yang kamu inginkan.' },
+  { max:17, note:'Neptu wetonmu tinggi (total {{n}}). Primbon berkata: neptu tinggi membawa peluang besar sekaligus tanggung jawab besar — gunakan dengan bijak dan jangan sia-siakan.' },
+  { max:99, note:'Neptu wetonmu tergolong sangat tinggi (total {{n}}). Ini salah satu neptu terkuat dalam primbon — berkah besar yang menuntut penggunaan yang setimpal pula.' }
+];
+
+function hitungKombinasi(wuku, weton, wukuIdx) {
+  const elWuku    = ELEMEN_WUKU[wukuIdx];
+  const elPasaran = ELEMEN_PASARAN[weton.pas.n] || 'B';
+  const key       = elWuku + '-' + elPasaran;
+  const kombi     = KOMBINASI_DATA[key] || KOMBINASI_DATA['B-B'];
+  const harmonyLv = HARMONY[key] || 3;
+
+  // Badge
+  document.getElementById('k-wuku-badge').textContent  = `${wuku.lambang} ${wuku.nama}`;
+  document.getElementById('k-weton-badge').textContent  = `${weton.label} · ${weton.total}`;
+
+  // Header
+  document.getElementById('k-title').textContent       = kombi.title;
+  document.getElementById('k-subtitle').textContent    = `Wuku ${NAMA_ELEMEN[elWuku]} × Weton ${NAMA_ELEMEN[elPasaran]}`;
+  document.getElementById('k-stars').textContent       = HARMONY_STARS[harmonyLv];
+  document.getElementById('k-keselarasan').textContent = HARMONY_LABEL[harmonyLv];
+
+  // Grid
+  document.getElementById('k-energi').textContent    = kombi.energi;
+  document.getElementById('k-kekuatan').textContent  = kombi.kekuatan;
+  document.getElementById('k-tantangan').textContent = kombi.tantangan;
+  document.getElementById('k-jalur').textContent     = kombi.jalur;
+
+  // Narasi & inti
+  document.getElementById('k-narasi').textContent = kombi.narasi;
+  document.getElementById('k-inti').textContent   = kombi.inti;
+
+  // Neptu note
+  const neptu = weton.total;
+  const noteObj = NEPTU_NOTE.find(n => neptu <= n.max) || NEPTU_NOTE[2];
+  document.getElementById('k-neptu-note').textContent = noteObj.note.replace('{{n}}', neptu);
 }
 
 function buildWukuGrid30() {
