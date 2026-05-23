@@ -171,6 +171,75 @@
   }
   .action-btn:hover { transform: translateY(-1px); opacity: .93; }
 
+  /* ── TOMBOL BAGIKAN ── */
+  .share-hasil-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    margin-top: 18px; padding: 9px 18px;
+    background: var(--paper-2); border: 1px solid var(--line);
+    border-radius: 999px; font-size: 13px; font-weight: 600;
+    color: var(--ink-soft); cursor: pointer; transition: all .15s;
+    width: 100%;
+    justify-content: center;
+  }
+  .share-hasil-btn:hover { background: var(--accent-deep); color: #F4F2EC; border-color: var(--accent-deep); }
+  .share-hasil-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+  /* Modal bagikan */
+  .bagikan-overlay {
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(0,0,0,0.5); align-items: center; justify-content: center;
+    padding: 16px;
+  }
+  .bagikan-overlay.show { display: flex; }
+  .bagikan-modal {
+    background: var(--paper); border-radius: 20px;
+    padding: 24px; width: 100%; max-width: 420px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    animation: fade .25s ease;
+  }
+  .bagikan-modal-title {
+    font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600;
+    color: var(--ink); margin-bottom: 4px;
+  }
+  .bagikan-modal-sub { font-size: 13px; color: var(--ink-soft); margin-bottom: 18px; }
+  .bagikan-preview {
+    background: var(--accent-deep); border-radius: 14px;
+    padding: 18px; margin-bottom: 16px; color: #F4F2EC;
+  }
+  .bagikan-preview-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(244,242,236,0.5); margin-bottom: 8px;
+  }
+  .bagikan-preview-text {
+    font-size: 13.5px; line-height: 1.7; color: rgba(244,242,236,0.9);
+    white-space: pre-wrap;
+  }
+  .bagikan-preview-footer {
+    margin-top: 10px; padding-top: 10px;
+    border-top: 1px solid rgba(244,242,236,0.15);
+    font-size: 11px; color: rgba(244,242,236,0.4);
+  }
+  .bagikan-btns { display: flex; flex-direction: column; gap: 8px; }
+  .bagikan-btn {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 16px; border-radius: 12px; border: 1px solid var(--line);
+    font-size: 13.5px; font-weight: 600; cursor: pointer;
+    background: var(--white); color: var(--ink); transition: all .15s;
+    text-align: left;
+  }
+  .bagikan-btn:hover { transform: translateY(-1px); }
+  .bagikan-btn.wa { background: #25D366; color: #fff; border-color: #25D366; }
+  .bagikan-btn.wa:hover { background: #1ebe5d; }
+  .bagikan-btn.copy { background: var(--paper-2); }
+  .bagikan-btn.copy:hover { background: var(--line); }
+  .bagikan-btn-icon { font-size: 18px; }
+  .bagikan-close {
+    margin-top: 10px; width: 100%; padding: 10px;
+    background: none; border: none; font-size: 13px;
+    color: var(--ink-soft); cursor: pointer;
+  }
+  .bagikan-close:hover { color: var(--ink); }
+
   /* result generic */
   .result-area { display: none; }
   .result-area.show { display: block; animation: fade .4s ease; }
@@ -746,6 +815,10 @@
           <div class="rh-pantangan-label">⚠ Pantangan Hari Ini</div>
           <div class="rh-pantangan-text" id="rhi-pantangan">—</div>
         </div>
+        <button class="share-hasil-btn" onclick="bukaModalBagikan('ramalanhari')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Bagikan Ramalan Hari Ini
+        </button>
       </div>
     </section>
 
@@ -800,6 +873,10 @@
         </div>
         <div class="interp" id="j-interp">—</div>
         <p class="note-line">Total neptu kedua weton: <span id="j-total">—</span>. Sistem ini membaca sisa pembagian neptu untuk menentukan watak hubungan.</p>
+        <button class="share-hasil-btn" onclick="bukaModalBagikan('jodoh')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Bagikan Hasil Kecocokan
+        </button>
       </div>
     </section>
 
@@ -885,12 +962,15 @@
                 <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:8px;color:var(--ink)">Analisis Mendalam</div>
                 <div style="font-size:14px;color:var(--ink-soft);max-width:260px;margin:0 auto 18px;line-height:1.6">Periode rezeki, pantangan finansial, rekomendasi usaha, dan nasihat leluhur khusus untuk wetonmu</div>
                 <div style="background:var(--accent);color:white;padding:11px 24px;border-radius:10px;font-size:14px;font-weight:600;display:inline-block;cursor:pointer" onclick="window.location.href='/'">Upgrade ke Pamungkas →</div>
-                <div style="font-size:12px;color:var(--ink-soft);margin-top:10px">Rp 79rb/bulan · Akses semua fitur premium</div>
+                <div style="font-size:12px;color:var(--ink-soft);margin-top:10px">Rp 49rb/bulan · Akses semua fitur premium</div>
               </div>
             </div>
           </div>
         </div>
-
+        <button class="share-hasil-btn" onclick="bukaModalBagikan('rezeki')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Bagikan Ramalan Rezeki
+        </button>
       </div>
     </section>
 
@@ -1002,6 +1082,10 @@
           <div style="font-size:13px;font-weight:600;margin-bottom:12px;color:var(--accent)">Keselarasan dengan Orang Tua</div>
           <div id="wa-keselarasan-isi"></div>
         </div>
+        <button class="share-hasil-btn" onclick="bukaModalBagikan('wetonanak')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Bagikan Weton Anak
+        </button>
       </div>
     </section>
 
@@ -1041,6 +1125,10 @@
           <h4>⚠ Pantangan & Catatan</h4>
           <p id="hb-pantangan">—</p>
         </div>
+        <button class="share-hasil-btn" onclick="bukaModalBagikan('haribaik')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Bagikan Hari Baik
+        </button>
       </div>
     </section>
 
@@ -3123,6 +3211,106 @@ function aiEnterSend(e) {
 function pakaiSuggestion(el) {
   document.getElementById('ai-input').value = el.textContent;
   kirimPesanAI();
+}
+</script>
+<!-- ═══════ MODAL BAGIKAN ═══════ -->
+<div class="bagikan-overlay" id="bagikan-overlay" onclick="tutupModalBagikan(event)">
+  <div class="bagikan-modal">
+    <div class="bagikan-modal-title">Bagikan Hasil</div>
+    <div class="bagikan-modal-sub" id="bagikan-sub">Salin atau kirim langsung ke WhatsApp</div>
+    <div class="bagikan-preview">
+      <div class="bagikan-preview-label">PRATINJAU PESAN</div>
+      <div class="bagikan-preview-text" id="bagikan-text">—</div>
+      <div class="bagikan-preview-footer">wetonku.id · Primbon & Weton Jawa</div>
+    </div>
+    <div class="bagikan-btns">
+      <button class="bagikan-btn wa" onclick="bagikanWA()">
+        <span class="bagikan-btn-icon">💬</span>
+        Kirim via WhatsApp
+      </button>
+      <button class="bagikan-btn copy" id="bagikan-copy-btn" onclick="bagikanCopy()">
+        <span class="bagikan-btn-icon">📋</span>
+        Salin Teks
+      </button>
+    </div>
+    <button class="bagikan-close" onclick="tutupModalBagikan()">Tutup</button>
+  </div>
+</div>
+
+<script>
+/* ═══════ SHARE / BAGIKAN ═══════ */
+let _bagikanTeks = '';
+
+const _bagikanTemplate = {
+  ramalanhari: () => {
+    const tgl    = document.getElementById('rhi-today-date')?.textContent || '';
+    const nasihat = document.getElementById('rhi-nasihat')?.textContent || '';
+    const weton  = document.getElementById('rhi-today-weton')?.textContent || '';
+    return `🌟 Ramalan Hariku di Wetonku\n\n📅 ${tgl}\n${weton}\n\n✨ Nasihat hari ini:\n"${nasihat}"\n\nCek ramalanmu sendiri di wetonku.id`;
+  },
+  jodoh: () => {
+    const w1     = document.getElementById('j-w1')?.textContent || '';
+    const w2     = document.getElementById('j-w2')?.textContent || '';
+    const skor   = document.getElementById('j-score')?.textContent || '';
+    const cat    = document.getElementById('j-cat')?.textContent || '';
+    return `💕 Cek Kecocokan Jodoh di Wetonku\n\n${w1} × ${w2}\n\nSkor Kecocokan: ${skor}/10\n${cat}\n\nCek kecocokan wetonmu di wetonku.id`;
+  },
+  rezeki: () => {
+    const weton  = document.getElementById('rz-weton')?.textContent || '';
+    const rezeki = document.getElementById('rz-rezeki')?.textContent?.slice(0,120) || '';
+    return `💰 Ramalan Rezeki Wetonku — ${weton}\n\n${rezeki}...\n\nTemukan ramalanmu sendiri di wetonku.id`;
+  },
+  wetonanak: () => {
+    const weton  = document.getElementById('wa-weton')?.textContent || '';
+    const karakter = document.getElementById('wa-karakter')?.textContent?.slice(0,120) || '';
+    return `✿ Weton Anakku — ${weton}\n\n${karakter}...\n\nCek weton anakmu di wetonku.id`;
+  },
+  haribaik: () => {
+    const hajat  = document.getElementById('hb-hajat-label')?.textContent || '';
+    const weton  = document.getElementById('hb-weton')?.textContent || '';
+    return `✦ Hari Baik untuk ${hajat}\nWeton: ${weton}\n\nTemukan hari terbaikmu di wetonku.id`;
+  }
+};
+
+function bukaModalBagikan(fitur) {
+  const fn = _bagikanTemplate[fitur];
+  if (!fn) return;
+  _bagikanTeks = fn();
+  document.getElementById('bagikan-text').textContent = _bagikanTeks;
+  document.getElementById('bagikan-copy-btn').textContent = '📋  Salin Teks';
+  document.getElementById('bagikan-overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function tutupModalBagikan(e) {
+  if (e && e.target !== document.getElementById('bagikan-overlay')) return;
+  document.getElementById('bagikan-overlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function bagikanWA() {
+  const url = 'https://wa.me/?text=' + encodeURIComponent(_bagikanTeks);
+  window.open(url, '_blank');
+}
+
+async function bagikanCopy() {
+  try {
+    await navigator.clipboard.writeText(_bagikanTeks);
+    const btn = document.getElementById('bagikan-copy-btn');
+    btn.textContent = '✓  Tersalin!';
+    setTimeout(() => { btn.textContent = '📋  Salin Teks'; }, 2000);
+  } catch(e) {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = _bagikanTeks;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    const btn = document.getElementById('bagikan-copy-btn');
+    btn.textContent = '✓  Tersalin!';
+    setTimeout(() => { btn.textContent = '📋  Salin Teks'; }, 2000);
+  }
 }
 </script>
 </body>
