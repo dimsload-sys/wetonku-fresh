@@ -417,89 +417,6 @@
   .panduan-row p { color: var(--ink); line-height: 1.6; margin: 0; }
   @media (max-width: 500px) { .nama-analysis-grid { grid-template-columns: 1fr; } }
 
-  /* ===== KONSULTASI AI ===== */
-  .ai-info-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
-  .ai-info-chip {
-    background:var(--paper-2); border:1px solid var(--line);
-    border-radius:999px; padding:5px 13px;
-    font-size:12px; font-weight:600; color:var(--ink-soft);
-  }
-  .ai-quota-chip { color:var(--good); border-color:rgba(60,122,78,0.3); background:rgba(60,122,78,0.06); }
-  .ai-chat-wrap {
-    background:var(--white); border:1px solid var(--line);
-    border-radius:16px; overflow:hidden; margin-bottom:12px;
-  }
-  .ai-messages {
-    min-height:300px; max-height:500px; overflow-y:auto;
-    padding:18px 16px; display:flex; flex-direction:column; gap:14px;
-    scroll-behavior:smooth;
-  }
-  .ai-msg { display:flex; gap:10px; align-items:flex-start; }
-  .ai-msg.user { flex-direction:row-reverse; }
-  .ai-msg-avatar {
-    width:32px; height:32px; border-radius:50%; flex-shrink:0;
-    background:var(--accent-deep); color:#F4F2EC;
-    display:flex; align-items:center; justify-content:center;
-    font-size:13px; font-weight:700;
-  }
-  .ai-msg.user .ai-msg-avatar { background:var(--accent-2); }
-  .ai-msg-bubble {
-    max-width:82%; padding:11px 14px; border-radius:14px;
-    font-size:13.5px; line-height:1.75; color:var(--ink);
-  }
-  .ai-msg.bot .ai-msg-bubble {
-    background:var(--paper-2); border:1px solid var(--line); border-top-left-radius:4px;
-  }
-  .ai-msg.user .ai-msg-bubble {
-    background:var(--accent-deep); color:#F4F2EC; border-top-right-radius:4px;
-  }
-  .ai-typing-dots { display:flex; gap:4px; align-items:center; padding:4px 0; }
-  .ai-typing-dots span {
-    width:7px; height:7px; border-radius:50%;
-    background:var(--ink-soft); opacity:.4;
-    animation:aiDot 1.2s infinite ease-in-out;
-  }
-  .ai-typing-dots span:nth-child(2){animation-delay:.2s}
-  .ai-typing-dots span:nth-child(3){animation-delay:.4s}
-  @keyframes aiDot{0%,80%,100%{transform:scale(1);opacity:.4}40%{transform:scale(1.3);opacity:1}}
-  .ai-suggestions {
-    display:flex; gap:7px; flex-wrap:wrap;
-    padding:10px 14px; border-top:1px solid var(--line); background:var(--paper-2);
-  }
-  .ai-chip {
-    background:var(--white); border:1px solid var(--line);
-    border-radius:999px; padding:5px 12px;
-    font-size:12px; color:var(--ink-soft); cursor:pointer; transition:all .15s;
-  }
-  .ai-chip:hover { border-color:var(--accent); color:var(--accent); }
-  .ai-input-row {
-    display:flex; gap:8px; align-items:flex-end;
-    padding:12px 14px; border-top:1px solid var(--line);
-  }
-  .ai-textarea {
-    flex:1; background:var(--paper-2); border:1px solid var(--line);
-    border-radius:10px; padding:10px 13px; font-size:14px;
-    color:var(--ink); resize:none; outline:none; font-family:inherit;
-    line-height:1.5; max-height:120px;
-  }
-  .ai-textarea:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(188,108,60,0.1); }
-  .ai-send-btn {
-    width:40px; height:40px; border-radius:10px; flex-shrink:0;
-    background:var(--accent-deep); color:#F4F2EC; border:none;
-    cursor:pointer; display:flex; align-items:center; justify-content:center;
-    transition:all .15s;
-  }
-  .ai-send-btn:hover { opacity:.85; transform:translateY(-1px); }
-  .ai-send-btn:disabled { opacity:.4; cursor:not-allowed; transform:none; }
-  .ai-footer-note {
-    font-size:11px; color:rgba(0,0,0,0.3); padding:0 14px 10px;
-    text-align:center; line-height:1.5;
-  }
-  .ai-quota-warn {
-    background:rgba(188,108,60,0.08); border:1px solid rgba(188,108,60,0.25);
-    border-radius:12px; padding:14px 16px; font-size:13px; color:var(--accent);
-  }
-
   /* ===== SISTEM WUKU ===== */
   .wuku-intro-card {
     background: var(--white); border: 1px solid var(--line); border-radius: 14px;
@@ -617,6 +534,36 @@
   .wdd-nomor { font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
   .wdd-nama  { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; color: var(--accent); }
   .wdd-dewa  { font-size: 12px; color: var(--ink-soft); }
+
+  /* ── AI KONSULTASI ── */
+  .ai-info-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .ai-info-chip{background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:5px 13px;font-size:12px;font-weight:600;color:var(--ink-soft)}
+  .ai-quota-chip{color:var(--good);border-color:rgba(60,122,78,0.3);background:rgba(60,122,78,0.06)}
+  .ai-chat-wrap{background:var(--white);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:12px}
+  .ai-messages{min-height:300px;max-height:500px;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth}
+  .ai-msg{display:flex;gap:10px;align-items:flex-start}
+  .ai-msg.user{flex-direction:row-reverse}
+  .ai-msg-avatar{width:32px;height:32px;border-radius:50%;flex-shrink:0;background:var(--accent-deep);color:#F4F2EC;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+  .ai-msg.user .ai-msg-avatar{background:var(--accent-2)}
+  .ai-msg-bubble{max-width:82%;padding:11px 14px;border-radius:14px;font-size:13.5px;line-height:1.75;color:var(--ink)}
+  .ai-msg.bot .ai-msg-bubble{background:var(--paper-2);border:1px solid var(--line);border-top-left-radius:4px}
+  .ai-msg.user .ai-msg-bubble{background:var(--accent-deep);color:#F4F2EC;border-top-right-radius:4px}
+  .ai-typing-dots{display:flex;gap:4px;align-items:center;padding:4px 0}
+  .ai-typing-dots span{width:7px;height:7px;border-radius:50%;background:var(--ink-soft);opacity:.4;animation:aiDot 1.2s infinite ease-in-out}
+  .ai-typing-dots span:nth-child(2){animation-delay:.2s}
+  .ai-typing-dots span:nth-child(3){animation-delay:.4s}
+  @keyframes aiDot{0%,80%,100%{transform:scale(1);opacity:.4}40%{transform:scale(1.3);opacity:1}}
+  .ai-suggestions{display:flex;gap:7px;flex-wrap:wrap;padding:10px 14px;border-top:1px solid var(--line);background:var(--paper-2)}
+  .ai-chip{background:var(--white);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12px;color:var(--ink-soft);cursor:pointer;transition:all .15s}
+  .ai-chip:hover{border-color:var(--accent);color:var(--accent)}
+  .ai-input-row{display:flex;gap:8px;align-items:flex-end;padding:12px 14px;border-top:1px solid var(--line)}
+  .ai-textarea{flex:1;background:var(--paper-2);border:1px solid var(--line);border-radius:10px;padding:10px 13px;font-size:14px;color:var(--ink);resize:none;outline:none;font-family:inherit;line-height:1.5;max-height:120px}
+  .ai-textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(188,108,60,0.1)}
+  .ai-send-btn{width:40px;height:40px;border-radius:10px;flex-shrink:0;background:var(--accent-deep);color:#F4F2EC;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+  .ai-send-btn:hover{opacity:.85;transform:translateY(-1px)}
+  .ai-send-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+  .ai-footer-note{font-size:11px;color:rgba(0,0,0,0.3);padding:0 14px 10px;text-align:center;line-height:1.5}
+  .ai-quota-warn{background:rgba(188,108,60,0.08);border:1px solid rgba(188,108,60,0.25);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--accent);margin-top:8px}
 </style>
 </head>
 <body>
@@ -1138,48 +1085,41 @@
         <p>Tanya apapun tentang wetonmu — karier, asmara, rezeki, keputusan hidup — dijawab berdasarkan primbon Jawa dan data wetonmu.</p>
       </div>
 
-      <!-- Info chip -->
       <div class="ai-info-row">
         <div class="ai-info-chip" id="ai-weton-chip">⏳ Memuat data wetonmu...</div>
-        <div class="ai-info-chip ai-quota-chip" id="ai-quota-chip">💬 80 pesan / 2 minggu</div>
+        <div class="ai-info-chip ai-quota-chip" id="ai-quota-chip">💬 80 pesan tersisa</div>
       </div>
 
-      <!-- Chat window -->
       <div class="ai-chat-wrap">
         <div class="ai-messages" id="ai-messages">
           <div class="ai-msg bot">
             <div class="ai-msg-avatar">✺</div>
             <div class="ai-msg-bubble">
-              Halo! Saya Ki Primbon — pendamping AI-mu yang memahami weton dan primbon Jawa secara mendalam.<br><br>
+              Halo! Saya Ki Primbon — pendamping AI yang memahami weton dan primbon Jawa secara mendalam.<br><br>
               Kamu bisa tanya apa saja: <strong>karier, asmara, keputusan besar, rezeki, hari baik,</strong> atau apapun yang ingin kamu dalami berdasarkan wetonmu.<br><br>
               Apa yang ingin kamu tanyakan hari ini?
             </div>
           </div>
         </div>
-
-        <!-- Suggestion chips -->
         <div class="ai-suggestions" id="ai-suggestions">
           <button class="ai-chip" onclick="pakaiSuggestion(this)">Apakah tahun ini baik untuk buka usaha?</button>
           <button class="ai-chip" onclick="pakaiSuggestion(this)">Karier apa yang paling cocok untuk wetonku?</button>
           <button class="ai-chip" onclick="pakaiSuggestion(this)">Bagaimana karakter asli wetonku?</button>
           <button class="ai-chip" onclick="pakaiSuggestion(this)">Apa pantangan terbesar wetonku?</button>
-          <button class="ai-chip" onclick="pakaiSuggestion(this)">Kapan waktu terbaik untuk mengambil keputusan besar?</button>
+          <button class="ai-chip" onclick="pakaiSuggestion(this)">Kapan waktu terbaik untuk ambil keputusan besar?</button>
           <button class="ai-chip" onclick="pakaiSuggestion(this)">Apa kekuatan tersembunyi wetonku?</button>
         </div>
-
-        <!-- Input -->
         <div class="ai-input-row">
           <textarea id="ai-input" class="ai-textarea" placeholder="Tulis pertanyaanmu di sini..." rows="2" onkeydown="aiEnterSend(event)"></textarea>
           <button class="ai-send-btn" id="ai-send-btn" onclick="kirimPesanAI()">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
           </button>
         </div>
-        <div class="ai-footer-note">Ki Primbon menggunakan data weton & wuku pribadimu. Jawaban bersifat panduan primbon, bukan keputusan final.</div>
+        <div class="ai-footer-note">Ki Primbon menggunakan data weton &amp; wuku pribadimu. Jawaban bersifat panduan primbon, bukan keputusan final.</div>
       </div>
 
-      <!-- Quota warning -->
       <div class="ai-quota-warn" id="ai-quota-warn" style="display:none">
-        <div>⚠️ Kamu sudah mencapai batas 80 pesan untuk periode ini. Batas akan direset otomatis dalam <span id="ai-reset-days">14</span> hari.</div>
+        ⚠️ Kamu sudah mencapai batas 80 pesan untuk periode ini. Batas akan direset dalam <span id="ai-reset-days">14</span> hari.
       </div>
     </section>
 
@@ -2434,15 +2374,6 @@ function showPanel(name){
     t.classList.toggle('active', t.getAttribute('data-panel')===name);
   });
   if (name === 'wuku') buildWukuGrid30();
-  if (name === 'ai') {
-    if (!aiUserData && window._currentUser) {
-      initAIPanel(window._currentUser);
-    } else if (aiUserData) {
-      // Refresh chip kalau sudah ada data
-      const chip = document.getElementById('ai-weton-chip');
-      if (chip) chip.textContent = `🌀 ${aiUserData.weton} · Wuku ${aiUserData.wuku}`;
-    }
-  }
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function buildMobileTabs(){
@@ -2613,275 +2544,24 @@ async function checkAuthAndInit() {
 
   // Show personalized greeting in topbar
   showGreeting(user);
-  window._currentUser = user;
 
-  // Init AI panel data segera — supaya nama & weton sudah siap sebelum tab diklik
-  setTimeout(() => { if (typeof initAIPanel === 'function') initAIPanel(user); }, 600);
+  // Simpan user global untuk dipakai AI panel
+  window._currentUser = user;
 
   // Auto-fill all date pickers with user's saved birth date
   autoFillBirthDate(user.profile?.birth_date);
+
+  // Init AI panel SETELAH semua data user sudah siap
+  // Dipanggil langsung — bukan setTimeout — karena user sudah pasti ada di sini
+  if (typeof initAIPanel === 'function') {
+    initAIPanel(user);
+  }
 }
 
 // Check auth on page load
 checkAuthAndInit();
 
-/* ============================================================
-   KONSULTASI AI — DEEPSEEK
-   ============================================================ */
-const DEEPSEEK_KEY = 'sk-2493c80932db49ff89a442b232542b0c';
-const AI_MODEL     = 'deepseek-chat';
-const AI_MAX_MSG   = 80;   // max pesan per periode
-const AI_PERIODE   = 14;   // hari reset
-
-let aiChatHistory  = [];   // {role, content}[]
-let aiUserData     = null; // data weton user
-let aiMsgCount     = 0;    // jumlah pesan sesi ini
-let aiSedangKirim  = false;
-
-/* ── Build system prompt dari data user ── */
-function buatSystemPromptAI(userData) {
-  const { nama, weton, neptu, wuku, elemenWuku, elemenPasaran } = userData;
-  return `Kamu adalah Ki Primbon — konsultan primbon Jawa yang bijak, hangat, dan modern. 
-
-ATURAN BAHASA (WAJIB DIIKUTI):
-- Gunakan Bahasa Indonesia yang natural, santai, dan mudah dipahami
-- BOLEH sesekali menyisipkan 1-2 kata Jawa saja (misalnya: "nrimo", "laku"), lalu langsung jelaskan artinya dalam kurung
-- JANGAN menulis kalimat panjang dalam Bahasa Jawa — pengguna tidak mengerti
-- Sapa pengguna dengan nama mereka: ${nama}
-
-DATA PENGGUNA:
-- Nama: ${nama}
-- Weton: ${weton}
-- Neptu: ${neptu}
-- Wuku: ${wuku}
-- Elemen Wuku: ${elemenWuku}
-- Elemen Pasaran: ${elemenPasaran}
-
-CARA MENJAWAB:
-- Selalu gunakan data weton dan wuku di atas sebagai dasar analisis yang spesifik
-- Sebut nama ${nama} sesekali agar terasa personal
-- Panjang jawaban: 3-4 paragraf, tidak perlu panjang-panjang
-- Akhiri dengan satu kalimat nasihat yang memotivasi
-- Gunakan kata "cenderung", "dalam pandangan primbon", "primbon menyebut" — jangan klaim pasti
-- Jika pertanyaan di luar primbon, arahkan kembali dengan lembut`;
-}
-
-/* ── Init AI saat panel dibuka ── */
-function initAIPanel(user) {
-  if (!user?.profile) return;
-
-  const nama = (user.profile.full_name || user.email.split('@')[0]).split(' ')[0];
-  let weton = 'belum diset', neptu = 0, wukuNama = 'belum dihitung';
-  let elemenWuku = 'B', elemenPasaran = 'B';
-
-  if (user.profile.birth_date) {
-    try {
-      const p = user.profile.birth_date.split('-');
-      const y = parseInt(p[0]), m = parseInt(p[1])-1, d = parseInt(p[2]);
-      const w = getWeton(y, m, d);
-      weton        = w.label;
-      neptu        = w.total;
-      elemenPasaran = ELEMEN_PASARAN[w.pas.n] || 'B';
-
-      const ref     = new Date(2001,0,7);
-      const tgl     = new Date(y, m, d);
-      const selisih = Math.floor((tgl - ref) / 86400000);
-      const idx     = Math.floor(((selisih % 210) + 210) % 210 / 7);
-      if (WUKU_DATA && WUKU_DATA[idx]) {
-        wukuNama   = WUKU_DATA[idx].nama;
-        elemenWuku = ELEMEN_WUKU[idx] || 'B';
-      }
-    } catch(e) { console.warn('initAIPanel error:', e); }
-  }
-
-  aiUserData = {
-    nama,
-    weton,
-    neptu,
-    wuku: wukuNama,
-    elemenWuku:    NAMA_ELEMEN[elemenWuku]    || elemenWuku,
-    elemenPasaran: NAMA_ELEMEN[elemenPasaran] || elemenPasaran
-  };
-
-  // Update chip info di panel AI
-  const chip = document.getElementById('ai-weton-chip');
-  if (chip) chip.textContent = `🌀 ${weton} · Wuku ${wukuNama}`;
-
-  // Reset history supaya system prompt terbaru dipakai
-  aiChatHistory = [];
-
-  // Cek kuota
-  cekKuotaAI();
-}
-
-/* ── Cek dan tampilkan kuota ── */
-function cekKuotaAI() {
-  const key    = 'ai_quota_' + (aiUserData?.nama || 'user');
-  const stored = JSON.parse(localStorage.getItem(key) || '{"count":0,"start":' + Date.now() + '}');
-  const selisihHari = (Date.now() - stored.start) / 86400000;
-
-  if (selisihHari >= AI_PERIODE) {
-    // Reset kuota
-    localStorage.setItem(key, JSON.stringify({count:0, start:Date.now()}));
-    aiMsgCount = 0;
-  } else {
-    aiMsgCount = stored.count || 0;
-  }
-
-  const sisa = AI_MAX_MSG - aiMsgCount;
-  const quotaChip = document.getElementById('ai-quota-chip');
-  if (quotaChip) quotaChip.textContent = `💬 ${sisa} pesan tersisa`;
-
-  if (sisa <= 0) {
-    const hariReset = Math.ceil(AI_PERIODE - selisihHari);
-    document.getElementById('ai-quota-warn').style.display = 'block';
-    document.getElementById('ai-reset-days').textContent = hariReset;
-    document.getElementById('ai-send-btn').disabled = true;
-    document.getElementById('ai-textarea') && (document.getElementById('ai-input').disabled = true);
-  }
-}
-
-/* ── Simpan kuota ── */
-function simpanKuotaAI() {
-  const key    = 'ai_quota_' + (aiUserData?.nama || 'user');
-  const stored = JSON.parse(localStorage.getItem(key) || '{"count":0,"start":' + Date.now() + '}');
-  stored.count = (stored.count || 0) + 1;
-  localStorage.setItem(key, JSON.stringify(stored));
-  aiMsgCount++;
-  const sisa = AI_MAX_MSG - aiMsgCount;
-  const quotaChip = document.getElementById('ai-quota-chip');
-  if (quotaChip) quotaChip.textContent = `💬 ${sisa} pesan tersisa`;
-  if (sisa <= 0) {
-    document.getElementById('ai-quota-warn').style.display = 'block';
-    document.getElementById('ai-send-btn').disabled = true;
-  }
-}
-
-/* ── Tambah bubble ke chat ── */
-function tambahBubble(role, text, isTyping = false) {
-  const msgs = document.getElementById('ai-messages');
-  const nama1 = aiUserData?.nama?.charAt(0)?.toUpperCase() || 'U';
-  const div   = document.createElement('div');
-  div.className = 'ai-msg ' + (role === 'user' ? 'user' : 'bot');
-
-  if (isTyping) {
-    div.id = 'ai-typing';
-    div.innerHTML = `
-      <div class="ai-msg-avatar">✺</div>
-      <div class="ai-msg-bubble">
-        <div class="ai-typing-dots"><span></span><span></span><span></span></div>
-      </div>`;
-  } else {
-    const avatar = role === 'user' ? nama1 : '✺';
-    // Format teks: bold **text**, newline
-    const formatted = text
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/\n/g, '<br>');
-    div.innerHTML = `
-      <div class="ai-msg-avatar">${avatar}</div>
-      <div class="ai-msg-bubble">${formatted}</div>`;
-  }
-
-  // Sembunyikan suggestions setelah pesan pertama user
-  if (role === 'user') {
-    const sug = document.getElementById('ai-suggestions');
-    if (sug) sug.style.display = 'none';
-  }
-
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-  return div;
-}
-
-/* ── Kirim pesan ke Deepseek ── */
-async function kirimPesanAI() {
-  if (aiSedangKirim) return;
-  if (aiMsgCount >= AI_MAX_MSG) return;
-
-  const input = document.getElementById('ai-input');
-  const pesan = input.value.trim();
-  if (!pesan) return;
-
-  // Tampilkan pesan user
-  tambahBubble('user', pesan);
-  input.value = '';
-  input.style.height = 'auto';
-
-  // Tambah ke history
-  if (aiChatHistory.length === 0) {
-    // Pertama kali — inject system prompt dengan data user terkini
-    const userData = aiUserData || {nama:'Kamu', weton:'belum diset', neptu:0, wuku:'belum dihitung', elemenWuku:'Bumi', elemenPasaran:'Bumi'};
-    aiChatHistory.push({ role: 'system', content: buatSystemPromptAI(userData) });
-  }
-
-  // Sliding window: simpan max 10 pesan terakhir (5 bolak-balik)
-  if (aiChatHistory.filter(m => m.role !== 'system').length >= 10) {
-    const system = aiChatHistory[0];
-    const recent = aiChatHistory.slice(-8);
-    aiChatHistory = [system, ...recent];
-  }
-
-  aiChatHistory.push({ role: 'user', content: pesan });
-
-  // Tampilkan typing
-  const typingEl = tambahBubble('bot', '', true);
-  document.getElementById('ai-send-btn').disabled = true;
-  aiSedangKirim = true;
-
-  try {
-    const res = await fetch('https://api.deepseek.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + DEEPSEEK_KEY
-      },
-      body: JSON.stringify({
-        model: AI_MODEL,
-        messages: aiChatHistory,
-        max_tokens: 800,
-        temperature: 0.8
-      })
-    });
-
-    const data = await res.json();
-
-    if (data.choices && data.choices[0]) {
-      const jawaban = data.choices[0].message.content;
-      aiChatHistory.push({ role: 'assistant', content: jawaban });
-
-      // Hapus typing, tampilkan jawaban
-      typingEl.remove();
-      tambahBubble('bot', jawaban);
-      simpanKuotaAI();
-    } else {
-      typingEl.remove();
-      tambahBubble('bot', 'Maaf, ada gangguan sesaat. Coba lagi ya.');
-      console.error('Deepseek error:', data);
-    }
-  } catch (err) {
-    typingEl.remove();
-    tambahBubble('bot', 'Koneksi bermasalah. Pastikan internetmu stabil lalu coba lagi.');
-    console.error('AI fetch error:', err);
-  }
-
-  document.getElementById('ai-send-btn').disabled = (aiMsgCount >= AI_MAX_MSG);
-  aiSedangKirim = false;
-}
-
-/* ── Enter untuk kirim (Shift+Enter = baris baru) ── */
-function aiEnterSend(e) {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    kirimPesanAI();
-  }
-}
-
-/* ── Pakai suggestion chip ── */
-function pakaiSuggestion(el) {
-  document.getElementById('ai-input').value = el.textContent;
-  kirimPesanAI();
-}
+/* ============== SISTEM WUKU — DATA & FUNGSI ============== */
 const WUKU_DATA = [
   {nomor:1,nama:'SINTA',lambang:'🐂',dewa:'Yamadipati',dewaNama:'Dewa Keadilan & Penjaga Kehidupan',
    watak:'Penyayang sejati, penuh bakti kepada keluarga, setia, rela berkorban, sifat pelindung yang kuat. Lebih mengutamakan orang lain daripada diri sendiri.',
@@ -3228,6 +2908,225 @@ function tutupDrawerWuku() {
   document.getElementById('wuku-drawer').classList.remove('show');
   document.querySelectorAll('.wuku-chip').forEach(c => c.classList.remove('aktif'));
 }
-</script>
+
+/* ============================================================
+   KONSULTASI AI — DEEPSEEK
+   ============================================================ */
+const DEEPSEEK_KEY = 'sk-2493c80932db49ff89a442b232542b0c';
+const AI_MODEL     = 'deepseek-chat';
+const AI_MAX_MSG   = 80;
+const AI_PERIODE   = 14;
+
+let aiChatHistory = [];
+let aiUserData    = null;
+let aiMsgCount    = 0;
+let aiSedangKirim = false;
+
+function buatSystemPromptAI(ud) {
+  return `Kamu adalah Ki Primbon — konsultan primbon Jawa yang bijak, hangat, dan modern.
+
+ATURAN BAHASA (WAJIB):
+- Gunakan Bahasa Indonesia yang natural, santai, dan mudah dipahami semua orang
+- BOLEH menyisipkan 1-2 kata Jawa saja, lalu langsung jelaskan artinya dalam kurung
+- JANGAN menulis kalimat atau paragraf dalam Bahasa Jawa — pengguna tidak mengerti
+- Panggil pengguna dengan nama: ${ud.nama}
+
+DATA PENGGUNA:
+- Nama: ${ud.nama}
+- Weton: ${ud.weton}
+- Neptu: ${ud.neptu}
+- Wuku: ${ud.wuku}
+- Elemen Wuku: ${ud.elemenWuku}
+- Elemen Pasaran: ${ud.elemenPasaran}
+
+CARA MENJAWAB:
+- Selalu jadikan data weton dan wuku sebagai dasar analisis yang spesifik
+- Sebut nama ${ud.nama} sesekali agar terasa personal
+- 3-4 paragraf, tidak terlalu panjang
+- Gunakan kata "cenderung", "dalam pandangan primbon", "primbon menyebut" — jangan klaim pasti
+- Akhiri dengan satu kalimat nasihat yang memotivasi
+- Jika pertanyaan di luar primbon/kehidupan, arahkan kembali dengan lembut`;
+}
+
+function initAIPanel(user) {
+  if (!user) return;
+
+  const nama = (user.profile?.full_name || user.email?.split('@')[0] || 'Kamu').split(' ')[0];
+  let weton = 'belum diset', neptu = 0, wukuNama = 'belum dihitung';
+  let elWuku = 'B', elPasaran = 'B';
+
+  if (user.profile?.birth_date) {
+    try {
+      const p  = user.profile.birth_date.split('-');
+      const y  = parseInt(p[0]), m = parseInt(p[1])-1, d = parseInt(p[2]);
+      const w  = getWeton(y, m, d);
+      weton    = w.label;
+      neptu    = w.total;
+      elPasaran = ELEMEN_PASARAN[w.pas.n] || 'B';
+
+      const ref = new Date(2001,0,7);
+      const idx = Math.floor(((Math.floor((new Date(y,m,d)-ref)/86400000)%210)+210)%210/7);
+      if (WUKU_DATA && WUKU_DATA[idx]) {
+        wukuNama = WUKU_DATA[idx].nama;
+        elWuku   = ELEMEN_WUKU[idx] || 'B';
+      }
+    } catch(e) { console.warn('initAIPanel:', e); }
+  }
+
+  aiUserData = {
+    nama,
+    weton,
+    neptu,
+    wuku: wukuNama,
+    elemenWuku:    NAMA_ELEMEN[elWuku]    || elWuku,
+    elemenPasaran: NAMA_ELEMEN[elPasaran] || elPasaran
+  };
+
+  // Update chip — langsung, tidak tunggu panel dibuka
+  const chip = document.getElementById('ai-weton-chip');
+  if (chip) chip.textContent = `🌀 ${weton} · Wuku ${wukuNama}`;
+
+  // Reset history supaya system prompt terbaru dipakai
+  aiChatHistory = [];
+
+  // Cek kuota
+  cekKuotaAI();
+}
+
+function cekKuotaAI() {
+  if (!aiUserData) return;
+  const key    = 'aiq_' + (aiUserData.nama || 'u');
+  let   stored = {};
+  try { stored = JSON.parse(localStorage.getItem(key) || '{}'); } catch(e){}
+  const start  = stored.start || Date.now();
+  const count  = stored.count || 0;
+  const hari   = (Date.now() - start) / 86400000;
+
+  if (hari >= AI_PERIODE) {
+    localStorage.setItem(key, JSON.stringify({count:0, start:Date.now()}));
+    aiMsgCount = 0;
+  } else {
+    aiMsgCount = count;
+  }
+
+  const sisa = AI_MAX_MSG - aiMsgCount;
+  const qc   = document.getElementById('ai-quota-chip');
+  if (qc) qc.textContent = `💬 ${sisa} pesan tersisa`;
+
+  if (sisa <= 0) {
+    const reset = Math.ceil(AI_PERIODE - hari);
+    document.getElementById('ai-quota-warn').style.display = 'block';
+    document.getElementById('ai-reset-days').textContent   = reset;
+    const btn = document.getElementById('ai-send-btn');
+    if (btn) btn.disabled = true;
+  }
+}
+
+function simpanKuotaAI() {
+  const key    = 'aiq_' + (aiUserData?.nama || 'u');
+  let   stored = {};
+  try { stored = JSON.parse(localStorage.getItem(key) || '{}'); } catch(e){}
+  stored.start = stored.start || Date.now();
+  stored.count = (stored.count || 0) + 1;
+  localStorage.setItem(key, JSON.stringify(stored));
+  aiMsgCount++;
+  const sisa = AI_MAX_MSG - aiMsgCount;
+  const qc   = document.getElementById('ai-quota-chip');
+  if (qc) qc.textContent = `💬 ${sisa} pesan tersisa`;
+  if (sisa <= 0) {
+    document.getElementById('ai-quota-warn').style.display = 'block';
+    const btn = document.getElementById('ai-send-btn');
+    if (btn) btn.disabled = true;
+  }
+}
+
+function tambahBubble(role, text, isTyping) {
+  const msgs  = document.getElementById('ai-messages');
+  const inisial = (aiUserData?.nama || 'U').charAt(0).toUpperCase();
+  const div   = document.createElement('div');
+  div.className = 'ai-msg ' + (role === 'user' ? 'user' : 'bot');
+
+  if (isTyping) {
+    div.id = 'ai-typing';
+    div.innerHTML = `<div class="ai-msg-avatar">✺</div><div class="ai-msg-bubble"><div class="ai-typing-dots"><span></span><span></span><span></span></div></div>`;
+  } else {
+    const avatar    = role === 'user' ? inisial : '✺';
+    const formatted = text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g,     '<em>$1</em>')
+      .replace(/\n/g,            '<br>');
+    div.innerHTML = `<div class="ai-msg-avatar">${avatar}</div><div class="ai-msg-bubble">${formatted}</div>`;
+  }
+
+  if (role === 'user') {
+    const sug = document.getElementById('ai-suggestions');
+    if (sug) sug.style.display = 'none';
+  }
+
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+async function kirimPesanAI() {
+  if (aiSedangKirim || aiMsgCount >= AI_MAX_MSG) return;
+  const input = document.getElementById('ai-input');
+  const pesan = input.value.trim();
+  if (!pesan) return;
+
+  tambahBubble('user', pesan);
+  input.value = '';
+
+  // Inject system prompt saat pertama kali kirim
+  if (aiChatHistory.length === 0) {
+    const ud = aiUserData || {nama:'Kamu',weton:'belum diset',neptu:0,wuku:'belum dihitung',elemenWuku:'Bumi',elemenPasaran:'Bumi'};
+    aiChatHistory.push({role:'system', content: buatSystemPromptAI(ud)});
+  }
+
+  // Sliding window max 10 pesan
+  const nonSystem = aiChatHistory.filter(m => m.role !== 'system');
+  if (nonSystem.length >= 10) {
+    aiChatHistory = [aiChatHistory[0], ...aiChatHistory.slice(-8)];
+  }
+  aiChatHistory.push({role:'user', content: pesan});
+
+  const typingEl = tambahBubble('bot', '', true);
+  document.getElementById('ai-send-btn').disabled = true;
+  aiSedangKirim = true;
+
+  try {
+    const res = await fetch('https://api.deepseek.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','Authorization':'Bearer '+DEEPSEEK_KEY},
+      body: JSON.stringify({model:AI_MODEL, messages:aiChatHistory, max_tokens:800, temperature:0.8})
+    });
+    const data = await res.json();
+    if (data.choices?.[0]) {
+      const jawaban = data.choices[0].message.content;
+      aiChatHistory.push({role:'assistant', content:jawaban});
+      typingEl.remove();
+      tambahBubble('bot', jawaban);
+      simpanKuotaAI();
+    } else {
+      typingEl.remove();
+      tambahBubble('bot', 'Maaf, ada gangguan sesaat. Coba lagi ya.');
+    }
+  } catch(err) {
+    typingEl.remove();
+    tambahBubble('bot', 'Koneksi bermasalah. Pastikan internetmu stabil lalu coba lagi.');
+  }
+
+  document.getElementById('ai-send-btn').disabled = (aiMsgCount >= AI_MAX_MSG);
+  aiSedangKirim = false;
+}
+
+function aiEnterSend(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); kirimPesanAI(); }
+}
+
+function pakaiSuggestion(el) {
+  document.getElementById('ai-input').value = el.textContent;
+  kirimPesanAI();
+}
 </body>
 </html>
