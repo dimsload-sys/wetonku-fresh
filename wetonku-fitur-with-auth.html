@@ -2314,7 +2314,7 @@ function hitungRamalanHari(){
   document.getElementById('rhi-today-date').textContent =
     now.getDate() + ' ' + BULAN_ID[now.getMonth()] + ' ' + now.getFullYear();
   document.getElementById('rhi-today-weton').textContent =
-    'Weton hari ini: ' + today.hari.id + ' ' + today.pas.id + ' · Neptu ' + today.total;
+    'Weton hari ini: ' + today.hari.n + ' ' + today.pas.n + ' · Neptu ' + today.total;
   document.getElementById('rhi-stars').textContent = stars;
 
   /* Aspek levels - each uses different sub-calc for variety */
@@ -2344,17 +2344,51 @@ function hitungRamalanHari(){
     </div>`;
   }).join('');
 
-  /* Warna */
-  const warna = WARNA_PASARAN[today.pas.id] || WARNA_PASARAN['Legi'];
-  document.getElementById('rhi-warna-row').innerHTML = warna.map(w =>
-    `<div class="rh-color-swatch" style="background:${w.hex}" title="${w.nama}"></div>
-     <span class="rh-color-name">${w.nama}</span>`
+  /* Warna — kombinasi pasaran USER × pasaran HARI INI supaya personal & bervariasi */
+  const WARNA_HARI = {
+    Minggu: [{hex:'#E8A020',nama:'Kuning Matahari'},{hex:'#F5E6C8',nama:'Krem Hangat'}],
+    Senin:  [{hex:'#C0C0C0',nama:'Perak'},{hex:'#FFFFFF',nama:'Putih'}],
+    Selasa: [{hex:'#C0392B',nama:'Merah Tua'},{hex:'#F08080',nama:'Merah Muda'}],
+    Rabu:   [{hex:'#27AE60',nama:'Hijau Segar'},{hex:'#F0FFF0',nama:'Hijau Muda'}],
+    Kamis:  [{hex:'#F39C12',nama:'Oranye Emas'},{hex:'#FFF3CD',nama:'Kuning Gading'}],
+    Jumat:  [{hex:'#8E44AD',nama:'Ungu'},{hex:'#D7BDE2',nama:'Lavender'}],
+    Sabtu:  [{hex:'#2C3E50',nama:'Biru Gelap'},{hex:'#85929E',nama:'Abu-abu'}]
+  };
+  // Pilih warna utama dari pasaran user, aksen dari hari ini
+  const warnaUser  = WARNA_PASARAN[w.pas.n]   || WARNA_PASARAN['Legi'];
+  const warnaHari  = WARNA_HARI[todayHariName] || WARNA_HARI['Senin'];
+  // Tampilkan warna pasaran user sebagai primer, warna hari sebagai sekunder
+  const warnaFinal = [warnaUser[0], warnaHari[0]];
+  document.getElementById('rhi-warna-row').innerHTML = warnaFinal.map(ww =>
+    `<div class="rh-color-swatch" style="background:${ww.hex}" title="${ww.nama}"></div>
+     <span class="rh-color-name">${ww.nama}</span>`
   ).join('<span style="color:var(--line);margin:0 4px">·</span>');
 
-  /* Jam */
-  const jam = JAM_BAIK_HARI[todayHariName] || JAM_BAIK_HARI['Senin'];
-  document.getElementById('rhi-jam').textContent     = jam.jam;
-  document.getElementById('rhi-jam-sub').textContent = jam.sub;
+  /* Jam terbaik — kombinasi neptu user dengan hari ini untuk variasi */
+  const JAM_KOMBINASI = {
+    // [hari][sisa neptu user % 3]
+    Minggu: ['05.00 – 07.00','09.00 – 11.00','15.00 – 17.00'],
+    Senin:  ['07.00 – 09.00','10.00 – 12.00','14.00 – 16.00'],
+    Selasa: ['06.00 – 08.00','09.00 – 11.00','16.00 – 18.00'],
+    Rabu:   ['08.00 – 10.00','11.00 – 13.00','15.00 – 17.00'],
+    Kamis:  ['07.00 – 09.00','14.00 – 16.00','19.00 – 21.00'],
+    Jumat:  ['06.00 – 08.00','11.00 – 13.00','15.00 – 17.00'],
+    Sabtu:  ['06.00 – 08.00','10.00 – 12.00','16.00 – 18.00']
+  };
+  const JAM_SUB = {
+    Minggu: ['Energi pagi Minggu paling segar untuk memulai','Tengah hari Minggu cocok untuk diskusi','Sore hari Minggu untuk refleksi dan rencana'],
+    Senin:  ['Pagi Senin paling produktif untuk prioritas utama','Jam kerja puncak untuk negosiasi','Sore cocok untuk pekerjaan kreatif'],
+    Selasa: ['Pagi Selasa penuh semangat dan tekad','Jam strategi dan perencanaan','Sore untuk membangun koneksi'],
+    Rabu:   ['Pagi Rabu energi komunikasi paling tinggi','Tengah hari untuk presentasi dan rapat','Sore untuk evaluasi dan koreksi'],
+    Kamis:  ['Pagi Kamis membawa kemudahan dan kelancaran','Sore Kamis penuh berkah','Malam Kamis cocok untuk doa dan refleksi'],
+    Jumat:  ['Pagi Jumat paling berkah untuk niat baik','Tengah hari Jumat membawa kelancaran','Sore untuk memperkuat hubungan'],
+    Sabtu:  ['Pagi Sabtu terbaik untuk kerja keras','Siang cocok untuk urusan material','Sore untuk istirahat dan pengisian energi']
+  };
+  const hariJam  = JAM_KOMBINASI[todayHariName] || JAM_KOMBINASI['Senin'];
+  const hariSub  = JAM_SUB[todayHariName]       || JAM_SUB['Senin'];
+  const idxJam   = w.total % 3; // berbeda tiap weton
+  document.getElementById('rhi-jam').textContent     = hariJam[idxJam];
+  document.getElementById('rhi-jam-sub').textContent = hariSub[idxJam];
 
   /* Nasihat & Pantangan */
   document.getElementById('rhi-nasihat').textContent  = NASIHAT_KOMBINASI[combined % 10];
@@ -2923,16 +2957,15 @@ let aiMsgCount    = 0;
 let aiSedangKirim = false;
 
 function buatSystemPromptAI(ud) {
-  return `Kamu adalah Ki Primbon — seorang penasihat primbon Jawa yang bijak, hangat, dan penuh kasih. Kamu bukan chatbot biasa. Kamu adalah sosok seperti kakek atau guru spiritual yang sudah menghabiskan hidupnya mempelajari primbon Jawa, dan kini hadir untuk menemani ${ud.nama} dengan tulus.
+  return `Kamu adalah Ki Primbon — konsultan primbon Jawa yang bijak, hangat, dan modern.
 
-═══ IDENTITAS & KARAKTER ═══
-- Namamu adalah Ki Primbon. Kamu tidak pernah menyebut dirimu "AI" atau "chatbot"
-- Bicaramu hangat, tenang, dan meyakinkan — seperti orang tua yang bijak
-- Kamu serius tapi tidak kaku, dalam tapi tidak menggurui
-- Kamu percaya bahwa setiap manusia punya cahaya dan jalan hidupnya sendiri
-- Kamu selalu melihat sisi baik dari setiap situasi tanpa menutup mata dari kenyataan
+ATURAN BAHASA (WAJIB):
+- Gunakan Bahasa Indonesia yang natural, santai, dan mudah dipahami semua orang
+- BOLEH menyisipkan 1-2 kata Jawa saja, lalu langsung jelaskan artinya dalam kurung
+- JANGAN menulis kalimat atau paragraf dalam Bahasa Jawa — pengguna tidak mengerti
+- Panggil pengguna dengan nama: ${ud.nama}
 
-═══ DATA PENGGUNA (WAJIB DIGUNAKAN) ═══
+DATA PENGGUNA:
 - Nama: ${ud.nama}
 - Weton: ${ud.weton}
 - Neptu: ${ud.neptu}
@@ -2940,48 +2973,13 @@ function buatSystemPromptAI(ud) {
 - Elemen Wuku: ${ud.elemenWuku}
 - Elemen Pasaran: ${ud.elemenPasaran}
 
-═══ ATURAN BAHASA (KETAT) ═══
-- Gunakan Bahasa Indonesia yang natural, hangat, dan mudah dipahami
-- BOLEH menyisipkan maksimal 2 kata/frasa Jawa per jawaban, WAJIB langsung jelaskan artinya dalam kurung — contoh: "nrimo (menerima dengan lapang)"
-- JANGAN menulis kalimat panjang dalam Bahasa Jawa — pengguna tidak mengerti
-- Panggil ${ud.nama} sesekali agar terasa personal dan hangat
-- Hindari bahasa yang terlalu formal atau akademis
-
-═══ CARA MENJAWAB ═══
-- WAJIB sebut weton (${ud.weton}) dan/atau wuku (${ud.wuku}) secara spesifik di setiap jawaban — bukan generik
-- Jawab dalam 3-4 paragraf — cukup padat, tidak bertele-tele
-- Selalu gunakan kata "cenderung", "dalam pandangan primbon", "primbon mengenal" — JANGAN klaim pasti atau meramal secara absolut
-- Akhiri SETIAP jawaban dengan satu kalimat nasihat leluhur atau kata-kata penyemangat yang personal
-
-═══ DETEKSI KONDISI EMOSIONAL ═══
-Jika dari pertanyaan terdeteksi bahwa ${ud.nama} sedang:
-- GALAU / SEDIH / BINGUNG: Mulai dengan validasi perasaan dulu ("Ki paham...", "Wajar kalau kamu merasa..."), baru masuk ke primbon. Akhiri dengan afirmasi kuat yang personal berdasarkan weton mereka.
-- CEMAS / TAKUT: Tenangkan dulu dengan satu kalimat, lalu gunakan karakter weton untuk menguatkan. Ingatkan bahwa dalam primbon, setiap weton punya kekuatan tersembunyi.
-- PUTUS ASA: Sampaikan nasihat leluhur yang kuat — bahwa dalam primbon, cobaan adalah "laku" (perjalanan batin) yang memurnikan. Sebutkan kekuatan spesifik dari weton ${ud.weton}.
-- EXCITED / HAPPY: Ikuti energinya dengan antusias, rayakan bersama, perkuat dengan pandangan primbon yang positif.
-
-═══ NASIHAT KUNO & AFIRMASI ═══
-Selalu sisipkan minimal satu dari ini di setiap jawaban:
-- Kutipan atau parafrase falsafah Jawa yang relevan (dan jelaskan maknanya)
-- Pengingat tentang kekuatan spesifik weton ${ud.weton}
-- Afirmasi berbasis karakter wuku ${ud.wuku}
-Contoh: "Orang dengan weton ${ud.weton} dikenal dalam primbon sebagai... ini bukan kebetulan, ${ud.nama}."
-
-═══ BATASAN TOPIK ═══
-TOLAK dengan sopan dan redirect jika ditanya tentang:
-- Politik, berita, olahraga, skor pertandingan
-- Teknologi, coding, resep masakan, hal teknis
-- Ramalan angka togel atau perjudian apapun — TEGAS tolak ini
-- Hal berbahaya atau menyakiti diri sendiri — respons dengan penuh kasih dan sarankan bicara dengan orang terdekat
-Cara menolak: hangat, tidak menghakimi, langsung tawarkan topik yang bisa dibantu.
-Contoh: "Ki bukan ahli di sana, tapi kalau mau bicara soal [topik primbon yang relevan], Ki siap menemanimu."
-
-═══ LARANGAN KERAS ═══
-- JANGAN pernah mengaku sebagai AI, robot, atau program komputer
-- JANGAN memberi angka pasti untuk rezeki, jodoh, atau kematian
-- JANGAN menakut-nakuti dengan ramalan buruk tanpa jalan keluar
-- JANGAN menulis dalam format tabel, bullet point, atau heading markdown
-- JANGAN jawaban lebih dari 5 paragraf kecuali benar-benar diperlukan`;
+CARA MENJAWAB:
+- Selalu jadikan data weton dan wuku sebagai dasar analisis yang spesifik
+- Sebut nama ${ud.nama} sesekali agar terasa personal
+- 3-4 paragraf, tidak terlalu panjang
+- Gunakan kata "cenderung", "dalam pandangan primbon", "primbon menyebut" — jangan klaim pasti
+- Akhiri dengan satu kalimat nasihat yang memotivasi
+- Jika pertanyaan di luar primbon/kehidupan, arahkan kembali dengan lembut`;
 }
 
 function initAIPanel(user) {
