@@ -2403,7 +2403,7 @@ function hitungRamalanHari(){
   document.getElementById('rhi-today-date').textContent =
     now.getDate() + ' ' + BULAN_ID[now.getMonth()] + ' ' + now.getFullYear();
   document.getElementById('rhi-today-weton').textContent =
-    'Weton hari ini: ' + today.hari.id + ' ' + today.pas.id + ' · Neptu ' + today.total;
+    'Weton hari ini: ' + today.hari.n + ' ' + today.pas.n + ' · Neptu ' + today.total;
   document.getElementById('rhi-stars').textContent = stars;
 
   /* Aspek levels - each uses different sub-calc for variety */
@@ -2434,7 +2434,7 @@ function hitungRamalanHari(){
   }).join('');
 
   /* Warna */
-  const warna = WARNA_PASARAN[today.pas.id] || WARNA_PASARAN['Legi'];
+  const warna = WARNA_PASARAN[today.pas.n] || WARNA_PASARAN['Legi'];
   document.getElementById('rhi-warna-row').innerHTML = warna.map(w =>
     `<div class="rh-color-swatch" style="background:${w.hex}" title="${w.nama}"></div>
      <span class="rh-color-name">${w.nama}</span>`
@@ -2517,63 +2517,34 @@ async function checkPremiumAccess() {
     const email = session.user.email;
     const isOwner = OWNER_EMAILS.includes(email.toLowerCase());
 
-    // Cek subscription dari tabel users
-    let tierAktif = 'gratis';
+    // Cek subscription tier (untuk user bayar nanti)
+    let isPremium = isOwner;
     if (!isOwner) {
-      const { data: profile } = await supabase
-        .from('users')
-        .select('subscription_tier, subscription_end')
-        .eq('id', session.user.id)
+      const { data: sub } = await supabase
+        .from('user_subscriptions')
+        .select('tier_code')
+        .eq('user_id', session.user.id)
+        .eq('status', 'active')
         .single();
-
-      if (profile && profile.subscription_tier && profile.subscription_tier !== 'gratis') {
-        // Cek apakah subscription masih berlaku
-        const today = new Date();
-        const endDate = profile.subscription_end ? new Date(profile.subscription_end) : null;
-
-        if (endDate && endDate >= today) {
-          // Masih aktif
-          tierAktif = profile.subscription_tier;
-        } else if (endDate && endDate < today) {
-          // Sudah expired — reset ke gratis otomatis
-          await supabase
-            .from('users')
-            .update({ subscription_tier: 'gratis', subscription_end: null })
-            .eq('id', session.user.id);
-          tierAktif = 'gratis';
-        }
-      }
-    } else {
-      tierAktif = 'pamungkas'; // owner dapat semua akses
+      isPremium = sub && sub.tier_code === 'pamungkas';
     }
 
-    // Simpan tier aktif secara global untuk dipakai fitur lain
-    window._tierAktif = tierAktif;
-
-    // Unlock fitur berdasarkan tier
-    if (tierAktif === 'pendalaman' || tierAktif === 'pamungkas' || isOwner) {
-      // Hapus blur Pamungkas preview di Rezeki
+    if (isPremium) {
+      // Hapus blur & overlay untuk premium user
       const preview = document.getElementById('rz-premium-preview');
-      if (preview) {
-        const blurDiv = preview.querySelector('[style*="blur"]');
-        const overlay = preview.querySelector('[style*="position:absolute"]');
-        if (blurDiv) blurDiv.style.filter = 'none';
-        if (overlay) overlay.style.display = 'none';
-      }
-    }
+      if (!preview) return;
+      const blurDiv = preview.querySelector('[style*="blur"]');
+      const overlay = preview.querySelector('[style*="position:absolute"]');
+      if (blurDiv) blurDiv.style.filter = 'none';
+      if (overlay) overlay.style.display = 'none';
 
-    if (tierAktif === 'pamungkas' || isOwner) {
-      // Update label Pamungkas aktif
-      const preview = document.getElementById('rz-premium-preview');
-      if (preview) {
-        const label = preview.querySelector('[style*="ANALISIS"]');
-        if (label) label.parentElement.innerHTML = `
-          <div style="width:3px;height:20px;background:var(--accent);border-radius:2px"></div>
-          <span style="font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.5px">ANALISIS PAMUNGKAS ✦ AKTIF</span>
-        `;
-      }
+      // Update label
+      const label = preview.querySelector('[style*="ANALISIS"]');
+      if (label) label.parentElement.innerHTML = `
+        <div style="width:3px;height:20px;background:var(--accent);border-radius:2px"></div>
+        <span style="font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.5px">ANALISIS PAMUNGKAS ✦ AKTIF</span>
+      `;
     }
-
   } catch(e) {
     console.log('Premium check:', e.message);
   }
@@ -2670,12 +2641,10 @@ async function checkAuthAndInit() {
   autoFillBirthDate(user.profile?.birth_date);
 
   // Init AI panel SETELAH semua data user sudah siap
+  // Dipanggil langsung — bukan setTimeout — karena user sudah pasti ada di sini
   if (typeof initAIPanel === 'function') {
     initAIPanel(user);
   }
-
-  // Cek subscription tier + expiry
-  checkPremiumAccess();
 }
 
 // Check auth on page load
