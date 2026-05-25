@@ -186,51 +186,59 @@
 
   /* Modal bagikan */
   .bagikan-overlay {
-    display:none; position:fixed; inset:0; z-index:999;
-    background:rgba(0,0,0,0.55); align-items:flex-end; justify-content:center;
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(0,0,0,0.5); align-items: center; justify-content: center;
+    padding: 16px;
   }
-  .bagikan-overlay.show { display:flex; }
+  .bagikan-overlay.show { display: flex; }
   .bagikan-modal {
-    background:var(--paper); border-radius:24px 24px 0 0;
-    padding:20px 20px 36px; width:100%; max-width:480px;
-    box-shadow:0 -8px 40px rgba(0,0,0,0.15);
-    animation:slideUp .25s ease;
+    background: var(--paper); border-radius: 20px;
+    padding: 24px; width: 100%; max-width: 420px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    animation: fade .25s ease;
   }
-  @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-  @media(min-width:520px){
-    .bagikan-overlay{align-items:center;padding:16px;}
-    .bagikan-modal{border-radius:20px;}
+  .bagikan-modal-title {
+    font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600;
+    color: var(--ink); margin-bottom: 4px;
   }
-  .bagikan-handle{width:36px;height:4px;background:var(--line);border-radius:2px;margin:0 auto 16px;}
-  .bagikan-modal-title{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--ink);margin-bottom:3px;}
-  .bagikan-modal-sub{font-size:13px;color:var(--ink-soft);margin-bottom:14px;}
-  .bagikan-preview{
-    background:var(--accent-deep);border-radius:13px;
-    padding:14px;margin-bottom:14px;color:#F4F2EC;
+  .bagikan-modal-sub { font-size: 13px; color: var(--ink-soft); margin-bottom: 18px; }
+  .bagikan-preview {
+    background: var(--accent-deep); border-radius: 14px;
+    padding: 18px; margin-bottom: 16px; color: #F4F2EC;
   }
-  .bagikan-preview-label{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(244,242,236,0.45);margin-bottom:6px;}
-  .bagikan-preview-text{font-size:12.5px;line-height:1.65;color:rgba(244,242,236,0.88);white-space:pre-wrap;max-height:90px;overflow-y:auto;}
-  .bagikan-preview-footer{margin-top:8px;padding-top:8px;border-top:1px solid rgba(244,242,236,0.15);font-size:10px;color:rgba(244,242,236,0.4);}
-  .bagikan-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
-  .bagikan-btn{
-    display:flex;flex-direction:column;align-items:center;gap:5px;
-    padding:13px 8px;border-radius:13px;border:1px solid var(--line);
-    font-size:12px;font-weight:600;cursor:pointer;
-    background:var(--white);color:var(--ink);transition:all .15s;
+  .bagikan-preview-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(244,242,236,0.5); margin-bottom: 8px;
   }
-  .bagikan-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.08);}
-  .bagikan-btn-icon{font-size:22px;line-height:1;}
-  .bagikan-btn.wa{background:#E8FBF0;border-color:#25D366;color:#128C3D;}
-  .bagikan-btn.wa:hover{background:#25D366;color:#fff;}
-  .bagikan-btn.tw{background:#EFF9FF;border-color:#1DA1F2;color:#1a8ad4;}
-  .bagikan-btn.tw:hover{background:#1DA1F2;color:#fff;}
-  .bagikan-btn.native{background:linear-gradient(135deg,#f3efff,#fff0fb);border-color:#b490ff;color:#6d28d9;}
-  .bagikan-btn.native:hover{background:#6d28d9;color:#fff;border-color:#6d28d9;}
-  .bagikan-btn.copy{background:var(--paper-2);}
-  .bagikan-btn.copy:hover{background:var(--line);}
-  .bagikan-btn.full{grid-column:1/-1;flex-direction:row;justify-content:center;gap:8px;padding:11px;}
-  .bagikan-close{width:100%;padding:10px;background:none;border:none;font-size:13px;color:var(--ink-soft);cursor:pointer;margin-top:2px;}
-  .bagikan-close:hover{color:var(--ink);}
+  .bagikan-preview-text {
+    font-size: 13.5px; line-height: 1.7; color: rgba(244,242,236,0.9);
+    white-space: pre-wrap;
+  }
+  .bagikan-preview-footer {
+    margin-top: 10px; padding-top: 10px;
+    border-top: 1px solid rgba(244,242,236,0.15);
+    font-size: 11px; color: rgba(244,242,236,0.4);
+  }
+  .bagikan-btns { display: flex; flex-direction: column; gap: 8px; }
+  .bagikan-btn {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 16px; border-radius: 12px; border: 1px solid var(--line);
+    font-size: 13.5px; font-weight: 600; cursor: pointer;
+    background: var(--white); color: var(--ink); transition: all .15s;
+    text-align: left;
+  }
+  .bagikan-btn:hover { transform: translateY(-1px); }
+  .bagikan-btn.wa { background: #25D366; color: #fff; border-color: #25D366; }
+  .bagikan-btn.wa:hover { background: #1ebe5d; }
+  .bagikan-btn.copy { background: var(--paper-2); }
+  .bagikan-btn.copy:hover { background: var(--line); }
+  .bagikan-btn-icon { font-size: 18px; }
+  .bagikan-close {
+    margin-top: 10px; width: 100%; padding: 10px;
+    background: none; border: none; font-size: 13px;
+    color: var(--ink-soft); cursor: pointer;
+  }
+  .bagikan-close:hover { color: var(--ink); }
 
   /* result generic */
   .result-area { display: none; }
@@ -2509,34 +2517,63 @@ async function checkPremiumAccess() {
     const email = session.user.email;
     const isOwner = OWNER_EMAILS.includes(email.toLowerCase());
 
-    // Cek subscription tier (untuk user bayar nanti)
-    let isPremium = isOwner;
+    // Cek subscription dari tabel users
+    let tierAktif = 'gratis';
     if (!isOwner) {
-      const { data: sub } = await supabase
-        .from('user_subscriptions')
-        .select('tier_code')
-        .eq('user_id', session.user.id)
-        .eq('status', 'active')
+      const { data: profile } = await supabase
+        .from('users')
+        .select('subscription_tier, subscription_end')
+        .eq('id', session.user.id)
         .single();
-      isPremium = sub && sub.tier_code === 'pamungkas';
+
+      if (profile && profile.subscription_tier && profile.subscription_tier !== 'gratis') {
+        // Cek apakah subscription masih berlaku
+        const today = new Date();
+        const endDate = profile.subscription_end ? new Date(profile.subscription_end) : null;
+
+        if (endDate && endDate >= today) {
+          // Masih aktif
+          tierAktif = profile.subscription_tier;
+        } else if (endDate && endDate < today) {
+          // Sudah expired — reset ke gratis otomatis
+          await supabase
+            .from('users')
+            .update({ subscription_tier: 'gratis', subscription_end: null })
+            .eq('id', session.user.id);
+          tierAktif = 'gratis';
+        }
+      }
+    } else {
+      tierAktif = 'pamungkas'; // owner dapat semua akses
     }
 
-    if (isPremium) {
-      // Hapus blur & overlay untuk premium user
+    // Simpan tier aktif secara global untuk dipakai fitur lain
+    window._tierAktif = tierAktif;
+
+    // Unlock fitur berdasarkan tier
+    if (tierAktif === 'pendalaman' || tierAktif === 'pamungkas' || isOwner) {
+      // Hapus blur Pamungkas preview di Rezeki
       const preview = document.getElementById('rz-premium-preview');
-      if (!preview) return;
-      const blurDiv = preview.querySelector('[style*="blur"]');
-      const overlay = preview.querySelector('[style*="position:absolute"]');
-      if (blurDiv) blurDiv.style.filter = 'none';
-      if (overlay) overlay.style.display = 'none';
-
-      // Update label
-      const label = preview.querySelector('[style*="ANALISIS"]');
-      if (label) label.parentElement.innerHTML = `
-        <div style="width:3px;height:20px;background:var(--accent);border-radius:2px"></div>
-        <span style="font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.5px">ANALISIS PAMUNGKAS ✦ AKTIF</span>
-      `;
+      if (preview) {
+        const blurDiv = preview.querySelector('[style*="blur"]');
+        const overlay = preview.querySelector('[style*="position:absolute"]');
+        if (blurDiv) blurDiv.style.filter = 'none';
+        if (overlay) overlay.style.display = 'none';
+      }
     }
+
+    if (tierAktif === 'pamungkas' || isOwner) {
+      // Update label Pamungkas aktif
+      const preview = document.getElementById('rz-premium-preview');
+      if (preview) {
+        const label = preview.querySelector('[style*="ANALISIS"]');
+        if (label) label.parentElement.innerHTML = `
+          <div style="width:3px;height:20px;background:var(--accent);border-radius:2px"></div>
+          <span style="font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.5px">ANALISIS PAMUNGKAS ✦ AKTIF</span>
+        `;
+      }
+    }
+
   } catch(e) {
     console.log('Premium check:', e.message);
   }
@@ -2633,10 +2670,12 @@ async function checkAuthAndInit() {
   autoFillBirthDate(user.profile?.birth_date);
 
   // Init AI panel SETELAH semua data user sudah siap
-  // Dipanggil langsung — bukan setTimeout — karena user sudah pasti ada di sini
   if (typeof initAIPanel === 'function') {
     initAIPanel(user);
   }
+
+  // Cek subscription tier + expiry
+  checkPremiumAccess();
 }
 
 // Check auth on page load
@@ -3208,34 +3247,22 @@ function pakaiSuggestion(el) {
 <!-- ═══════ MODAL BAGIKAN ═══════ -->
 <div class="bagikan-overlay" id="bagikan-overlay" onclick="tutupModalBagikan(event)">
   <div class="bagikan-modal">
-    <div class="bagikan-handle"></div>
     <div class="bagikan-modal-title">Bagikan Hasil</div>
-    <div class="bagikan-modal-sub">Pilih cara berbagi yang kamu inginkan</div>
+    <div class="bagikan-modal-sub" id="bagikan-sub">Salin atau kirim langsung ke WhatsApp</div>
     <div class="bagikan-preview">
-      <div class="bagikan-preview-label">Pratinjau Pesan</div>
+      <div class="bagikan-preview-label">PRATINJAU PESAN</div>
       <div class="bagikan-preview-text" id="bagikan-text">—</div>
       <div class="bagikan-preview-footer">wetonku.id · Primbon & Weton Jawa</div>
     </div>
-    <div class="bagikan-grid">
-      <!-- WhatsApp -->
+    <div class="bagikan-btns">
       <button class="bagikan-btn wa" onclick="bagikanWA()">
-        <span class="bagikan-btn-icon">💬</span>WhatsApp
+        <span class="bagikan-btn-icon">💬</span>
+        Kirim via WhatsApp
       </button>
-      <!-- Twitter/X -->
-      <button class="bagikan-btn tw" onclick="bagikanTwitter()">
-        <span class="bagikan-btn-icon">𝕏</span>Twitter / X
-      </button>
-      <!-- Native share (IG, TikTok, FB, dll) -->
-      <button class="bagikan-btn native" id="bagikan-native-btn" onclick="bagikanNative()" style="display:none">
-        <span class="bagikan-btn-icon">✦</span>Bagikan ke App
-      </button>
-      <!-- Salin teks -->
       <button class="bagikan-btn copy" id="bagikan-copy-btn" onclick="bagikanCopy()">
-        <span class="bagikan-btn-icon">📋</span><span id="bagikan-copy-label">Salin Teks</span>
+        <span class="bagikan-btn-icon">📋</span>
+        Salin Teks
       </button>
-    </div>
-    <div style="font-size:11.5px;color:var(--ink-soft);text-align:center;padding:4px 0 8px;line-height:1.6">
-      📱 Di HP: tombol <strong>Bagikan ke App</strong> akan muncul — pilih Instagram, TikTok, atau Facebook langsung dari sana
     </div>
     <button class="bagikan-close" onclick="tutupModalBagikan()">Tutup</button>
   </div>
@@ -3247,32 +3274,32 @@ let _bagikanTeks = '';
 
 const _bagikanTemplate = {
   ramalanhari: () => {
-    const tgl     = document.getElementById('rhi-today-date')?.textContent || '';
+    const tgl    = document.getElementById('rhi-today-date')?.textContent || '';
     const nasihat = document.getElementById('rhi-nasihat')?.textContent || '';
-    const weton   = document.getElementById('rhi-today-weton')?.textContent || '';
-    return `🌟 Ramalan Hariku — Wetonku\n\n📅 ${tgl}\n${weton}\n\n✨ Nasihat hari ini:\n"${nasihat}"\n\nCek ramalanmu di wetonku.id`;
+    const weton  = document.getElementById('rhi-today-weton')?.textContent || '';
+    return `🌟 Ramalan Hariku di Wetonku\n\n📅 ${tgl}\n${weton}\n\n✨ Nasihat hari ini:\n"${nasihat}"\n\nCek ramalanmu sendiri di wetonku.id`;
   },
   jodoh: () => {
-    const w1   = document.getElementById('j-w1')?.textContent || '';
-    const w2   = document.getElementById('j-w2')?.textContent || '';
-    const skor = document.getElementById('j-score')?.textContent || '';
-    const cat  = document.getElementById('j-cat')?.textContent || '';
-    return `💕 Kecocokan Jodoh — Wetonku\n\n${w1} × ${w2}\n\nSkor: ${skor}/10 · ${cat}\n\nCek kecocokan wetonmu di wetonku.id`;
+    const w1     = document.getElementById('j-w1')?.textContent || '';
+    const w2     = document.getElementById('j-w2')?.textContent || '';
+    const skor   = document.getElementById('j-score')?.textContent || '';
+    const cat    = document.getElementById('j-cat')?.textContent || '';
+    return `💕 Cek Kecocokan Jodoh di Wetonku\n\n${w1} × ${w2}\n\nSkor Kecocokan: ${skor}/10\n${cat}\n\nCek kecocokan wetonmu di wetonku.id`;
   },
   rezeki: () => {
     const weton  = document.getElementById('rz-weton')?.textContent || '';
-    const rezeki = (document.getElementById('rz-rezeki')?.textContent || '').slice(0,110);
-    return `💰 Ramalan Rezeki — Wetonku\nWeton ${weton}\n\n${rezeki}...\n\nTemukan ramalanmu di wetonku.id`;
+    const rezeki = document.getElementById('rz-rezeki')?.textContent?.slice(0,120) || '';
+    return `💰 Ramalan Rezeki Wetonku — ${weton}\n\n${rezeki}...\n\nTemukan ramalanmu sendiri di wetonku.id`;
   },
   wetonanak: () => {
-    const weton    = document.getElementById('wa-weton')?.textContent || '';
-    const karakter = (document.getElementById('wa-karakter')?.textContent || '').slice(0,110);
-    return `✿ Weton Anakku — Wetonku\nWeton ${weton}\n\n${karakter}...\n\nCek weton anakmu di wetonku.id`;
+    const weton  = document.getElementById('wa-weton')?.textContent || '';
+    const karakter = document.getElementById('wa-karakter')?.textContent?.slice(0,120) || '';
+    return `✿ Weton Anakku — ${weton}\n\n${karakter}...\n\nCek weton anakmu di wetonku.id`;
   },
   haribaik: () => {
-    const hajat = document.getElementById('hb-hajat-label')?.textContent || '';
-    const weton = document.getElementById('hb-weton')?.textContent || '';
-    return `✦ Hari Baik untuk ${hajat} — Wetonku\nWeton: ${weton}\n\nTemukan hari terbaikmu di wetonku.id`;
+    const hajat  = document.getElementById('hb-hajat-label')?.textContent || '';
+    const weton  = document.getElementById('hb-weton')?.textContent || '';
+    return `✦ Hari Baik untuk ${hajat}\nWeton: ${weton}\n\nTemukan hari terbaikmu di wetonku.id`;
   }
 };
 
@@ -3281,16 +3308,7 @@ function bukaModalBagikan(fitur) {
   if (!fn) return;
   _bagikanTeks = fn();
   document.getElementById('bagikan-text').textContent = _bagikanTeks;
-  document.getElementById('bagikan-copy-label').textContent = 'Salin Teks';
-
-  // Tampilkan tombol Native Share kalau browser support (biasanya HP)
-  const nativeBtn = document.getElementById('bagikan-native-btn');
-  if (navigator.share) {
-    nativeBtn.style.display = 'flex';
-  } else {
-    nativeBtn.style.display = 'none';
-  }
-
+  document.getElementById('bagikan-copy-btn').textContent = '📋  Salin Teks';
   document.getElementById('bagikan-overlay').classList.add('show');
   document.body.style.overflow = 'hidden';
 }
@@ -3302,45 +3320,28 @@ function tutupModalBagikan(e) {
 }
 
 function bagikanWA() {
-  window.open('https://wa.me/?text=' + encodeURIComponent(_bagikanTeks), '_blank');
-}
-
-function bagikanTwitter() {
-  // Twitter max 280 karakter — potong kalau perlu
-  const teks = _bagikanTeks.length > 250
-    ? _bagikanTeks.slice(0, 247) + '...'
-    : _bagikanTeks;
-  window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(teks), '_blank');
-}
-
-async function bagikanNative() {
-  if (!navigator.share) return;
-  try {
-    await navigator.share({
-      title: 'Wetonku — Primbon & Weton Jawa',
-      text: _bagikanTeks,
-      url: 'https://wetonku.id'
-    });
-  } catch(e) {
-    // user batal atau error — tidak perlu handle
-  }
+  const url = 'https://wa.me/?text=' + encodeURIComponent(_bagikanTeks);
+  window.open(url, '_blank');
 }
 
 async function bagikanCopy() {
-  const label = document.getElementById('bagikan-copy-label');
   try {
     await navigator.clipboard.writeText(_bagikanTeks);
-    label.textContent = '✓ Tersalin!';
+    const btn = document.getElementById('bagikan-copy-btn');
+    btn.textContent = '✓  Tersalin!';
+    setTimeout(() => { btn.textContent = '📋  Salin Teks'; }, 2000);
   } catch(e) {
+    // fallback
     const ta = document.createElement('textarea');
     ta.value = _bagikanTeks;
     document.body.appendChild(ta);
     ta.select();
     document.execCommand('copy');
     document.body.removeChild(ta);
-    label.textContent = '✓ Tersalin!';
+    const btn = document.getElementById('bagikan-copy-btn');
+    btn.textContent = '✓  Tersalin!';
+    setTimeout(() => { btn.textContent = '📋  Salin Teks'; }, 2000);
   }
-  setTimeout(() => { label.textContent = 'Salin Teks'; }, 2500);
 }
 </script>
 </body>
